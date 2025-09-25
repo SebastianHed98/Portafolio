@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Play, Info, Volume2, VolumeX, Star, Clock, Calendar } from 'lucide-react';
 import { useMovieContext } from '../context/MovieContext';
-import { getPopularMovies, getMovieDetails, getImageUrl, getMovieVideos } from '../services/tmdbApi';
+import {
+  getPopularMovies,
+  getMovieDetails,
+  getImageUrl,
+  getMovieVideos,
+} from '../services/tmdbApi';
 import VideoPlayer from './VideoPlayer';
 import MovieDetailModal from './MovieDetailModal';
 
@@ -14,7 +20,9 @@ const Hero = () => {
   const [isLoadingTrailer, setIsLoadingTrailer] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [selectedMovieForDetails, setSelectedMovieForDetails] = useState(null);
-  const { playMovie, toggleFavorite, isFavorite, favorites, currentPlaying, addNotification } = useMovieContext();
+  const { playMovie, toggleFavorite, isFavorite, favorites, currentPlaying, addNotification } =
+    useMovieContext();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchFeaturedMovie = async () => {
@@ -31,7 +39,8 @@ const Hero = () => {
         setFeaturedMovie({
           id: 1,
           title: 'Stranger Things',
-          overview: 'Cuando un niño desaparece, un pequeño pueblo descubre un misterio que involucra experimentos secretos, fuerzas sobrenaturales aterradoras y una niña muy extraña.',
+          overview:
+            'Cuando un niño desaparece, un pequeño pueblo descubre un misterio que involucra experimentos secretos, fuerzas sobrenaturales aterradoras y una niña muy extraña.',
           backdrop_path: '/path/to/backdrop.jpg',
           poster_path: '/path/to/poster.jpg',
           vote_average: 8.7,
@@ -52,7 +61,7 @@ const Hero = () => {
       <div className="relative h-screen bg-[#141414] flex items-center justify-center">
         <div className="text-center">
           <div className="shimmer w-16 h-16 rounded-full mx-auto mb-4"></div>
-          <p className="text-[#E5E5E5] text-lg">Cargando contenido destacado...</p>
+          <p className="text-[#E5E5E5] text-lg">{t('hero.loading')}</p>
         </div>
       </div>
     );
@@ -60,46 +69,45 @@ const Hero = () => {
 
   const handlePlay = async () => {
     setIsLoadingTrailer(true);
-    
+
     try {
       // Obtener videos (trailers) de la película destacada
       const videosData = await getMovieVideos(featuredMovie.id);
-      
+
       // Filtrar trailers de YouTube
       const trailers = videosData
-        .filter(video => 
-          video.site === 'YouTube' && 
-          (video.type === 'Trailer' || video.type === 'Teaser')
+        .filter(
+          (video) =>
+            video.site === 'YouTube' && (video.type === 'Trailer' || video.type === 'Teaser')
         )
         .slice(0, 3); // Tomar los primeros 3 trailers
-      
+
       if (trailers.length > 0) {
         // Si hay trailers, usar el primero
         setSelectedTrailer(trailers[0]);
         addNotification({
-          message: `Reproduciendo trailer de "${featuredMovie.title}"`,
+          message: t('row.playingTrailer', { title: featuredMovie.title }),
           type: 'success',
-          duration: 2000
+          duration: 2000,
         });
       } else {
         // Si no hay trailers, mostrar notificación
         addNotification({
-          message: `No hay trailers disponibles para "${featuredMovie.title}"`,
+          message: t('row.noTrailers', { title: featuredMovie.title }),
           type: 'info',
-          duration: 3000
+          duration: 3000,
         });
         // Aún así abrir el reproductor para mostrar la película
         setSelectedTrailer(null);
       }
-      
+
       setIsVideoPlayerOpen(true);
-      
     } catch (error) {
       console.error('Error loading trailers:', error);
       addNotification({
-        message: 'Error al cargar los trailers',
+        message: t('row.errorLoadingTrailers'),
         type: 'error',
-        duration: 3000
+        duration: 3000,
       });
       // Abrir reproductor sin trailer
       setSelectedTrailer(null);
@@ -126,14 +134,33 @@ const Hero = () => {
   // Función para mapear IDs de géneros a nombres reales
   const getGenreName = (genreId) => {
     const genreMap = {
-      28: 'Acción', 12: 'Aventura', 16: 'Animación', 35: 'Comedia',
-      80: 'Crimen', 99: 'Documental', 18: 'Drama', 10751: 'Familiar',
-      14: 'Fantasía', 36: 'Historia', 27: 'Terror', 10402: 'Música',
-      9648: 'Misterio', 10749: 'Romance', 878: 'Ciencia Ficción',
-      10770: 'Película de TV', 53: 'Thriller', 10752: 'Guerra',
-      37: 'Western', 10759: 'Acción y Aventura', 10762: 'Kids',
-      10763: 'News', 10764: 'Reality', 10765: 'Ciencia Ficción y Fantasía',
-      10766: 'Soap', 10767: 'Talk', 10768: 'Guerra y Política'
+      28: 'Acción',
+      12: 'Aventura',
+      16: 'Animación',
+      35: 'Comedia',
+      80: 'Crimen',
+      99: 'Documental',
+      18: 'Drama',
+      10751: 'Familiar',
+      14: 'Fantasía',
+      36: 'Historia',
+      27: 'Terror',
+      10402: 'Música',
+      9648: 'Misterio',
+      10749: 'Romance',
+      878: 'Ciencia Ficción',
+      10770: 'Película de TV',
+      53: 'Thriller',
+      10752: 'Guerra',
+      37: 'Western',
+      10759: 'Acción y Aventura',
+      10762: 'Kids',
+      10763: 'News',
+      10764: 'Reality',
+      10765: 'Ciencia Ficción y Fantasía',
+      10766: 'Soap',
+      10767: 'Talk',
+      10768: 'Guerra y Política',
     };
     return genreMap[genreId] || `Género ${genreId}`;
   };
@@ -156,11 +183,11 @@ const Hero = () => {
               e.target.style.display = 'none';
             }}
           />
-          
+
           {/* Overlay con gradiente profesional */}
           <div className="absolute inset-0 hero-gradient"></div>
           <div className="absolute inset-0 bg-gradient-to-r from-[#141414]/90 via-[#141414]/50 to-transparent"></div>
-          
+
           {/* Efecto de partículas sutiles */}
           <div className="absolute inset-0 opacity-30">
             <div className="absolute inset-0 bg-gradient-to-br from-[#E50914]/5 via-transparent to-transparent"></div>
@@ -174,7 +201,7 @@ const Hero = () => {
               {/* Badge de contenido destacado */}
               <div className="inline-flex items-center space-x-2 bg-[#E50914]/90 text-white px-4 py-2 rounded-full text-sm font-bold mb-6 shadow-lg">
                 <Star size={16} className="text-yellow-300 fill-current" />
-                <span>CONTENIDO DESTACADO</span>
+                <span>{t('hero.featuredContent')}</span>
               </div>
 
               {/* Título con tipografía profesional */}
@@ -187,20 +214,24 @@ const Hero = () => {
                 <div className="flex items-center space-x-2 bg-[#E50914]/20 px-3 py-1 rounded-full">
                   <Star size={16} className="text-yellow-400 fill-current" />
                   <span className="text-green-400 font-bold text-lg">
-                    {featuredMovie.vote_average?.toFixed(1) || 'N/A'}
+                    {featuredMovie.vote_average?.toFixed(1) || t('common.na')}
                   </span>
-                  <span className="text-white">/ 10</span>
+                  <span className="text-white">{t('hero.ratingOutOfTen')}</span>
                 </div>
-                
+
                 <div className="flex items-center space-x-2 bg-black/30 px-3 py-1 rounded-full">
                   <Calendar size={16} className="text-[#E5E5E5]" />
-                  <span>{featuredMovie.release_date?.split('-')[0] || 'N/A'}</span>
+                  <span>{featuredMovie.release_date?.split('-')[0] || t('common.na')}</span>
                 </div>
-                
+
                 {featuredMovie.runtime && (
                   <div className="flex items-center space-x-2 bg-black/30 px-3 py-1 rounded-full">
                     <Clock size={16} className="text-[#E5E5E5]" />
-                    <span>{Math.floor(featuredMovie.runtime / 60)}h {featuredMovie.runtime % 60}m</span>
+                    <span>
+                      {Math.floor(featuredMovie.runtime / 60)}
+                      {t('common.hoursShort')} {featuredMovie.runtime % 60}
+                      {t('common.minutesShort')}
+                    </span>
                   </div>
                 )}
               </div>
@@ -222,25 +253,23 @@ const Hero = () => {
                   {isLoadingTrailer ? (
                     <>
                       <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span className="text-lg">Cargando...</span>
+                      <span className="text-lg">{t('hero.loadingTrailer')}</span>
                     </>
                   ) : (
                     <>
                       <Play size={24} className="group-hover:scale-110 transition-transform" />
-                      <span className="text-lg">Reproducir</span>
+                      <span className="text-lg">{t('hero.play')}</span>
                     </>
                   )}
                 </button>
-                
+
                 <button
                   onClick={handleMoreInfo}
                   className="btn-secondary btn-action-hover group flex items-center justify-center space-x-3"
                 >
                   <Info size={24} className="group-hover:scale-110 transition-transform" />
-                  <span className="text-lg">Más información</span>
+                  <span className="text-lg">{t('hero.moreInfo')}</span>
                 </button>
-
-
 
                 <button
                   onClick={handleAddToFavorites}
@@ -263,9 +292,9 @@ const Hero = () => {
                     <span
                       key={index}
                       className="glass px-4 py-2 rounded-full text-sm font-medium text-white border border-white/20 hover:border-[#E50914]/50 transition-all duration-300"
-                                          >
-                        {getGenreName(genreId)}
-                      </span>
+                    >
+                      {getGenreName(genreId)}
+                    </span>
                   ))}
                 </div>
               )}
@@ -278,7 +307,7 @@ const Hero = () => {
           <button
             onClick={handleToggleMute}
             className="btn-action btn-action-hover group"
-            title={isMuted ? 'Activar sonido' : 'Silenciar'}
+            title={isMuted ? t('heroA11y.unmute') : t('heroA11y.mute')}
           >
             {isMuted ? (
               <VolumeX size={24} className="group-hover:scale-110 transition-transform" />
@@ -291,14 +320,14 @@ const Hero = () => {
         {/* Indicador de edad mejorado */}
         <div className="absolute bottom-8 left-8 z-20">
           <div className="glass px-4 py-2 rounded-lg text-white font-bold text-lg border border-white/20">
-            +16
+            {t('hero.ageRating')}
           </div>
         </div>
 
         {/* Indicador de calidad */}
         <div className="absolute top-8 right-8 z-20">
           <div className="glass px-3 py-1 rounded-full text-xs font-medium text-white border border-white/20">
-            4K ULTRA HD
+            {t('hero.quality')}
           </div>
         </div>
 
@@ -313,9 +342,9 @@ const Hero = () => {
         onClose={() => {
           if (selectedTrailer) {
             addNotification({
-              message: `Trailer de "${featuredMovie.title}" finalizado`,
+              message: t('row.trailerFinished', { title: featuredMovie.title }),
               type: 'info',
-              duration: 2000
+              duration: 2000,
             });
           }
           setIsVideoPlayerOpen(false);

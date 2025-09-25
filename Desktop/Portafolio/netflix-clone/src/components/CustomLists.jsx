@@ -32,7 +32,7 @@ const CustomLists = ({ isOpen, onClose }) => {
       addNotification({
         message: 'Por favor ingresa un nombre para la lista',
         type: 'warning',
-        duration: 3000
+        duration: 3000,
       });
       return;
     }
@@ -43,16 +43,16 @@ const CustomLists = ({ isOpen, onClose }) => {
       items: [],
       createdAt: new Date().toISOString(),
       description: '',
-      isPrivate: false
+      isPrivate: false,
     };
 
     const updatedLists = [...lists, newList];
     saveLists(updatedLists);
-    
+
     addNotification({
       message: `Lista "${newList.name}" creada exitosamente`,
       type: 'success',
-      duration: 3000
+      duration: 3000,
     });
 
     setNewListName('');
@@ -65,23 +65,21 @@ const CustomLists = ({ isOpen, onClose }) => {
       addNotification({
         message: 'Por favor ingresa un nombre para la lista',
         type: 'warning',
-        duration: 3000
+        duration: 3000,
       });
       return;
     }
 
-    const updatedLists = lists.map(list => 
-      list.id === editingListId 
-        ? { ...list, name: editingName.trim() }
-        : list
+    const updatedLists = lists.map((list) =>
+      list.id === editingListId ? { ...list, name: editingName.trim() } : list
     );
 
     saveLists(updatedLists);
-    
+
     addNotification({
       message: 'Lista actualizada exitosamente',
       type: 'success',
-      duration: 3000
+      duration: 3000,
     });
 
     setIsEditing(false);
@@ -91,15 +89,15 @@ const CustomLists = ({ isOpen, onClose }) => {
 
   // Eliminar lista
   const deleteList = (listId) => {
-    const listToDelete = lists.find(list => list.id === listId);
-    const updatedLists = lists.filter(list => list.id !== listId);
-    
+    const listToDelete = lists.find((list) => list.id === listId);
+    const updatedLists = lists.filter((list) => list.id !== listId);
+
     saveLists(updatedLists);
-    
+
     addNotification({
       message: `Lista "${listToDelete.name}" eliminada`,
       type: 'info',
-      duration: 3000
+      duration: 3000,
     });
 
     if (selectedList?.id === listId) {
@@ -109,14 +107,14 @@ const CustomLists = ({ isOpen, onClose }) => {
 
   // Agregar item a lista
   const addToList = (listId, item) => {
-    const updatedLists = lists.map(list => {
+    const updatedLists = lists.map((list) => {
       if (list.id === listId) {
         // Verificar si el item ya existe
-        const exists = list.items.some(existingItem => existingItem.id === item.id);
+        const exists = list.items.some((existingItem) => existingItem.id === item.id);
         if (!exists) {
           return {
             ...list,
-            items: [...list.items, { ...item, addedAt: new Date().toISOString() }]
+            items: [...list.items, { ...item, addedAt: new Date().toISOString() }],
           };
         }
       }
@@ -124,39 +122,39 @@ const CustomLists = ({ isOpen, onClose }) => {
     });
 
     saveLists(updatedLists);
-    
+
     addNotification({
       message: `"${item.title || item.name}" agregado a la lista`,
       type: 'success',
-      duration: 3000
+      duration: 3000,
     });
   };
 
   // Remover item de lista
   const removeFromList = (listId, itemId) => {
-    const updatedLists = lists.map(list => {
+    const updatedLists = lists.map((list) => {
       if (list.id === listId) {
         return {
           ...list,
-          items: list.items.filter(item => item.id !== itemId)
+          items: list.items.filter((item) => item.id !== itemId),
         };
       }
       return list;
     });
 
     saveLists(updatedLists);
-    
+
     addNotification({
       message: 'Item removido de la lista',
       type: 'info',
-      duration: 3000
+      duration: 3000,
     });
   };
 
   // Obtener estadísticas de la lista
   const getListStats = (list) => {
-    const movies = list.items.filter(item => item.title);
-    const series = list.items.filter(item => item.name);
+    const movies = list.items.filter((item) => item.title);
+    const series = list.items.filter((item) => item.name);
     const totalRating = list.items.reduce((sum, item) => sum + (item.vote_average || 0), 0);
     const avgRating = list.items.length > 0 ? (totalRating / list.items.length).toFixed(1) : 0;
 
@@ -164,7 +162,7 @@ const CustomLists = ({ isOpen, onClose }) => {
       movies: movies.length,
       series: series.length,
       total: list.items.length,
-      avgRating
+      avgRating,
     };
   };
 
@@ -249,9 +247,7 @@ const CustomLists = ({ isOpen, onClose }) => {
                     onClick={() => setSelectedList(list)}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold text-white text-sm truncate">
-                        {list.name}
-                      </h3>
+                      <h3 className="font-semibold text-white text-sm truncate">{list.name}</h3>
                       <div className="flex space-x-1">
                         <button
                           onClick={(e) => {
@@ -277,7 +273,7 @@ const CustomLists = ({ isOpen, onClose }) => {
                         </button>
                       </div>
                     </div>
-                    
+
                     <div className="text-xs text-gray-400 space-y-1">
                       <div className="flex items-center space-x-2">
                         <span>{stats.total} items</span>
@@ -370,7 +366,7 @@ const CustomLists = ({ isOpen, onClose }) => {
                               e.target.style.display = 'none';
                             }}
                           />
-                          
+
                           {/* Botón eliminar */}
                           <button
                             onClick={() => removeFromList(selectedList.id, item.id)}
@@ -385,17 +381,19 @@ const CustomLists = ({ isOpen, onClose }) => {
                           <h4 className="text-white font-semibold text-sm line-clamp-2 mb-2">
                             {item.title || item.name}
                           </h4>
-                          
+
                           <div className="flex items-center justify-between text-xs text-gray-400">
                             <div className="flex items-center space-x-1">
                               <Star size={12} className="text-yellow-400 fill-current" />
                               <span>{item.vote_average?.toFixed(1) || 'N/A'}</span>
                             </div>
                             <span>
-                              {item.release_date?.split('-')[0] || item.first_air_date?.split('-')[0] || 'N/A'}
+                              {item.release_date?.split('-')[0] ||
+                                item.first_air_date?.split('-')[0] ||
+                                'N/A'}
                             </span>
                           </div>
-                          
+
                           <div className="mt-2">
                             <span className="inline-block px-2 py-1 bg-[#E50914] text-white text-xs rounded">
                               {item.title ? 'Película' : 'Serie'}
@@ -408,21 +406,15 @@ const CustomLists = ({ isOpen, onClose }) => {
                 ) : (
                   <div className="text-center py-12">
                     <Eye size={64} className="text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      Lista vacía
-                    </h3>
-                    <p className="text-gray-400">
-                      Esta lista no tiene contenido aún
-                    </p>
+                    <h3 className="text-xl font-semibold text-white mb-2">Lista vacía</h3>
+                    <p className="text-gray-400">Esta lista no tiene contenido aún</p>
                   </div>
                 )}
               </div>
             ) : (
               <div className="text-center py-12">
                 <Eye size={64} className="text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  Selecciona una lista
-                </h3>
+                <h3 className="text-xl font-semibold text-white mb-2">Selecciona una lista</h3>
                 <p className="text-gray-400">
                   Elige una lista de la izquierda para ver su contenido
                 </p>

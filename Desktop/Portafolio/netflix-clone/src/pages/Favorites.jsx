@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Heart, Play, Plus, Info, Star, Calendar, Trash2, Filter, List, Sparkles } from 'lucide-react';
+import {
+  Heart,
+  Play,
+  Plus,
+  Info,
+  Star,
+  Calendar,
+  Trash2,
+  Filter,
+  List,
+  Sparkles,
+} from 'lucide-react';
 import { useMovieContext } from '../context/MovieContext';
 import { getImageUrl } from '../services/tmdbApi';
 import VideoPlayer from '../components/VideoPlayer';
@@ -36,7 +47,7 @@ const Favorites = () => {
   };
 
   // Filtrar favoritos según el tipo seleccionado
-  const filteredFavorites = favorites.filter(movie => {
+  const filteredFavorites = favorites.filter((movie) => {
     if (filterType === 'all') return true;
     if (filterType === 'movie') return movie.title; // Películas tienen 'title'
     if (filterType === 'tv') return movie.name; // Series tienen 'name'
@@ -87,7 +98,7 @@ const Favorites = () => {
         <Heart size={20} className={activeTab === 'favorites' ? 'fill-current' : ''} />
         <span>{t('favorites.tabFavorites', { count: favorites.length })}</span>
       </button>
-      
+
       <button
         onClick={() => setActiveTab('lists')}
         className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
@@ -110,12 +121,8 @@ const Favorites = () => {
           <div className="w-32 h-32 bg-[#E50914]/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <Heart size={64} className="text-[#E50914]" />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-4">
-            {t('favorites.emptyTitle')}
-          </h2>
-          <p className="text-[#E5E5E5] mb-6">
-            {t('favorites.emptySubtitle')}
-          </p>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('favorites.emptyTitle')}</h2>
+          <p className="text-[#E5E5E5] mb-6">{t('favorites.emptySubtitle')}</p>
           <div className="flex items-center justify-center space-x-2 text-[#E50914]">
             <Heart size={20} className="fill-current" />
             <span className="font-semibold">{t('favorites.emptyCta')}</span>
@@ -180,7 +187,7 @@ const Favorites = () => {
                     e.target.style.display = 'none';
                   }}
                 />
-                
+
                 {/* Overlay con información */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute inset-0 flex flex-col justify-end p-4">
@@ -198,7 +205,10 @@ const Favorites = () => {
                         className="bg-red-600/90 text-white p-2 rounded-full hover:bg-red-600 transition-colors duration-200 group/delete"
                         title={t('favorites.removeFromList')}
                       >
-                        <Trash2 size={16} className="group-hover/delete:scale-110 transition-transform" />
+                        <Trash2
+                          size={16}
+                          className="group-hover/delete:scale-110 transition-transform"
+                        />
                       </button>
                     </div>
 
@@ -207,7 +217,7 @@ const Favorites = () => {
                       <h3 className="text-white font-bold text-lg line-clamp-2">
                         {getMovieTitle(movie)}
                       </h3>
-                      
+
                       <div className="flex items-center justify-between text-sm">
                         <div className="flex items-center space-x-2">
                           <Star size={16} className="text-yellow-400 fill-current" />
@@ -215,7 +225,7 @@ const Favorites = () => {
                             {movie.vote_average?.toFixed(1) || 'N/A'}
                           </span>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2 text-[#E5E5E5]">
                           <Calendar size={14} />
                           <span>{getMovieYear(movie)}</span>
@@ -233,7 +243,7 @@ const Favorites = () => {
                           <Play size={16} className="fill-current" />
                           <span>{t('common.play')}</span>
                         </button>
-                        
+
                         <button
                           onClick={() => console.log('Más info:', getMovieTitle(movie))}
                           className="p-2 bg-[#808080]/80 text-white rounded-lg hover:bg-[#808080] 
@@ -252,22 +262,23 @@ const Favorites = () => {
                 <h4 className="text-white font-semibold text-sm line-clamp-2 mb-2 group-hover:text-[#E50914] transition-colors">
                   {getMovieTitle(movie)}
                 </h4>
-                
+
                 <div className="flex items-center justify-between text-xs text-[#E5E5E5]">
                   <div className="flex items-center space-x-1">
                     <Star size={12} className="text-yellow-400 fill-current" />
                     <span>{movie.vote_average?.toFixed(1) || 'N/A'}</span>
                   </div>
-                  
+
                   <span>{getMovieYear(movie)}</span>
                 </div>
 
                 {/* Fecha de agregado */}
                 <div className="mt-2 text-xs text-[#808080]">
-                  {t('favorites.added')}: {new Date(movie.addedAt).toLocaleDateString(getLocale(), {
+                  {t('favorites.added')}:{' '}
+                  {new Date(movie.addedAt).toLocaleDateString(getLocale(), {
                     year: 'numeric',
                     month: 'short',
-                    day: 'numeric'
+                    day: 'numeric',
                   })}
                 </div>
               </div>
@@ -279,16 +290,9 @@ const Favorites = () => {
         {filteredFavorites.length === 0 && favorites.length > 0 && (
           <div className="text-center py-12">
             <div className="glass p-8 rounded-2xl border border-white/20 max-w-md mx-auto">
-              <h3 className="text-xl font-bold text-white mb-4">
-                {t('favorites.noResults')}
-              </h3>
-              <p className="text-[#E5E5E5] mb-4">
-                {t('favorites.noResultsSubtitle')}
-              </p>
-              <button
-                onClick={() => setFilterType('all')}
-                className="btn-primary px-6 py-2"
-              >
+              <h3 className="text-xl font-bold text-white mb-4">{t('favorites.noResults')}</h3>
+              <p className="text-[#E5E5E5] mb-4">{t('favorites.noResultsSubtitle')}</p>
+              <button onClick={() => setFilterType('all')} className="btn-primary px-6 py-2">
                 {t('favorites.viewAll')}
               </button>
             </div>
@@ -304,9 +308,7 @@ const Favorites = () => {
       <div className="w-32 h-32 bg-[#E50914]/20 rounded-full flex items-center justify-center mx-auto mb-6">
         <List size={64} className="text-[#E50914]" />
       </div>
-      <h2 className="text-2xl font-bold text-white mb-4">
-        Gestiona tus listas personalizadas
-      </h2>
+      <h2 className="text-2xl font-bold text-white mb-4">Gestiona tus listas personalizadas</h2>
       <p className="text-[#E5E5E5] mb-6">
         Crea listas temáticas, organiza tu contenido favorito y comparte tus colecciones.
       </p>
@@ -317,7 +319,7 @@ const Favorites = () => {
         <List size={20} />
         <span>Gestionar Listas</span>
       </button>
-      
+
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
         <div className="glass p-6 rounded-xl border border-white/20 text-center">
           <div className="w-16 h-16 bg-[#E50914]/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -328,7 +330,7 @@ const Favorites = () => {
             Crea listas por género, director, actor o cualquier criterio que prefieras
           </p>
         </div>
-        
+
         <div className="glass p-6 rounded-xl border border-white/20 text-center">
           <div className="w-16 h-16 bg-[#E50914]/20 rounded-full flex items-center justify-center mx-auto mb-4">
             <Heart size={32} className="text-[#E50914]" />
@@ -338,7 +340,7 @@ const Favorites = () => {
             Agrupa tus favoritos en colecciones organizadas y fáciles de navegar
           </p>
         </div>
-        
+
         <div className="glass p-6 rounded-xl border border-white/20 text-center">
           <div className="w-16 h-16 bg-[#E50914]/20 rounded-full flex items-center justify-center mx-auto mb-4">
             <Plus size={32} className="text-[#E50914]" />
@@ -363,14 +365,11 @@ const Favorites = () => {
                 <Heart size={32} className="text-[#E50914] fill-current" />
               </div>
               <div>
-                <h1 className="text-4xl md:text-6xl font-black text-white text-shadow">
-                  Mi Lista
-                </h1>
+                <h1 className="text-4xl md:text-6xl font-black text-white text-shadow">Mi Lista</h1>
                 <p className="text-xl text-[#E5E5E5]">
-                  {activeTab === 'favorites' 
+                  {activeTab === 'favorites'
                     ? `${favorites.length} título${favorites.length !== 1 ? 's' : ''} en tu lista`
-                    : 'Gestiona tus listas personalizadas'
-                  }
+                    : 'Gestiona tus listas personalizadas'}
                 </p>
               </div>
             </div>
@@ -392,10 +391,7 @@ const Favorites = () => {
       />
 
       {/* Modal de listas personalizadas */}
-      <CustomLists 
-        isOpen={isCustomListsOpen}
-        onClose={() => setIsCustomListsOpen(false)}
-      />
+      <CustomLists isOpen={isCustomListsOpen} onClose={() => setIsCustomListsOpen(false)} />
     </>
   );
 };

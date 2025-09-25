@@ -1,8 +1,8 @@
 import cacheService from './cacheService';
 import i18n from 'i18next';
 
-const API_KEY = "a144777441fe09d63772c92bf1eb443c";
-const BASE_URL = "https://api.themoviedb.org/3";
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY || 'a144777441fe09d63772c92bf1eb443c';
+const BASE_URL = 'https://api.themoviedb.org/3';
 
 // Mapear código de i18n a locale de TMDB
 const mapLanguageToTmdb = (lng) => {
@@ -24,13 +24,13 @@ const buildUrl = (endpoint, params = {}) => {
   url.searchParams.append('api_key', API_KEY);
   const currentLng = i18n?.language;
   url.searchParams.append('language', mapLanguageToTmdb(currentLng));
-  
+
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
       url.searchParams.append(key, value);
     }
   });
-  
+
   return url.toString();
 };
 
@@ -103,11 +103,13 @@ export const getSeriesDetails = async (seriesId) => {
 // Búsqueda múltiple (películas, series, personas)
 export const searchMulti = async (query, page = 1) => {
   try {
-    const response = await fetch(buildUrl('/search/multi', { 
-      query, 
-      page,
-      include_adult: false 
-    }));
+    const response = await fetch(
+      buildUrl('/search/multi', {
+        query,
+        page,
+        include_adult: false,
+      })
+    );
     const data = await response.json();
     return data.results || [];
   } catch (error) {
@@ -119,11 +121,13 @@ export const searchMulti = async (query, page = 1) => {
 // Búsqueda de películas
 export const searchMovies = async (query, page = 1) => {
   try {
-    const response = await fetch(buildUrl('/search/movie', { 
-      query, 
-      page,
-      include_adult: false 
-    }));
+    const response = await fetch(
+      buildUrl('/search/movie', {
+        query,
+        page,
+        include_adult: false,
+      })
+    );
     const data = await response.json();
     return data.results || [];
   } catch (error) {
@@ -135,11 +139,13 @@ export const searchMovies = async (query, page = 1) => {
 // Búsqueda de series
 export const searchSeries = async (query, page = 1) => {
   try {
-    const response = await fetch(buildUrl('/search/tv', { 
-      query, 
-      page,
-      include_adult: false 
-    }));
+    const response = await fetch(
+      buildUrl('/search/tv', {
+        query,
+        page,
+        include_adult: false,
+      })
+    );
     const data = await response.json();
     return data.results || [];
   } catch (error) {
@@ -163,11 +169,13 @@ export const getGenres = async (mediaType = 'movie') => {
 // Películas por género
 export const getMoviesByGenre = async (genreId, page = 1) => {
   try {
-    const response = await fetch(buildUrl('/discover/movie', { 
-      with_genres: genreId, 
-      page,
-      sort_by: 'popularity.desc'
-    }));
+    const response = await fetch(
+      buildUrl('/discover/movie', {
+        with_genres: genreId,
+        page,
+        sort_by: 'popularity.desc',
+      })
+    );
     const data = await response.json();
     return data.results || [];
   } catch (error) {
@@ -179,11 +187,13 @@ export const getMoviesByGenre = async (genreId, page = 1) => {
 // Series por género
 export const getSeriesByGenre = async (genreId, page = 1) => {
   try {
-    const response = await fetch(buildUrl('/discover/tv', { 
-      with_genres: genreId, 
-      page,
-      sort_by: 'popularity.desc'
-    }));
+    const response = await fetch(
+      buildUrl('/discover/tv', {
+        with_genres: genreId,
+        page,
+        sort_by: 'popularity.desc',
+      })
+    );
     const data = await response.json();
     return data.results || [];
   } catch (error) {
@@ -242,143 +252,119 @@ export const getOnAirSeries = async (page = 1) => {
 
 // Obtener reparto de una película
 export const getMovieCredits = async (movieId) => {
-  return cacheService.cachedRequest(
-    `movie/${movieId}/credits`,
-    { movieId },
-    async () => {
-      try {
-        const url = buildUrl(`/movie/${movieId}/credits`);
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        return data.cast || [];
-      } catch (error) {
-        console.error('Error fetching movie credits:', error);
-        return [];
+  return cacheService.cachedRequest(`movie/${movieId}/credits`, { movieId }, async () => {
+    try {
+      const url = buildUrl(`/movie/${movieId}/credits`);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+      return data.cast || [];
+    } catch (error) {
+      console.error('Error fetching movie credits:', error);
+      return [];
     }
-  );
+  });
 };
 
 // Obtener reparto de una serie
 export const getSeriesCredits = async (seriesId) => {
-  return cacheService.cachedRequest(
-    `tv/${seriesId}/credits`,
-    { seriesId },
-    async () => {
-      try {
-        const url = buildUrl(`/tv/${seriesId}/credits`);
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        return data.cast || [];
-      } catch (error) {
-        console.error('Error fetching series credits:', error);
-        return [];
+  return cacheService.cachedRequest(`tv/${seriesId}/credits`, { seriesId }, async () => {
+    try {
+      const url = buildUrl(`/tv/${seriesId}/credits`);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+      return data.cast || [];
+    } catch (error) {
+      console.error('Error fetching series credits:', error);
+      return [];
     }
-  );
+  });
 };
 
 // Obtener videos/trailers de una película
 export const getMovieVideos = async (movieId) => {
-  return cacheService.cachedRequest(
-    `movie/${movieId}/videos`,
-    { movieId },
-    async () => {
-      try {
-        const url = buildUrl(`/movie/${movieId}/videos`);
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        return data.results || [];
-      } catch (error) {
-        console.error('Error fetching movie videos:', error);
-        return [];
+  return cacheService.cachedRequest(`movie/${movieId}/videos`, { movieId }, async () => {
+    try {
+      const url = buildUrl(`/movie/${movieId}/videos`);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+      return data.results || [];
+    } catch (error) {
+      console.error('Error fetching movie videos:', error);
+      return [];
     }
-  );
+  });
 };
 
 // Obtener videos/trailers de una serie
 export const getSeriesVideos = async (seriesId) => {
-  return cacheService.cachedRequest(
-    `tv/${seriesId}/videos`,
-    { seriesId },
-    async () => {
-      try {
-        const url = buildUrl(`/tv/${seriesId}/videos`);
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        return data.results || [];
-      } catch (error) {
-        console.error('Error fetching series videos:', error);
-        return [];
+  return cacheService.cachedRequest(`tv/${seriesId}/videos`, { seriesId }, async () => {
+    try {
+      const url = buildUrl(`/tv/${seriesId}/videos`);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+      return data.results || [];
+    } catch (error) {
+      console.error('Error fetching series videos:', error);
+      return [];
     }
-  );
+  });
 };
 
 // Obtener contenido similar
 export const getSimilarMovies = async (movieId) => {
-  return cacheService.cachedRequest(
-    `movie/${movieId}/similar`,
-    { movieId },
-    async () => {
-      try {
-        const url = buildUrl(`/movie/${movieId}/similar`);
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        return data.results || [];
-      } catch (error) {
-        console.error('Error fetching similar movies:', error);
-        return [];
+  return cacheService.cachedRequest(`movie/${movieId}/similar`, { movieId }, async () => {
+    try {
+      const url = buildUrl(`/movie/${movieId}/similar`);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+      return data.results || [];
+    } catch (error) {
+      console.error('Error fetching similar movies:', error);
+      return [];
     }
-  );
+  });
 };
 
 export const getSimilarSeries = async (seriesId) => {
-  return cacheService.cachedRequest(
-    `tv/${seriesId}/similar`,
-    { seriesId },
-    async () => {
-      try {
-        const url = buildUrl(`/tv/${seriesId}/similar`);
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        return data.results || [];
-      } catch (error) {
-        console.error('Error fetching similar series:', error);
-        return [];
+  return cacheService.cachedRequest(`tv/${seriesId}/similar`, { seriesId }, async () => {
+    try {
+      const url = buildUrl(`/tv/${seriesId}/similar`);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+      return data.results || [];
+    } catch (error) {
+      console.error('Error fetching similar series:', error);
+      return [];
     }
-  );
+  });
 };

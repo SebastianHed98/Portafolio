@@ -1,5 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
-import { X, Play, Pause, Volume2, VolumeX, Maximize2, SkipBack, SkipForward, RotateCcw } from 'lucide-react';
+import {
+  X,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize2,
+  SkipBack,
+  SkipForward,
+  RotateCcw,
+} from 'lucide-react';
 import { useMovieContext } from '../context/MovieContext';
 
 const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
@@ -12,7 +22,7 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
   const [isYouTubeMode, setIsYouTubeMode] = useState(false);
   const [youtubeVideoId, setYoutubeVideoId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const { stopPlaying } = useMovieContext();
@@ -20,7 +30,7 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
   // Determinar si es modo YouTube o modo normal
   useEffect(() => {
     console.log('🎬 VideoPlayer useEffect videoData:', { videoData, movie });
-    
+
     if (videoData && videoData.key) {
       console.log('✅ Modo YouTube activado:', videoData);
       setIsYouTubeMode(true);
@@ -108,12 +118,13 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
 
   const handleSkip = (direction) => {
     if (isYouTubeMode) return;
-    
+
     const skipAmount = 10;
-    const newTime = direction === 'forward' 
-      ? Math.min(currentTime + skipAmount, duration)
-      : Math.max(currentTime - skipAmount, 0);
-    
+    const newTime =
+      direction === 'forward'
+        ? Math.min(currentTime + skipAmount, duration)
+        : Math.max(currentTime - skipAmount, 0);
+
     setCurrentTime(newTime);
     if (videoRef.current) {
       videoRef.current.currentTime = newTime;
@@ -155,30 +166,32 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
 
   return (
     <div className="fixed inset-0 bg-black/95 backdrop-blur-sm z-[10002] flex items-center justify-center p-4 video-player-modal video-player-overlay">
-      <div 
+      <div
         ref={containerRef}
         className="relative w-full max-w-6xl max-h-[90vh] bg-black rounded-xl overflow-hidden"
       >
-                 {/* Header con controles */}
-         <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-b from-black/80 to-transparent p-4">
-           <div className="flex items-center justify-between">
-             <div className="flex items-center space-x-4">
-               <h3 className="text-white font-bold text-lg">
-                 {isYouTubeMode ? (videoData?.name || 'Video') : (movie?.title || movie?.name || 'Reproduciendo')}
-               </h3>
-               {isYouTubeMode && (
-                 <div className="flex items-center space-x-2">
-                   <span className="bg-[#E50914] text-white px-2 py-1 rounded text-xs font-bold">
-                     Trailer
-                   </span>
-                   {videoData?.official && (
-                     <span className="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">
-                       Oficial
-                     </span>
-                   )}
-                 </div>
-               )}
-             </div>
+        {/* Header con controles */}
+        <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-b from-black/80 to-transparent p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <h3 className="text-white font-bold text-lg">
+                {isYouTubeMode
+                  ? videoData?.name || 'Video'
+                  : movie?.title || movie?.name || 'Reproduciendo'}
+              </h3>
+              {isYouTubeMode && (
+                <div className="flex items-center space-x-2">
+                  <span className="bg-[#E50914] text-white px-2 py-1 rounded text-xs font-bold">
+                    Trailer
+                  </span>
+                  {videoData?.official && (
+                    <span className="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">
+                      Oficial
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
             <button
               onClick={handleClose}
               className="w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
@@ -192,25 +205,25 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
         <div className="relative w-full h-full">
           {isYouTubeMode ? (
             // Modo YouTube - iframe integrado
-                         <div className="w-full aspect-video relative">
-               {isLoading && (
-                 <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-10">
-                   <div className="text-center">
-                     <div className="w-16 h-16 border-4 border-[#E50914] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                     <p className="text-white text-lg">Cargando trailer...</p>
-                   </div>
-                 </div>
-               )}
-               <iframe
-                 src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=1&rel=0&modestbranding=1&showinfo=0`}
-                 title={videoData?.name || 'Video de YouTube'}
-                 className="w-full h-full"
-                 frameBorder="0"
-                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                 allowFullScreen
-                 onLoad={() => setIsLoading(false)}
-               />
-             </div>
+            <div className="w-full aspect-video relative">
+              {isLoading && (
+                <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-10">
+                  <div className="text-center">
+                    <div className="w-16 h-16 border-4 border-[#E50914] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-white text-lg">Cargando trailer...</p>
+                  </div>
+                </div>
+              )}
+              <iframe
+                src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=1&rel=0&modestbranding=1&showinfo=0`}
+                title={videoData?.name || 'Video de YouTube'}
+                className="w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                onLoad={() => setIsLoading(false)}
+              />
+            </div>
           ) : (
             // Modo normal - video simulado
             <div className="w-full aspect-video bg-[#141414] flex items-center justify-center relative">
@@ -224,7 +237,8 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
                 </p>
                 <div className="bg-[#333]/50 rounded-lg p-4 border border-[#555]/30">
                   <p className="text-sm text-gray-300">
-                    💡 <strong>Consejo:</strong> Intenta con otra película o serie que tenga trailers disponibles.
+                    💡 <strong>Consejo:</strong> Intenta con otra película o serie que tenga
+                    trailers disponibles.
                   </p>
                 </div>
               </div>
@@ -315,22 +329,22 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
           </div>
         )}
 
-                 {/* Información adicional para YouTube */}
-         {isYouTubeMode && videoData && (
-           <div className="bg-[#141414] p-4">
-             <h4 className="text-white font-semibold text-lg mb-2">{videoData.name}</h4>
-             <div className="flex items-center justify-between text-sm text-gray-400 mb-3">
-               <span>{videoData.type}</span>
-               <span>{videoData.site}</span>
-             </div>
-             <div className="bg-[#E50914]/20 border border-[#E50914]/30 rounded-lg p-3">
-               <p className="text-white text-sm">
-                 🎬 <strong>Trailer oficial</strong> de "{movie?.title || movie?.name}". 
-                 El video se reproduce automáticamente desde YouTube.
-               </p>
-             </div>
-           </div>
-         )}
+        {/* Información adicional para YouTube */}
+        {isYouTubeMode && videoData && (
+          <div className="bg-[#141414] p-4">
+            <h4 className="text-white font-semibold text-lg mb-2">{videoData.name}</h4>
+            <div className="flex items-center justify-between text-sm text-gray-400 mb-3">
+              <span>{videoData.type}</span>
+              <span>{videoData.site}</span>
+            </div>
+            <div className="bg-[#E50914]/20 border border-[#E50914]/30 rounded-lg p-3">
+              <p className="text-white text-sm">
+                🎬 <strong>Trailer oficial</strong> de "{movie?.title || movie?.name}". El video se
+                reproduce automáticamente desde YouTube.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

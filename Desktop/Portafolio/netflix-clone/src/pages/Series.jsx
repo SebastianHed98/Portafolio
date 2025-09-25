@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Filter, Grid, List, Tv } from 'lucide-react';
@@ -20,12 +18,9 @@ const Series = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        
+
         // Obtener series y géneros en paralelo
-        const [seriesData, genresData] = await Promise.all([
-          getPopularSeries(1),
-          getGenres('tv')
-        ]);
+        const [seriesData, genresData] = await Promise.all([getPopularSeries(1), getGenres('tv')]);
 
         setSeries(seriesData || []);
         setFilteredSeries(seriesData || []);
@@ -41,7 +36,7 @@ const Series = () => {
             vote_average: 9.3,
             first_air_date: '2011-04-17',
             adult: true,
-            genre_ids: [10759, 18, 10765]
+            genre_ids: [10759, 18, 10765],
           },
           {
             id: 2,
@@ -50,7 +45,7 @@ const Series = () => {
             vote_average: 9.5,
             first_air_date: '2008-01-20',
             adult: false,
-            genre_ids: [18, 80, 9648]
+            genre_ids: [18, 80, 9648],
           },
           {
             id: 3,
@@ -59,8 +54,8 @@ const Series = () => {
             vote_average: 8.7,
             first_air_date: '2016-07-15',
             adult: false,
-            genre_ids: [18, 9648, 10765]
-          }
+            genre_ids: [18, 9648, 10765],
+          },
         ]);
         setFilteredSeries([
           {
@@ -70,7 +65,7 @@ const Series = () => {
             vote_average: 9.3,
             first_air_date: '2011-04-17',
             adult: true,
-            genre_ids: [10759, 18, 10765]
+            genre_ids: [10759, 18, 10765],
           },
           {
             id: 2,
@@ -79,7 +74,7 @@ const Series = () => {
             vote_average: 9.5,
             first_air_date: '2008-01-20',
             adult: false,
-            genre_ids: [18, 80, 9648]
+            genre_ids: [18, 80, 9648],
           },
           {
             id: 3,
@@ -88,8 +83,8 @@ const Series = () => {
             vote_average: 8.7,
             first_air_date: '2016-07-15',
             adult: false,
-            genre_ids: [18, 9648, 10765]
-          }
+            genre_ids: [18, 9648, 10765],
+          },
         ]);
         setGenres([
           { id: 10759, name: 'Acción y Aventura' },
@@ -107,7 +102,7 @@ const Series = () => {
           { id: 10766, name: 'Soap' },
           { id: 10767, name: 'Talk' },
           { id: 10768, name: 'War & Politics' },
-          { id: 37, name: 'Western' }
+          { id: 37, name: 'Western' },
         ]);
       } finally {
         setLoading(false);
@@ -122,9 +117,7 @@ const Series = () => {
 
     // Filtrar por género
     if (selectedGenre !== 'all') {
-      filtered = filtered.filter(serie => 
-        serie.genre_ids?.includes(parseInt(selectedGenre))
-      );
+      filtered = filtered.filter((serie) => serie.genre_ids?.includes(parseInt(selectedGenre)));
     }
 
     // Ordenar
@@ -175,13 +168,9 @@ const Series = () => {
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
             <Tv size={40} className="text-netflix-red" />
-            <h1 className="text-4xl md:text-5xl font-bold text-white">
-              {t('series.title')}
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-white">{t('series.title')}</h1>
           </div>
-          <p className="text-netflix-light-gray text-lg">
-            {t('series.subtitle')}
-          </p>
+          <p className="text-netflix-light-gray text-lg">{t('series.subtitle')}</p>
         </div>
 
         {/* Filtros y controles */}
@@ -193,7 +182,7 @@ const Series = () => {
                 <Filter size={20} className="text-netflix-light-gray" />
                 <span className="text-white font-medium">{t('common.filters')}</span>
               </div>
-              
+
               {/* Géneros */}
               <select
                 value={selectedGenre}
@@ -201,7 +190,7 @@ const Series = () => {
                 className="bg-gray-800 text-white px-3 py-2 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-netflix-red"
               >
                 <option value="all">{t('common.allGenres')}</option>
-                {genres.map(genre => (
+                {genres.map((genre) => (
                   <option key={genre.id} value={genre.id}>
                     {genre.name}
                   </option>
@@ -253,7 +242,10 @@ const Series = () => {
           <p className="text-netflix-light-gray">
             {t('series.showingCount', { count: filteredSeries.length })}
             {selectedGenre !== 'all' && ' '}
-            {selectedGenre !== 'all' && t('common.inGenre', { genre: genres.find(g => g.id === parseInt(selectedGenre))?.name })}
+            {selectedGenre !== 'all' &&
+              t('common.inGenre', {
+                genre: genres.find((g) => g.id === parseInt(selectedGenre))?.name,
+              })}
           </p>
         </div>
 
@@ -261,20 +253,13 @@ const Series = () => {
         {viewMode === 'row' ? (
           // Vista en filas (carrusel)
           <div>
-            <MovieRow 
-              title={t('series.filteredTitle')} 
-              movies={filteredSeries} 
-              type="tv"
-            />
+            <MovieRow title={t('series.filteredTitle')} movies={filteredSeries} type="tv" />
           </div>
         ) : (
           // Vista en grid
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {filteredSeries.map((serie) => (
-              <div
-                key={serie.id}
-                className="group relative overflow-hidden rounded-md"
-              >
+              <div key={serie.id} className="group relative overflow-hidden rounded-md">
                 <img
                   src={getImageUrl(serie.poster_path, 'w500')}
                   alt={serie.name}
@@ -284,7 +269,7 @@ const Series = () => {
                     e.target.nextSibling.style.display = 'block';
                   }}
                 />
-                
+
                 {/* Overlay con información */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute inset-0 flex flex-col justify-end p-3">
@@ -321,9 +306,7 @@ const Series = () => {
         {/* Mensaje si no hay resultados */}
         {filteredSeries.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-netflix-light-gray text-lg">
-              {t('series.noResults')}
-            </p>
+            <p className="text-netflix-light-gray text-lg">{t('series.noResults')}</p>
             <button
               onClick={() => setSelectedGenre('all')}
               className="mt-4 bg-netflix-red text-white px-6 py-2 rounded-md hover:bg-red-700 transition-colors"
@@ -336,15 +319,13 @@ const Series = () => {
         {/* Información adicional */}
         <div className="mt-16 text-center">
           <div className="bg-netflix-black/30 rounded-lg p-6 border border-gray-700">
-            <h3 className="text-xl font-semibold text-white mb-3">
-              ¿Buscas algo específico?
-            </h3>
+            <h3 className="text-xl font-semibold text-white mb-3">¿Buscas algo específico?</h3>
             <p className="text-netflix-light-gray mb-4">
-              Usa los filtros de arriba para encontrar exactamente lo que buscas, 
-              o navega por nuestras categorías populares.
+              Usa los filtros de arriba para encontrar exactamente lo que buscas, o navega por
+              nuestras categorías populares.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
-              {genres.slice(0, 8).map(genre => (
+              {genres.slice(0, 8).map((genre) => (
                 <button
                   key={genre.id}
                   onClick={() => handleGenreChange(genre.id)}

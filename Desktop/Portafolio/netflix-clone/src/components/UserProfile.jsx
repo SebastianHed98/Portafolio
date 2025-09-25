@@ -1,8 +1,19 @@
-
-
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { X, User, Mail, Calendar, Heart, Play, Star, Settings, LogOut, Trash2, Download, Database } from 'lucide-react';
+import {
+  X,
+  User,
+  Mail,
+  Calendar,
+  Heart,
+  Play,
+  Star,
+  Settings,
+  LogOut,
+  Trash2,
+  Download,
+  Database,
+} from 'lucide-react';
 import { useMovieContext } from '../context/MovieContext';
 import cacheService from '../services/cacheService';
 
@@ -12,19 +23,12 @@ const UserProfile = ({ isOpen, onClose }) => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
   const [cacheStats, setCacheStats] = useState(null);
-  
-  const { 
-    user, 
-    isAuthenticated, 
-    loginUser, 
-    logoutUser, 
-    addNotification,
-    favorites,
-    watchHistory
-  } = useMovieContext();
+
+  const { user, isAuthenticated, loginUser, logoutUser, addNotification, favorites, watchHistory } =
+    useMovieContext();
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -41,18 +45,18 @@ const UserProfile = ({ isOpen, onClose }) => {
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    
+
     if (!formData.email || !formData.password) {
       addNotification({
         message: t('profile.form.fillAll'),
         type: 'error',
-        duration: 3000
+        duration: 3000,
       });
       return;
     }
@@ -63,14 +67,14 @@ const UserProfile = ({ isOpen, onClose }) => {
       name: formData.email.split('@')[0], // Usar parte del email como nombre
       email: formData.email,
       joinedAt: new Date().toISOString(),
-      avatar: null
+      avatar: null,
     };
 
     loginUser(userData);
     addNotification({
       message: t('profile.login.success'),
       type: 'success',
-      duration: 3000
+      duration: 3000,
     });
 
     // Reset form
@@ -79,12 +83,12 @@ const UserProfile = ({ isOpen, onClose }) => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
       addNotification({
         message: t('profile.form.fillAll'),
         type: 'error',
-        duration: 3000
+        duration: 3000,
       });
       return;
     }
@@ -93,7 +97,7 @@ const UserProfile = ({ isOpen, onClose }) => {
       addNotification({
         message: t('profile.form.passwordMismatch'),
         type: 'error',
-        duration: 3000
+        duration: 3000,
       });
       return;
     }
@@ -104,14 +108,14 @@ const UserProfile = ({ isOpen, onClose }) => {
       name: formData.name,
       email: formData.email,
       joinedAt: new Date().toISOString(),
-      avatar: null
+      avatar: null,
     };
 
     loginUser(userData);
     addNotification({
       message: t('profile.register.success'),
       type: 'success',
-      duration: 3000
+      duration: 3000,
     });
 
     // Reset form
@@ -123,7 +127,7 @@ const UserProfile = ({ isOpen, onClose }) => {
     addNotification({
       message: t('profile.logout.success'),
       type: 'info',
-      duration: 3000
+      duration: 3000,
     });
     onClose();
   };
@@ -134,7 +138,7 @@ const UserProfile = ({ isOpen, onClose }) => {
     addNotification({
       message: t('profile.cache.cleared'),
       type: 'success',
-      duration: 3000
+      duration: 3000,
     });
   };
 
@@ -144,7 +148,7 @@ const UserProfile = ({ isOpen, onClose }) => {
       addNotification({
         message: t('profile.favorites.cleared'),
         type: 'success',
-        duration: 3000
+        duration: 3000,
       });
     }
   };
@@ -155,7 +159,7 @@ const UserProfile = ({ isOpen, onClose }) => {
       addNotification({
         message: t('profile.history.cleared'),
         type: 'success',
-        duration: 3000
+        duration: 3000,
       });
     }
   };
@@ -171,10 +175,7 @@ const UserProfile = ({ isOpen, onClose }) => {
             <h2 className="text-2xl font-bold text-white">
               {isAuthenticated ? t('profile.title') : t('profile.login.title')}
             </h2>
-            <button
-              onClick={onClose}
-              className="text-white hover:text-gray-200 transition-colors"
-            >
+            <button onClick={onClose} className="text-white hover:text-gray-200 transition-colors">
               <X size={24} />
             </button>
           </div>
@@ -190,9 +191,7 @@ const UserProfile = ({ isOpen, onClose }) => {
                 <button
                   onClick={() => setIsLoginMode(true)}
                   className={`flex-1 py-2 px-4 rounded-md font-semibold transition-colors ${
-                    isLoginMode
-                      ? 'bg-[#E50914] text-white'
-                      : 'text-gray-400 hover:text-white'
+                    isLoginMode ? 'bg-[#E50914] text-white' : 'text-gray-400 hover:text-white'
                   }`}
                 >
                   {t('profile.login.title')}
@@ -200,9 +199,7 @@ const UserProfile = ({ isOpen, onClose }) => {
                 <button
                   onClick={() => setIsLoginMode(false)}
                   className={`flex-1 py-2 px-4 rounded-md font-semibold transition-colors ${
-                    !isLoginMode
-                      ? 'bg-[#E50914] text-white'
-                      : 'text-gray-400 hover:text-white'
+                    !isLoginMode ? 'bg-[#E50914] text-white' : 'text-gray-400 hover:text-white'
                   }`}
                 >
                   {t('profile.register.title')}
@@ -213,7 +210,9 @@ const UserProfile = ({ isOpen, onClose }) => {
               <form onSubmit={isLoginMode ? handleLogin : handleRegister} className="space-y-4">
                 {!isLoginMode && (
                   <div>
-                    <label className="block text-white font-semibold mb-2">{t('profile.form.name')}</label>
+                    <label className="block text-white font-semibold mb-2">
+                      {t('profile.form.name')}
+                    </label>
                     <input
                       type="text"
                       name="name"
@@ -238,7 +237,9 @@ const UserProfile = ({ isOpen, onClose }) => {
                 </div>
 
                 <div>
-                  <label className="block text-white font-semibold mb-2">{t('profile.form.password')}</label>
+                  <label className="block text-white font-semibold mb-2">
+                    {t('profile.form.password')}
+                  </label>
                   <input
                     type="password"
                     name="password"
@@ -251,7 +252,9 @@ const UserProfile = ({ isOpen, onClose }) => {
 
                 {!isLoginMode && (
                   <div>
-                  <label className="block text-white font-semibold mb-2">{t('profile.form.confirmPassword')}</label>
+                    <label className="block text-white font-semibold mb-2">
+                      {t('profile.form.confirmPassword')}
+                    </label>
                     <input
                       type="password"
                       name="confirmPassword"
@@ -302,7 +305,11 @@ const UserProfile = ({ isOpen, onClose }) => {
                 <h3 className="text-2xl font-bold text-white mb-2">{user.name}</h3>
                 <p className="text-gray-400">{user.email}</p>
                 <p className="text-sm text-gray-500 mt-1">
-                  {t('profile.memberSince', { date: new Date(user.joinedAt).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'es-ES') })}
+                  {t('profile.memberSince', {
+                    date: new Date(user.joinedAt).toLocaleDateString(
+                      i18n.language === 'en' ? 'en-US' : 'es-ES'
+                    ),
+                  })}
                 </p>
               </div>
 
@@ -321,10 +328,12 @@ const UserProfile = ({ isOpen, onClose }) => {
                 <div className="bg-[#333] p-4 rounded-lg text-center">
                   <Star size={32} className="text-[#E50914] mx-auto mb-2" />
                   <p className="text-2xl font-bold text-white">
-                    {favorites.length > 0 
-                      ? (favorites.reduce((acc, item) => acc + (item.vote_average || 0), 0) / favorites.length).toFixed(1)
-                      : 'N/A'
-                    }
+                    {favorites.length > 0
+                      ? (
+                          favorites.reduce((acc, item) => acc + (item.vote_average || 0), 0) /
+                          favorites.length
+                        ).toFixed(1)
+                      : 'N/A'}
                   </p>
                   <p className="text-gray-400 text-sm">{t('profile.stats.average')}</p>
                 </div>
@@ -347,7 +356,9 @@ const UserProfile = ({ isOpen, onClose }) => {
                       <p className="text-gray-400 text-xs">{t('profile.cache.max')}</p>
                     </div>
                     <div>
-                      <p className="text-2xl font-bold text-white">{Math.round(cacheStats.maxAge / 60000)}m</p>
+                      <p className="text-2xl font-bold text-white">
+                        {Math.round(cacheStats.maxAge / 60000)}m
+                      </p>
                       <p className="text-gray-400 text-xs">{t('profile.cache.expiration')}</p>
                     </div>
                   </div>
@@ -357,7 +368,7 @@ const UserProfile = ({ isOpen, onClose }) => {
               {/* Acciones */}
               <div className="space-y-3">
                 <h4 className="text-white font-semibold text-lg">{t('profile.actions.title')}</h4>
-                
+
                 <button
                   onClick={handleClearCache}
                   className="w-full flex items-center gap-3 p-3 bg-[#333] hover:bg-[#444] text-white rounded-lg transition-colors"

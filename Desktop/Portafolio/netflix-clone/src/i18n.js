@@ -13,7 +13,7 @@ const resources = {
         searchTitle: 'Advanced search',
         listsTitle: 'Custom lists',
         notificationsTitle: 'Notifications',
-        profileTitle: 'My Profile'
+        profileTitle: 'My Profile',
       },
       hero: {
         loading: 'Loading featured content...',
@@ -23,7 +23,7 @@ const resources = {
         play: 'Play',
         moreInfo: 'More info',
         ageRating: '+16',
-        quality: '4K ULTRA HD'
+        quality: '4K ULTRA HD',
       },
       home: {
         trendingNow: 'Trending now',
@@ -31,14 +31,14 @@ const resources = {
         popularSeries: 'Popular series',
         topRated: 'Top rated',
         netflixOriginals: 'Netflix originals',
-        documentaries: 'Documentaries'
+        documentaries: 'Documentaries',
       },
       movies: {
         loading: 'Loading movies...',
         title: 'Movies',
         subtitle: 'Discover the best movies from all genres',
         filteredTitle: 'Filtered movies',
-        noResults: 'No movies found for the selected filters.'
+        noResults: 'No movies found for the selected filters.',
       },
       series: {
         loading: 'Loading series...',
@@ -46,7 +46,7 @@ const resources = {
         subtitle: 'Discover the best series from all genres',
         filteredTitle: 'Filtered series',
         noResults: 'No series found for the selected filters.',
-        showingCount: 'Showing {{count}} series'
+        showingCount: 'Showing {{count}} series',
       },
       recommendations: {
         loading: 'Generating personalized recommendations...',
@@ -60,25 +60,26 @@ const resources = {
           byGenre: 'Not enough favorites to generate genre-based recommendations',
           topRated: 'Could not load top rated content',
           trending: 'Could not load trending content',
-          similar: 'Not enough favorites to generate similar recommendations'
+          similar: 'Not enough favorites to generate similar recommendations',
         },
         noneTitle: 'No recommendations yet',
-        noneSubtitle: 'Add some movies or series to your favorites to get personalized recommendations',
+        noneSubtitle:
+          'Add some movies or series to your favorites to get personalized recommendations',
         goToFavorites: 'Go to My Favorites',
-        regenerate: 'Regenerate recommendations'
+        regenerate: 'Regenerate recommendations',
       },
       favorites: {
         tabFavorites: 'Favorites ({{count}})',
         tabLists: 'Custom Lists',
         emptyTitle: 'Your favorites list is empty',
-        emptySubtitle: 'Start adding content by clicking the "+ My list" button on any movie or series you like.',
-        emptyCta: 'Explore and find your next favorite!'
-        ,
+        emptySubtitle:
+          'Start adding content by clicking the "+ My list" button on any movie or series you like.',
+        emptyCta: 'Explore and find your next favorite!',
         removeFromList: 'Remove from my list',
         added: 'Added',
         noResults: 'No results',
         noResultsSubtitle: 'No favorites found for the selected filters.',
-        viewAll: 'View all'
+        viewAll: 'View all',
       },
       common: {
         filters: 'Filters:',
@@ -87,7 +88,7 @@ const resources = {
           popularity: 'Most popular',
           rating: 'Top rated',
           date: 'Newest',
-          title: 'Alphabetical'
+          title: 'Alphabetical',
         },
         view: 'View:',
         showingCount: 'Showing {{count}} items',
@@ -100,7 +101,10 @@ const resources = {
         movie: 'Movie',
         series: 'Series',
         loading: 'Loading...',
-        cancel: 'Cancel'
+        na: 'N/A',
+        hoursShort: 'h',
+        minutesShort: 'm',
+        cancel: 'Cancel',
       },
       adv: {
         header: 'Advanced Search',
@@ -119,12 +123,24 @@ const resources = {
         results: 'Results ({{count}})',
         noResults: 'No results found',
         noResultsSubtitle: 'Try other search terms or adjust filters',
-        search: { enterTerm: 'Please enter a search term', error: 'Error performing search', resultsFound: '{{count}} results found', searching: 'Searching...', searchBtn: 'Search' }
+        search: {
+          enterTerm: 'Please enter a search term',
+          error: 'Error performing search',
+          resultsFound: '{{count}} results found',
+          searching: 'Searching...',
+          searchBtn: 'Search',
+        },
       },
       notifications: {
         title: 'Notifications',
         count: '{{count}} notification{{count, plural, one {} other {s}}}',
-        filters: { all: 'All', success: 'Success', error: 'Error', warning: 'Warning', info: 'Info' },
+        filters: {
+          all: 'All',
+          success: 'Success',
+          error: 'Error',
+          warning: 'Warning',
+          info: 'Info',
+        },
         showRead: 'Show read',
         markAsRead: 'Mark as read',
         deleteOne: 'Delete notification',
@@ -133,20 +149,59 @@ const resources = {
         cleared: 'All notifications cleared',
         markAllAsRead: 'Mark all as read',
         clearAll: 'Clear all',
-        showing: 'Showing {{shown}} of {{total}} notifications'
+        showing: 'Showing {{shown}} of {{total}} notifications',
+        empty: {
+          title: 'No notifications',
+          allUpToDate: 'You are up to date with all notifications',
+          noneOfType: 'No notifications of type "{{type}}"',
+        },
       },
       profile: {
         title: 'My Profile',
         memberSince: 'Member since {{date}}',
         stats: { favorites: 'Favorites', watched: 'Watched', average: 'Average' },
-        actions: { title: 'Actions', clearCache: 'Clear Cache', clearFavorites: 'Clear Favorites', clearHistory: 'Clear History', logout: 'Log out' },
+        actions: {
+          title: 'Actions',
+          clearCache: 'Clear Cache',
+          clearFavorites: 'Clear Favorites',
+          clearHistory: 'Clear History',
+          logout: 'Log out',
+        },
         cache: { title: 'Cache stats', items: 'Items', max: 'Max', expiration: 'Expiration' },
-        form: { name: 'Name', namePlaceholder: 'Your full name', emailPlaceholder: 'your@email.com', password: 'Password', confirmPassword: 'Confirm Password', fillAll: 'Please fill all fields', passwordMismatch: 'Passwords do not match' },
-        login: { title: 'Sign in', submit: 'Sign in', success: 'Signed in successfully!', noAccount: "Don't have an account?", haveAccount: 'Already have an account?', registerHere: 'Register here', signinHere: 'Sign in here' },
-        register: { title: 'Register', submit: 'Register', success: 'Registration successful! Welcome to Netflix Clone' },
+        form: {
+          name: 'Name',
+          namePlaceholder: 'Your full name',
+          emailPlaceholder: 'your@email.com',
+          password: 'Password',
+          confirmPassword: 'Confirm Password',
+          fillAll: 'Please fill all fields',
+          passwordMismatch: 'Passwords do not match',
+        },
+        login: {
+          title: 'Sign in',
+          submit: 'Sign in',
+          success: 'Signed in successfully!',
+          noAccount: "Don't have an account?",
+          haveAccount: 'Already have an account?',
+          registerHere: 'Register here',
+          signinHere: 'Sign in here',
+        },
+        register: {
+          title: 'Register',
+          submit: 'Register',
+          success: 'Registration successful! Welcome to Netflix Clone',
+        },
         logout: { success: 'Signed out successfully' },
-        favorites: { confirmClear: 'Are you sure you want to delete all your favorites? This action cannot be undone.', cleared: 'Favorites cleared successfully' },
-        history: { confirmClear: 'Are you sure you want to delete your entire history? This action cannot be undone.', cleared: 'History cleared successfully' }
+        favorites: {
+          confirmClear:
+            'Are you sure you want to delete all your favorites? This action cannot be undone.',
+          cleared: 'Favorites cleared successfully',
+        },
+        history: {
+          confirmClear:
+            'Are you sure you want to delete your entire history? This action cannot be undone.',
+          cleared: 'History cleared successfully',
+        },
       },
       lists: {
         title: 'My Custom Lists',
@@ -167,13 +222,58 @@ const resources = {
         updated: 'List updated successfully',
         deleted: 'List "{{name}}" deleted',
         itemAdded: '"{{title}}" added to the list',
-        itemRemoved: 'Item removed from the list'
+        itemRemoved: 'Item removed from the list',
       },
       context: {
         addedToList: '"{{title}}" added to your list',
         removedFromList: '"{{title}}" removed from your list',
-        playing: 'Playing: "{{title}}"'
-      }
+        playing: 'Playing: "{{title}}"',
+        moreInfoOf: 'More info of "{{title}}"',
+      },
+      heroA11y: {
+        languageSelector: 'Language selector',
+        mute: 'Mute',
+        unmute: 'Unmute',
+      },
+      detail: {
+        closedEsc: 'Modal closed with ESC',
+        closedClickOutside: 'Modal closed by clicking outside',
+        loaded: 'Details of "{{title}}" loaded successfully',
+        errorLoading: 'Error loading movie details',
+        addedToHistory: '"{{title}}" added to your history',
+        linkCopied: 'Link copied to clipboard',
+        navigatingTo: 'Navigating to "{{title}}"...',
+        loadingTrailers: 'Loading trailers...',
+        noTrailersGeneric: 'No trailers available for this title',
+        playingTypeOf: 'Playing {{type}} of "{{title}}"',
+        genreDescriptions: {
+          action: 'Adrenaline-filled films with spectacular action sequences',
+          adventure: 'Epic stories that will take you to incredible worlds',
+          animation: 'Animated films with colorful characters and boundless creativity',
+          comedy: 'Guaranteed laughs with smart humor and funny situations',
+          drama: 'Deep stories that explore the human condition',
+          horror: 'Suspense and fear that will keep you on the edge of your seat',
+          romance: 'Love stories that will touch your heart',
+          scienceFiction: 'Visions of the future and advanced technology',
+          fantasy: 'Magical worlds and fantastic creatures',
+          thriller: 'Psychological suspense that will keep you guessing',
+          crime: 'Detective stories and mysteries to solve',
+          war: 'Epic stories of historical conflicts',
+          family: 'Content suitable for the whole family',
+          documentary: 'Real stories that educate and inform',
+          music: 'Musical films with memorable songs',
+          mystery: 'Puzzles to solve and surprising endings',
+          western: 'Wild west films with cowboys and duels',
+          history: 'Films based on real historical events',
+        },
+        warnings: {
+          violenceModerate: 'Moderate violence',
+          scaryContent: 'Scary content',
+          adultThemes: 'Adult themes',
+          adultHumor: 'Adult humor',
+          criminalContent: 'Criminal content',
+        },
+      },
       row: {
         playingTrailer: 'Playing trailer of "{{title}}"',
         noTrailers: 'No trailers available for "{{title}}"',
@@ -187,10 +287,10 @@ const resources = {
           noListsTitle: 'You have no custom lists',
           noListsSubtitle: 'Go to the navbar and create your first list',
           items: '{{count}} items',
-          created: 'Created'
-        }
-      }
-    }
+          created: 'Created',
+        },
+      },
+    },
   },
   es: {
     translation: {
@@ -203,7 +303,7 @@ const resources = {
         searchTitle: 'Búsqueda avanzada',
         listsTitle: 'Listas personalizadas',
         notificationsTitle: 'Notificaciones',
-        profileTitle: 'Mi Perfil'
+        profileTitle: 'Mi Perfil',
       },
       hero: {
         loading: 'Cargando contenido destacado...',
@@ -213,7 +313,7 @@ const resources = {
         play: 'Reproducir',
         moreInfo: 'Más información',
         ageRating: '+16',
-        quality: '4K ULTRA HD'
+        quality: '4K ULTRA HD',
       },
       home: {
         trendingNow: 'Tendencias ahora',
@@ -221,22 +321,14 @@ const resources = {
         popularSeries: 'Series populares',
         topRated: 'Mejor valoradas',
         netflixOriginals: 'Contenido original de Netflix',
-        documentaries: 'Documentales'
-      },
-      home: {
-        trendingNow: 'Tendencias ahora',
-        popularMovies: 'Películas populares',
-        popularSeries: 'Series populares',
-        topRated: 'Mejor valoradas',
-        netflixOriginals: 'Contenido original de Netflix',
-        documentaries: 'Documentales'
+        documentaries: 'Documentales',
       },
       movies: {
         loading: 'Cargando películas...',
         title: 'Películas',
         subtitle: 'Descubre las mejores películas de todos los géneros',
         filteredTitle: 'Películas filtradas',
-        noResults: 'No se encontraron películas con los filtros seleccionados.'
+        noResults: 'No se encontraron películas con los filtros seleccionados.',
       },
       series: {
         loading: 'Cargando series...',
@@ -244,12 +336,13 @@ const resources = {
         subtitle: 'Descubre las mejores series de todos los géneros',
         filteredTitle: 'Series filtradas',
         noResults: 'No se encontraron series con los filtros seleccionados.',
-        showingCount: 'Mostrando {{count}} series'
+        showingCount: 'Mostrando {{count}} series',
       },
       recommendations: {
         loading: 'Generando recomendaciones personalizadas...',
         title: 'Recomendaciones para ti',
-        subtitle: 'Basado en tus favoritos y preferencias, hemos seleccionado contenido que creemos que te encantará',
+        subtitle:
+          'Basado en tus favoritos y preferencias, hemos seleccionado contenido que creemos que te encantará',
         byGenre: 'Basado en tus géneros favoritos',
         topRated: 'Lo mejor de lo mejor',
         trending: 'Tendencias del momento',
@@ -258,24 +351,26 @@ const resources = {
           byGenre: 'No hay suficientes favoritos para generar recomendaciones por género',
           topRated: 'No se pudo cargar el contenido mejor valorado',
           trending: 'No se pudo cargar las tendencias',
-          similar: 'No hay suficientes favoritos para generar recomendaciones similares'
+          similar: 'No hay suficientes favoritos para generar recomendaciones similares',
         },
         noneTitle: 'No hay recomendaciones aún',
-        noneSubtitle: 'Agrega algunas películas o series a tus favoritos para recibir recomendaciones personalizadas',
+        noneSubtitle:
+          'Agrega algunas películas o series a tus favoritos para recibir recomendaciones personalizadas',
         goToFavorites: 'Ir a Mis Favoritos',
-        regenerate: 'Regenerar Recomendaciones'
+        regenerate: 'Regenerar Recomendaciones',
       },
       favorites: {
         tabFavorites: 'Favoritos ({{count}})',
         tabLists: 'Listas Personalizadas',
         emptyTitle: 'Tu lista de favoritos está vacía',
-        emptySubtitle: 'Comienza a agregar contenido a tu lista haciendo clic en el botón "+ Mi lista" en cualquier película o serie que te guste.',
+        emptySubtitle:
+          'Comienza a agregar contenido a tu lista haciendo clic en el botón "+ Mi lista" en cualquier película o serie que te guste.',
         emptyCta: '¡Explora y encuentra tu próximo favorito!',
         removeFromList: 'Eliminar de mi lista',
         added: 'Agregado',
         noResults: 'No hay resultados',
         noResultsSubtitle: 'No se encontraron favoritos con los filtros seleccionados.',
-        viewAll: 'Ver todos'
+        viewAll: 'Ver todos',
       },
       common: {
         filters: 'Filtros:',
@@ -284,7 +379,7 @@ const resources = {
           popularity: 'Más populares',
           rating: 'Mejor valoradas',
           date: 'Más recientes',
-          title: 'Alfabético'
+          title: 'Alfabético',
         },
         view: 'Vista:',
         showingCount: 'Mostrando {{count}} elementos',
@@ -297,7 +392,10 @@ const resources = {
         movie: 'Película',
         series: 'Serie',
         loading: 'Cargando...',
-        cancel: 'Cancelar'
+        na: 'N/D',
+        hoursShort: 'h',
+        minutesShort: 'm',
+        cancel: 'Cancelar',
       },
       adv: {
         header: 'Búsqueda Avanzada',
@@ -316,12 +414,24 @@ const resources = {
         results: 'Resultados ({{count}})',
         noResults: 'No se encontraron resultados',
         noResultsSubtitle: 'Intenta con otros términos o ajusta los filtros',
-        search: { enterTerm: 'Por favor ingresa un término de búsqueda', error: 'Error al realizar la búsqueda', resultsFound: 'Se encontraron {{count}} resultados', searching: 'Buscando...', searchBtn: 'Buscar' }
+        search: {
+          enterTerm: 'Por favor ingresa un término de búsqueda',
+          error: 'Error al realizar la búsqueda',
+          resultsFound: 'Se encontraron {{count}} resultados',
+          searching: 'Buscando...',
+          searchBtn: 'Buscar',
+        },
       },
       notifications: {
         title: 'Notificaciones',
         count: '{{count}} notificación{{count, plural, one {} other {es}}}',
-        filters: { all: 'Todas', success: 'Éxito', error: 'Error', warning: 'Advertencia', info: 'Información' },
+        filters: {
+          all: 'Todas',
+          success: 'Éxito',
+          error: 'Error',
+          warning: 'Advertencia',
+          info: 'Información',
+        },
         showRead: 'Mostrar leídas',
         markAsRead: 'Marcar como leída',
         deleteOne: 'Eliminar notificación',
@@ -330,20 +440,64 @@ const resources = {
         cleared: 'Todas las notificaciones eliminadas',
         markAllAsRead: 'Marcar todas como leídas',
         clearAll: 'Limpiar todas',
-        showing: 'Mostrando {{shown}} de {{total}} notificaciones'
+        showing: 'Mostrando {{shown}} de {{total}} notificaciones',
+        empty: {
+          title: 'No hay notificaciones',
+          allUpToDate: 'Estás al día con todas las notificaciones',
+          noneOfType: 'No hay notificaciones de tipo "{{type}}"',
+        },
       },
       profile: {
         title: 'Mi Perfil',
         memberSince: 'Miembro desde {{date}}',
         stats: { favorites: 'Favoritos', watched: 'Vistos', average: 'Promedio' },
-        actions: { title: 'Acciones', clearCache: 'Limpiar Caché', clearFavorites: 'Limpiar Favoritos', clearHistory: 'Limpiar Historial', logout: 'Cerrar Sesión' },
-        cache: { title: 'Estadísticas del Caché', items: 'Items', max: 'Máximo', expiration: 'Expiración' },
-        form: { name: 'Nombre', namePlaceholder: 'Tu nombre completo', emailPlaceholder: 'tu@email.com', password: 'Contraseña', confirmPassword: 'Confirmar Contraseña', fillAll: 'Por favor completa todos los campos', passwordMismatch: 'Las contraseñas no coinciden' },
-        login: { title: 'Iniciar Sesión', submit: 'Iniciar Sesión', success: '¡Inicio de sesión exitoso!', noAccount: '¿No tienes cuenta?', haveAccount: '¿Ya tienes cuenta?', registerHere: 'Regístrate aquí', signinHere: 'Inicia sesión aquí' },
-        register: { title: 'Registrarse', submit: 'Registrarse', success: '¡Registro exitoso! Bienvenido a Netflix Clone' },
+        actions: {
+          title: 'Acciones',
+          clearCache: 'Limpiar Caché',
+          clearFavorites: 'Limpiar Favoritos',
+          clearHistory: 'Limpiar Historial',
+          logout: 'Cerrar Sesión',
+        },
+        cache: {
+          title: 'Estadísticas del Caché',
+          items: 'Items',
+          max: 'Máximo',
+          expiration: 'Expiración',
+        },
+        form: {
+          name: 'Nombre',
+          namePlaceholder: 'Tu nombre completo',
+          emailPlaceholder: 'tu@email.com',
+          password: 'Contraseña',
+          confirmPassword: 'Confirmar Contraseña',
+          fillAll: 'Por favor completa todos los campos',
+          passwordMismatch: 'Las contraseñas no coinciden',
+        },
+        login: {
+          title: 'Iniciar Sesión',
+          submit: 'Iniciar Sesión',
+          success: '¡Inicio de sesión exitoso!',
+          noAccount: '¿No tienes cuenta?',
+          haveAccount: '¿Ya tienes cuenta?',
+          registerHere: 'Regístrate aquí',
+          signinHere: 'Inicia sesión aquí',
+        },
+        register: {
+          title: 'Registrarse',
+          submit: 'Registrarse',
+          success: '¡Registro exitoso! Bienvenido a Netflix Clone',
+        },
         logout: { success: 'Sesión cerrada correctamente' },
-        favorites: { confirmClear: '¿Estás seguro de que quieres eliminar todos tus favoritos? Esta acción no se puede deshacer.', cleared: 'Favoritos eliminados correctamente' },
-        history: { confirmClear: '¿Estás seguro de que quieres eliminar todo tu historial? Esta acción no se puede deshacer.', cleared: 'Historial eliminado correctamente' }
+        favorites: {
+          confirmClear:
+            '¿Estás seguro de que quieres eliminar todos tus favoritos? Esta acción no se puede deshacer.',
+          cleared: 'Favoritos eliminados correctamente',
+        },
+        history: {
+          confirmClear:
+            '¿Estás seguro de que quieres eliminar todo tu historial? Esta acción no se puede deshacer.',
+          cleared: 'Historial eliminado correctamente',
+        },
       },
       lists: {
         title: 'Mis Listas Personalizadas',
@@ -364,13 +518,58 @@ const resources = {
         updated: 'Lista actualizada exitosamente',
         deleted: 'Lista "{{name}}" eliminada',
         itemAdded: '"{{title}}" agregado a la lista',
-        itemRemoved: 'Item removido de la lista'
-      }
+        itemRemoved: 'Item removido de la lista',
+      },
       context: {
         addedToList: '"{{title}}" agregado a tu lista',
         removedFromList: '"{{title}}" eliminado de tu lista',
-        playing: 'Reproduciendo: "{{title}}"'
-      }
+        playing: 'Reproduciendo: "{{title}}"',
+        moreInfoOf: 'Más información de "{{title}}"',
+      },
+      heroA11y: {
+        languageSelector: 'Selector de idioma',
+        mute: 'Silenciar',
+        unmute: 'Activar sonido',
+      },
+      detail: {
+        closedEsc: 'Modal cerrado con ESC',
+        closedClickOutside: 'Modal cerrado haciendo clic fuera',
+        loaded: 'Detalles de "{{title}}" cargados correctamente',
+        errorLoading: 'Error al cargar los detalles de la película',
+        addedToHistory: '"{{title}}" agregado a tu historial',
+        linkCopied: 'Enlace copiado al portapapeles',
+        navigatingTo: 'Navegando a "{{title}}"...',
+        loadingTrailers: 'Cargando trailers...',
+        noTrailersGeneric: 'No hay trailers disponibles para esta película/serie',
+        playingTypeOf: 'Reproduciendo {{type}} de "{{title}}"',
+        genreDescriptions: {
+          action: 'Películas llenas de adrenalina con secuencias de acción espectaculares',
+          adventure: 'Historias épicas que te llevarán a mundos increíbles',
+          animation: 'Películas animadas con personajes coloridos y creatividad sin límites',
+          comedy: 'Risas garantizadas con humor inteligente y situaciones divertidas',
+          drama: 'Historias profundas que exploran la condición humana',
+          horror: 'Suspenso y miedo que te mantendrán en el borde del asiento',
+          romance: 'Historias de amor que tocarán tu corazón',
+          scienceFiction: 'Visiones del futuro y tecnología avanzada',
+          fantasy: 'Mundos mágicos y criaturas fantásticas',
+          thriller: 'Suspenso psicológico que te mantendrá adivinando',
+          crime: 'Historias de detectives y misterios por resolver',
+          war: 'Historias épicas de conflictos históricos',
+          family: 'Contenido apto para toda la familia',
+          documentary: 'Historias reales que educan e informan',
+          music: 'Películas musicales con canciones memorables',
+          mystery: 'Enigmas por resolver y finales sorprendentes',
+          western: 'Películas del lejano oeste con vaqueros y duelos',
+          history: 'Películas basadas en eventos históricos reales',
+        },
+        warnings: {
+          violenceModerate: 'Violencia moderada',
+          scaryContent: 'Contenido aterrador',
+          adultThemes: 'Temas adultos',
+          adultHumor: 'Humor para adultos',
+          criminalContent: 'Contenido criminal',
+        },
+      },
       row: {
         playingTrailer: 'Reproduciendo trailer de "{{title}}"',
         noTrailers: 'No hay trailers disponibles para "{{title}}"',
@@ -384,22 +583,18 @@ const resources = {
           noListsTitle: 'No tienes listas personalizadas',
           noListsSubtitle: 'Ve al navbar y crea tu primera lista',
           items: '{{count}} elementos',
-          created: 'Creada'
-        }
-      }
-    }
-  }
+          created: 'Creada',
+        },
+      },
+    },
+  },
 };
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: 'es',
-    fallbackLng: 'es',
-    interpolation: { escapeValue: false }
-  });
+i18n.use(initReactI18next).init({
+  resources,
+  lng: 'es',
+  fallbackLng: 'es',
+  interpolation: { escapeValue: false },
+});
 
 export default i18n;
-
-

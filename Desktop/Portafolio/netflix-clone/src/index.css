@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Importar fuentes de Google */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 /* Estilos base personalizados */
 @layer base {
   * {
@@ -18,7 +15,16 @@
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      sans-serif;
     background-color: #141414;
     color: #ffffff;
     line-height: 1.6;
@@ -36,7 +42,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #E50914;
+    background: #e50914;
     border-radius: 4px;
   }
 
@@ -50,10 +56,6 @@
   /* Navbar */
   .nav-link {
     @apply flex items-center space-x-2 text-[#E5E5E5] hover:text-white transition-all duration-300 relative cursor-pointer;
-  }
-  
-  .nav-link.group {
-    /* Estilos adicionales para group si es necesario */
   }
 
   .nav-link.active {
@@ -99,22 +101,22 @@
   /* Efectos de glassmorphism */
   .glass {
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .glass-dark {
     background: rgba(20, 20, 20, 0.8);
-    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   /* Efectos de blur personalizados */
   .backdrop-blur-custom {
-    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
   }
 
   /* Sombras personalizadas */
@@ -147,17 +149,27 @@
   }
 
   @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
   }
 
   /* Efectos de neon */
   .neon {
-    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+    text-shadow:
+      0 0 5px currentColor,
+      0 0 10px currentColor,
+      0 0 15px currentColor;
   }
 
   .neon-red {
-    text-shadow: 0 0 5px #E50914, 0 0 10px #E50914, 0 0 15px #E50914;
+    text-shadow:
+      0 0 5px #e50914,
+      0 0 10px #e50914,
+      0 0 15px #e50914;
   }
 
   /* Efectos de texto */
@@ -209,16 +221,20 @@
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes slideInFromTop {
-    from { 
+    from {
       opacity: 0;
       transform: translateY(-10px);
     }
-    to { 
+    to {
       opacity: 1;
       transform: translateY(0);
     }
@@ -230,7 +246,8 @@
   }
 
   @keyframes pulse {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 1;
     }
     50% {
@@ -383,7 +400,7 @@
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  background: #E50914;
+  background: #e50914;
   height: 16px;
   width: 16px;
   border-radius: 50%;
@@ -392,7 +409,7 @@
 }
 
 .slider::-webkit-slider-thumb:hover {
-  background: #F43F5E;
+  background: #f43f5e;
   transform: scale(1.1);
 }
 
@@ -404,7 +421,7 @@
 }
 
 .slider::-moz-range-thumb {
-  background: #E50914;
+  background: #e50914;
   height: 16px;
   width: 16px;
   border-radius: 50%;
@@ -414,19 +431,31 @@
 }
 
 .slider::-moz-range-thumb:hover {
-  background: #F43F5E;
+  background: #f43f5e;
   transform: scale(1.1);
 }
 
 /* Animaciones para el reproductor */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .video-player-enter {
@@ -479,7 +508,7 @@
 }
 
 .genre-badge {
-  background: linear-gradient(135deg, #E50914 0%, #F43F5E 100%);
+  background: linear-gradient(135deg, #e50914 0%, #f43f5e 100%);
   box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
 }
 
@@ -514,8 +543,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 /* Estilos para clasificación por edad */
@@ -544,28 +578,28 @@
   .video-player-container {
     padding: 1rem;
   }
-  
+
   .video-controls {
     padding: 1rem;
   }
-  
+
   .video-control {
     width: 2.5rem;
     height: 2.5rem;
   }
-  
+
   .genre-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .rating-warnings-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .expanded-overview {
     padding: 1rem;
   }
-  
+
   .genre-card {
     padding: 1rem;
   }
@@ -608,14 +642,15 @@
 /* Forzar que el navbar esté por debajo del modal */
 nav {
   z-index: 40 !important;
-  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-              filter 0.2s ease-out,
-              backdrop-filter 0.3s ease-out,
-              -webkit-backdrop-filter 0.3s ease-out !important;
+  transition:
+    opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.2s ease-out,
+    backdrop-filter 0.3s ease-out,
+    -webkit-backdrop-filter 0.3s ease-out !important;
   will-change: opacity, transform, filter, backdrop-filter !important;
-  backdrop-filter: blur(0px) !important;
   -webkit-backdrop-filter: blur(0px) !important;
+  backdrop-filter: blur(0px) !important;
 }
 
 /* Ocultar el navbar cuando el modal esté abierto */
@@ -648,8 +683,8 @@ nav {
 /* Navbar cuando está scrolleado - más opaco pero mantiene transparencia */
 nav.scrolled {
   background: rgba(20, 20, 20, 0.8) !important;
-  backdrop-filter: blur(45px) !important;
   -webkit-backdrop-filter: blur(45px) !important;
+  backdrop-filter: blur(45px) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4) !important;
 }
@@ -657,8 +692,8 @@ nav.scrolled {
 /* Navbar en estado hover - efecto de profundidad */
 nav:hover {
   background: rgba(20, 20, 20, 0.9) !important;
-  backdrop-filter: blur(55px) !important;
   -webkit-backdrop-filter: blur(55px) !important;
+  backdrop-filter: blur(55px) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
 }
 
@@ -765,13 +800,13 @@ nav::before {
 @keyframes modalFadeOut {
   from {
     opacity: 1 !important;
-    backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
   }
   to {
     opacity: 0 !important;
-    backdrop-filter: blur(0px) !important;
     -webkit-backdrop-filter: blur(0px) !important;
+    backdrop-filter: blur(0px) !important;
   }
 }
 
@@ -924,7 +959,7 @@ nav::before {
 }
 
 /* Regla específica para VideoPlayer con z-index máximo */
-div[class*="z-[10002]"] {
+div[class*='z-[10002]'] {
   z-index: 10002 !important;
   position: fixed !important;
 }
@@ -932,7 +967,7 @@ div[class*="z-[10002]"] {
 /* Asegurar que el VideoPlayer tenga prioridad absoluta */
 .video-player-modal,
 .video-player-overlay,
-div[class*="z-[10002]"] {
+div[class*='z-[10002]'] {
   z-index: 10002 !important;
   position: fixed !important;
   pointer-events: auto !important;
@@ -941,7 +976,7 @@ div[class*="z-[10002]"] {
 /* Asegurar que el contenido del VideoPlayer esté por encima */
 .video-player-modal *,
 .video-player-overlay *,
-div[class*="z-[10002]"] * {
+div[class*='z-[10002]'] * {
   position: relative !important;
   z-index: 10002 !important;
 }
@@ -971,7 +1006,7 @@ div[class*="z-[10002]"] * {
 /* Regla de prioridad absoluta para VideoPlayer */
 .video-player-modal,
 .video-player-overlay,
-div[class*="video-player"] {
+div[class*='video-player'] {
   z-index: 999999 !important;
   position: fixed !important;
   pointer-events: auto !important;
@@ -999,9 +1034,9 @@ div[class*="video-player"] {
 /* Regla final de prioridad máxima para VideoPlayer */
 .video-player-modal,
 .video-player-overlay,
-div[class*="video-player"],
-div[class*="z-[10002]"],
-div[class*="z-[999999]"] {
+div[class*='video-player'],
+div[class*='z-[10002]'],
+div[class*='z-[999999]'] {
   z-index: 999999 !important;
   position: fixed !important;
   pointer-events: auto !important;
@@ -1023,7 +1058,7 @@ div[class*="z-[999999]"] {
 /* Regla adicional para asegurar prioridad absoluta */
 .video-player-modal,
 .video-player-overlay,
-div[class*="video-player"] {
+div[class*='video-player'] {
   z-index: 999999 !important;
   position: fixed !important;
   pointer-events: auto !important;
@@ -1052,7 +1087,7 @@ div[class*="video-player"] {
 .modal-content select,
 .modal-content textarea,
 .modal-content a,
-.modal-content [role="button"],
+.modal-content [role='button'],
 .modal-content [tabindex] {
   position: relative !important;
   z-index: 10001 !important;
@@ -1133,13 +1168,13 @@ div[class*="video-player"] {
 @keyframes overlayFadeIn {
   from {
     opacity: 0;
-    backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
   }
   to {
     opacity: 1;
-    backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
   }
 }
 
@@ -1208,10 +1243,10 @@ body {
 }
 
 .modal-content::-webkit-scrollbar-thumb {
-  background: #E50914;
+  background: #e50914;
   border-radius: 4px;
 }
 
 .modal-content::-webkit-scrollbar-thumb:hover {
-  background: #B2070F;
+  background: #b2070f;
 }

@@ -36,7 +36,7 @@ const ACTIONS = {
 const movieReducer = (state, action) => {
   switch (action.type) {
     case ACTIONS.ADD_TO_FAVORITES:
-      const isAlreadyFavorite = state.favorites.some(item => item.id === action.payload.id);
+      const isAlreadyFavorite = state.favorites.some((item) => item.id === action.payload.id);
       if (isAlreadyFavorite) {
         return state; // Ya está en favoritos
       }
@@ -48,16 +48,16 @@ const movieReducer = (state, action) => {
     case ACTIONS.REMOVE_FROM_FAVORITES:
       return {
         ...state,
-        favorites: state.favorites.filter(item => item.id !== action.payload),
+        favorites: state.favorites.filter((item) => item.id !== action.payload),
       };
 
     case ACTIONS.ADD_TO_WATCH_HISTORY:
-      const existingHistory = state.watchHistory.filter(item => item.id !== action.payload.id);
+      const existingHistory = state.watchHistory.filter((item) => item.id !== action.payload.id);
       return {
         ...state,
         watchHistory: [
           { ...action.payload, watchedAt: new Date().toISOString() },
-          ...existingHistory
+          ...existingHistory,
         ].slice(0, 50), // Mantener solo los últimos 50
       };
 
@@ -112,7 +112,9 @@ const movieReducer = (state, action) => {
     case ACTIONS.REMOVE_NOTIFICATION:
       return {
         ...state,
-        notifications: state.notifications.filter(notification => notification.id !== action.payload),
+        notifications: state.notifications.filter(
+          (notification) => notification.id !== action.payload
+        ),
       };
 
     case ACTIONS.SET_USER:
@@ -159,7 +161,7 @@ export const MovieProvider = ({ children }) => {
     const savedFavorites = localStorage.getItem('netflix-favorites');
     const savedWatchHistory = localStorage.getItem('netflix-watch-history');
     const savedUser = localStorage.getItem('netflixUser');
-    
+
     if (savedFavorites) {
       try {
         const favorites = JSON.parse(savedFavorites);
@@ -169,7 +171,7 @@ export const MovieProvider = ({ children }) => {
         console.error('❌ Error al cargar favoritos:', error);
       }
     }
-    
+
     if (savedWatchHistory) {
       try {
         const watchHistory = JSON.parse(savedWatchHistory);
@@ -205,7 +207,7 @@ export const MovieProvider = ({ children }) => {
   const addToFavorites = (movie) => {
     console.log('➕ Agregando a favoritos:', movie.title || movie.name);
     dispatch({ type: ACTIONS.ADD_TO_FAVORITES, payload: movie });
-    
+
     // Agregar notificación
     dispatch({
       type: ACTIONS.ADD_NOTIFICATION,
@@ -213,15 +215,15 @@ export const MovieProvider = ({ children }) => {
         message: i18n.t('context.addedToList', { title: movie.title || movie.name }),
         type: 'success',
         duration: 3000,
-      }
+      },
     });
   };
 
   const removeFromFavorites = (movieId) => {
-    const movie = state.favorites.find(item => item.id === movieId);
+    const movie = state.favorites.find((item) => item.id === movieId);
     console.log('➖ Eliminando de favoritos:', movie?.title || movie?.name);
     dispatch({ type: ACTIONS.REMOVE_FROM_FAVORITES, payload: movieId });
-    
+
     // Agregar notificación
     if (movie) {
       dispatch({
@@ -230,13 +232,13 @@ export const MovieProvider = ({ children }) => {
           message: i18n.t('context.removedFromList', { title: movie.title || movie.name }),
           type: 'info',
           duration: 3000,
-        }
+        },
       });
     }
   };
 
   const toggleFavorite = (movie) => {
-    const isFavorite = state.favorites.some(item => item.id === movie.id);
+    const isFavorite = state.favorites.some((item) => item.id === movie.id);
     if (isFavorite) {
       removeFromFavorites(movie.id);
     } else {
@@ -245,7 +247,7 @@ export const MovieProvider = ({ children }) => {
   };
 
   const isFavorite = (movieId) => {
-    return state.favorites.some(item => item.id === movieId);
+    return state.favorites.some((item) => item.id === movieId);
   };
 
   // Funciones para manejar reproducción
@@ -253,7 +255,7 @@ export const MovieProvider = ({ children }) => {
     console.log('▶️ Reproduciendo:', movie.title || movie.name);
     dispatch({ type: ACTIONS.SET_CURRENT_PLAYING, payload: movie });
     dispatch({ type: ACTIONS.ADD_TO_WATCH_HISTORY, payload: movie });
-    
+
     // Agregar notificación
     dispatch({
       type: ACTIONS.ADD_NOTIFICATION,
@@ -261,13 +263,13 @@ export const MovieProvider = ({ children }) => {
         message: i18n.t('context.playing', { title: movie.title || movie.name }),
         type: 'info',
         duration: 2000,
-      }
+      },
     });
-    
+
     // Aquí podrías implementar la lógica real de reproducción
     // Por ahora, simularemos abrir un modal o navegar a una página de reproducción
     console.log('Reproduciendo:', movie.title || movie.name);
-    
+
     // Simular reproducción (en una app real, esto abriría un reproductor)
     setTimeout(() => {
       dispatch({ type: ACTIONS.SET_CURRENT_PLAYING, payload: null });
@@ -341,34 +343,34 @@ export const MovieProvider = ({ children }) => {
     notifications: state.notifications,
     user: state.user,
     isAuthenticated: state.isAuthenticated,
-    
+
     // Funciones de favoritos
     addToFavorites,
     removeFromFavorites,
     toggleFavorite,
     isFavorite,
-    
+
     // Funciones de reproducción
     playMovie,
     stopPlaying,
     addToWatchHistory,
-    
+
     // Funciones de búsqueda
     setSearchQuery,
     clearSearch,
-    
+
     // Funciones de utilidad
     setLoading,
     setError,
-    
+
     // Funciones de notificaciones
     addNotification,
     removeNotification,
-    
+
     // Funciones de autenticación
     loginUser,
     logoutUser,
-    
+
     // Getters
     getFavorites,
     getWatchHistory,
@@ -379,9 +381,5 @@ export const MovieProvider = ({ children }) => {
     getNotifications,
   };
 
-  return (
-    <MovieContext.Provider value={value}>
-      {children}
-    </MovieContext.Provider>
-  );
+  return <MovieContext.Provider value={value}>{children}</MovieContext.Provider>;
 };

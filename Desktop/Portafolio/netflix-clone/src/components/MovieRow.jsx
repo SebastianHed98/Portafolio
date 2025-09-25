@@ -24,13 +24,11 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
   const scroll = (direction) => {
     if (rowRef.current) {
       const { scrollLeft, clientWidth } = rowRef.current;
-      const scrollTo = direction === 'left' 
-        ? scrollLeft - clientWidth 
-        : scrollLeft + clientWidth;
-      
+      const scrollTo = direction === 'left' ? scrollLeft - clientWidth : scrollLeft + clientWidth;
+
       rowRef.current.scrollTo({
         left: scrollTo,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   };
@@ -50,52 +48,49 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
   const handlePlay = async (movie) => {
     setIsLoadingTrailer(true);
     setSelectedMovie(movie);
-    
+
     try {
       // Determinar si es película o serie
       const isMovie = !!movie.title;
       const mediaId = movie.id;
-      
+
       // Obtener videos (trailers)
-      const videosData = isMovie 
-        ? await getMovieVideos(mediaId)
-        : await getSeriesVideos(mediaId);
-      
+      const videosData = isMovie ? await getMovieVideos(mediaId) : await getSeriesVideos(mediaId);
+
       // Filtrar trailers de YouTube
       const trailers = videosData
-        .filter(video => 
-          video.site === 'YouTube' && 
-          (video.type === 'Trailer' || video.type === 'Teaser')
+        .filter(
+          (video) =>
+            video.site === 'YouTube' && (video.type === 'Trailer' || video.type === 'Teaser')
         )
         .slice(0, 3); // Tomar los primeros 3 trailers
-      
+
       if (trailers.length > 0) {
         // Si hay trailers, usar el primero
         setSelectedTrailer(trailers[0]);
         addNotification({
           message: t('row.playingTrailer', { title: movie.title || movie.name }),
           type: 'success',
-          duration: 2000
+          duration: 2000,
         });
       } else {
         // Si no hay trailers, mostrar notificación
         addNotification({
           message: t('row.noTrailers', { title: movie.title || movie.name }),
           type: 'info',
-          duration: 3000
+          duration: 3000,
         });
         // Aún así abrir el reproductor para mostrar la película
         setSelectedTrailer(null);
       }
-      
+
       setIsVideoPlayerOpen(true);
-      
     } catch (error) {
       console.error('Error loading trailers:', error);
       addNotification({
         message: t('row.errorLoadingTrailers'),
         type: 'error',
-        duration: 3000
+        duration: 3000,
       });
       // Abrir reproductor sin trailer
       setSelectedTrailer(null);
@@ -116,7 +111,7 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
       addNotification({
         message: t('row.trailerFinished', { title: selectedMovie?.title || selectedMovie?.name }),
         type: 'info',
-        duration: 2000
+        duration: 2000,
       });
     }
     setIsVideoPlayerOpen(false);
@@ -131,14 +126,14 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
 
   const addToCustomList = (listId, listName) => {
     const savedLists = JSON.parse(localStorage.getItem('customLists') || '[]');
-    const updatedLists = savedLists.map(list => {
+    const updatedLists = savedLists.map((list) => {
       if (list.id === listId) {
         // Verificar si el item ya existe
-        const exists = list.items.some(item => item.id === selectedMovieForList.id);
+        const exists = list.items.some((item) => item.id === selectedMovieForList.id);
         if (!exists) {
           return {
             ...list,
-            items: [...list.items, { ...selectedMovieForList, addedAt: new Date().toISOString() }]
+            items: [...list.items, { ...selectedMovieForList, addedAt: new Date().toISOString() }],
           };
         }
       }
@@ -146,11 +141,11 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
     });
 
     localStorage.setItem('customLists', JSON.stringify(updatedLists));
-    
+
     addNotification({
       message: `"${selectedMovieForList.title || selectedMovieForList.name}" agregado a "${listName}"`,
       type: 'success',
-      duration: 3000
+      duration: 3000,
     });
 
     setShowListSelector(false);
@@ -166,10 +161,8 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
       <div className="mb-12">
         {/* Título de la fila con mejor diseño */}
         <div className="flex items-center justify-between mb-6 px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-white text-shadow">
-            {title}
-          </h2>
-          
+          <h2 className="text-2xl md:text-3xl font-bold text-white text-shadow">{title}</h2>
+
           {/* Indicador de cantidad */}
           <div className="flex items-center space-x-2 text-[#E5E5E5] text-sm">
             <span className="bg-[#E50914]/20 text-[#E50914] px-3 py-1 rounded-full font-medium">
@@ -177,7 +170,7 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
             </span>
           </div>
         </div>
-        
+
         <div className="relative group">
           {/* Flecha izquierda mejorada */}
           {showLeftArrow && (
@@ -227,7 +220,7 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
                       }}
                     />
                   </div>
-                  
+
                   {/* Overlay con información mejorado - SIEMPRE VISIBLE */}
                   <div className="absolute inset-0 card-gradient opacity-100 transition-all duration-500">
                     <div className="absolute inset-0 flex flex-col justify-end p-4">
@@ -253,20 +246,22 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
                         <h3 className="text-white font-bold text-lg line-clamp-2 group-hover/item:text-shadow">
                           {movie.title || movie.name}
                         </h3>
-                        
+
                         {/* Información adicional con iconos */}
                         <div className="flex items-center justify-between text-sm">
                           <div className="flex items-center space-x-2">
                             <Star size={16} className="text-yellow-400 fill-current" />
                             <span className="text-green-400 font-bold">
-                              {movie.vote_average?.toFixed(1) || 'N/A'}
+                              {movie.vote_average?.toFixed(1) || t('common.na')}
                             </span>
                           </div>
-                          
+
                           <div className="flex items-center space-x-2 text-[#E5E5E5]">
                             <Calendar size={14} />
                             <span>
-                              {movie.release_date?.split('-')[0] || movie.first_air_date?.split('-')[0] || 'N/A'}
+                              {movie.release_date?.split('-')[0] ||
+                                movie.first_air_date?.split('-')[0] ||
+                                t('common.na')}
                             </span>
                           </div>
                         </div>
@@ -290,9 +285,10 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
                             className={`flex-1 text-xs font-bold py-1.5 px-2 rounded-lg 
                                      transition-all duration-200 transform hover:scale-105 
                                      flex items-center justify-center space-x-1 shadow-lg cursor-pointer z-10 btn-play-trailer
-                                     ${isLoadingTrailer 
-                                       ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
-                                       : 'bg-white text-[#141414] hover:bg-gray-200'
+                                     ${
+                                       isLoadingTrailer
+                                         ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                                         : 'bg-white text-[#141414] hover:bg-gray-200'
                                      }`}
                           >
                             {isLoadingTrailer ? (
@@ -307,7 +303,7 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
                               </>
                             )}
                           </button>
-                          
+
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -326,7 +322,7 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
                               <Plus size={16} />
                             )}
                           </button>
-                          
+
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -338,7 +334,7 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
                           >
                             <List size={16} />
                           </button>
-                          
+
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -356,8 +352,10 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
                   </div>
 
                   {/* Efectos de hover adicionales */}
-                  <div className="absolute inset-0 border-2 border-transparent group-hover/item:border-[#E50914]/50 
-                                transition-all duration-300 rounded-xl"></div>
+                  <div
+                    className="absolute inset-0 border-2 border-transparent group-hover/item:border-[#E50914]/50 
+                                transition-all duration-300 rounded-xl"
+                  ></div>
                 </div>
 
                 {/* Información debajo de la imagen */}
@@ -365,14 +363,18 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
                   <h4 className="text-white font-semibold text-sm line-clamp-2 group-hover/item:text-[#E50914] transition-colors">
                     {movie.title || movie.name}
                   </h4>
-                  
+
                   <div className="flex items-center justify-between mt-2 text-xs text-[#E5E5E5]">
                     <div className="flex items-center space-x-1">
                       <Star size={12} className="text-yellow-400 fill-current" />
-                      <span>{movie.vote_average?.toFixed(1) || 'N/A'}</span>
+                      <span>{movie.vote_average?.toFixed(1) || t('common.na')}</span>
                     </div>
-                    
-                    <span>{movie.release_date?.split('-')[0] || movie.first_air_date?.split('-')[0] || 'N/A'}</span>
+
+                    <span>
+                      {movie.release_date?.split('-')[0] ||
+                        movie.first_air_date?.split('-')[0] ||
+                        t('common.na')}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -383,8 +385,14 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
           <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-10">
             <div className="flex space-x-1">
               <div className="w-2 h-2 bg-[#E50914]/60 rounded-full animate-pulse"></div>
-              <div className="w-2 h-2 bg-[#E50914]/40 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-2 h-2 bg-[#E50914]/20 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+              <div
+                className="w-2 h-2 bg-[#E50914]/40 rounded-full animate-pulse"
+                style={{ animationDelay: '0.2s' }}
+              ></div>
+              <div
+                className="w-2 h-2 bg-[#E50914]/20 rounded-full animate-pulse"
+                style={{ animationDelay: '0.4s' }}
+              ></div>
             </div>
           </div>
         </div>
@@ -403,19 +411,15 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
         <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
           <div className="w-full max-w-md bg-[#141414] rounded-xl overflow-hidden">
             <div className="bg-[#E50914] p-6">
-              <h3 className="text-xl font-bold text-white text-center">
-                {t('row.modal.title')}
-              </h3>
+              <h3 className="text-xl font-bold text-white text-center">{t('row.modal.title')}</h3>
             </div>
-            
+
             <div className="p-6">
               <div className="mb-4">
                 <h4 className="text-white font-semibold mb-2">
                   {selectedMovieForList?.title || selectedMovieForList?.name}
                 </h4>
-                <p className="text-gray-400 text-sm">
-                  {t('row.modal.subtitle')}
-                </p>
+                <p className="text-gray-400 text-sm">{t('row.modal.subtitle')}</p>
               </div>
 
               <div className="space-y-3 max-h-64 overflow-y-auto">
@@ -430,7 +434,7 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
                       </div>
                     );
                   }
-                  
+
                   return savedLists.map((list) => (
                     <button
                       key={list.id}
@@ -441,7 +445,8 @@ const MovieRow = ({ title, movies, type = 'movie' }) => {
                         <div>
                           <h5 className="text-white font-semibold">{list.name}</h5>
                           <p className="text-gray-400 text-sm">
-                            {t('row.modal.items', { count: list.items.length })} • {t('row.modal.created')} {new Date(list.createdAt).toLocaleDateString()}
+                            {t('row.modal.items', { count: list.items.length })} •{' '}
+                            {t('row.modal.created')} {new Date(list.createdAt).toLocaleDateString()}
                           </p>
                         </div>
                         <Plus size={20} className="text-[#E50914]" />

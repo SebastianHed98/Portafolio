@@ -10,7 +10,7 @@ class CacheService {
   generateKey(endpoint, params = {}) {
     const sortedParams = Object.keys(params)
       .sort()
-      .map(key => `${key}:${params[key]}`)
+      .map((key) => `${key}:${params[key]}`)
       .join('|');
     return `${endpoint}|${sortedParams}`;
   }
@@ -19,9 +19,9 @@ class CacheService {
   isValid(key) {
     const item = this.cache.get(key);
     if (!item) return false;
-    
+
     const now = Date.now();
-    return (now - item.timestamp) < this.maxAge;
+    return now - item.timestamp < this.maxAge;
   }
 
   // Obtener item del caché
@@ -31,7 +31,7 @@ class CacheService {
       console.log('📦 Cache hit:', key);
       return item.data;
     }
-    
+
     // Remover item expirado
     this.cache.delete(key);
     console.log('❌ Cache miss:', key);
@@ -47,7 +47,7 @@ class CacheService {
 
     const item = {
       data,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     this.cache.set(key, item);
@@ -60,13 +60,13 @@ class CacheService {
     const expiredKeys = [];
 
     for (const [key, item] of this.cache.entries()) {
-      if ((now - item.timestamp) >= this.maxAge) {
+      if (now - item.timestamp >= this.maxAge) {
         expiredKeys.push(key);
       }
     }
 
-    expiredKeys.forEach(key => this.cache.delete(key));
-    
+    expiredKeys.forEach((key) => this.cache.delete(key));
+
     if (expiredKeys.length > 0) {
       console.log(`🧹 Cleaned ${expiredKeys.length} expired cache items`);
     }
@@ -83,7 +83,7 @@ class CacheService {
     return {
       size: this.cache.size,
       maxSize: this.maxSize,
-      maxAge: this.maxAge
+      maxAge: this.maxAge,
     };
   }
 
@@ -116,7 +116,7 @@ class CacheService {
   // Función helper para hacer requests con caché
   async cachedRequest(endpoint, params = {}, requestFn) {
     const key = this.generateKey(endpoint, params);
-    
+
     // Intentar obtener del caché
     const cachedData = this.get(key);
     if (cachedData) {
@@ -126,13 +126,13 @@ class CacheService {
     try {
       // Hacer request real
       const data = await requestFn();
-      
+
       // Guardar en caché
       this.set(key, data);
-      
+
       // Persistir caché
       this.persist();
-      
+
       return data;
     } catch (error) {
       console.error('Request failed:', error);

@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -14,7 +11,7 @@ export default {
         'netflix-light-gray': '#E5E5E5',
       },
       fontFamily: {
-        'netflix': ['Inter', 'Helvetica Neue', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
+        netflix: ['Inter', 'Helvetica Neue', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -23,4 +20,4 @@ export default {
     },
   },
   plugins: [],
-}
+};

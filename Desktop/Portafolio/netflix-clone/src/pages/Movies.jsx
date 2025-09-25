@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Filter, Grid, List } from 'lucide-react';
@@ -20,11 +18,11 @@ const Movies = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        
+
         // Obtener películas y géneros en paralelo
         const [moviesData, genresData] = await Promise.all([
           getPopularMovies(1),
-          getGenres('movie')
+          getGenres('movie'),
         ]);
 
         setMovies(moviesData || []);
@@ -41,7 +39,7 @@ const Movies = () => {
             vote_average: 8.8,
             release_date: '2010-07-16',
             adult: false,
-            genre_ids: [28, 878]
+            genre_ids: [28, 878],
           },
           {
             id: 2,
@@ -50,8 +48,8 @@ const Movies = () => {
             vote_average: 9.0,
             release_date: '2008-07-18',
             adult: false,
-            genre_ids: [28, 80, 18]
-          }
+            genre_ids: [28, 80, 18],
+          },
         ]);
         setFilteredMovies([
           {
@@ -61,7 +59,7 @@ const Movies = () => {
             vote_average: 8.8,
             release_date: '2010-07-16',
             adult: false,
-            genre_ids: [28, 878]
+            genre_ids: [28, 878],
           },
           {
             id: 2,
@@ -70,8 +68,8 @@ const Movies = () => {
             vote_average: 9.0,
             release_date: '2008-07-18',
             adult: false,
-            genre_ids: [28, 80, 18]
-          }
+            genre_ids: [28, 80, 18],
+          },
         ]);
         setGenres([
           { id: 28, name: 'Acción' },
@@ -92,7 +90,7 @@ const Movies = () => {
           { id: 10770, name: 'Película de TV' },
           { id: 53, name: 'Suspense' },
           { id: 10752, name: 'Guerra' },
-          { id: 37, name: 'Western' }
+          { id: 37, name: 'Western' },
         ]);
       } finally {
         setLoading(false);
@@ -107,9 +105,7 @@ const Movies = () => {
 
     // Filtrar por género
     if (selectedGenre !== 'all') {
-      filtered = filtered.filter(movie => 
-        movie.genre_ids?.includes(parseInt(selectedGenre))
-      );
+      filtered = filtered.filter((movie) => movie.genre_ids?.includes(parseInt(selectedGenre)));
     }
 
     // Ordenar
@@ -158,12 +154,8 @@ const Movies = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            {t('movies.title')}
-          </h1>
-          <p className="text-netflix-light-gray text-lg">
-            {t('movies.subtitle')}
-          </p>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{t('movies.title')}</h1>
+          <p className="text-netflix-light-gray text-lg">{t('movies.subtitle')}</p>
         </div>
 
         {/* Filtros y controles */}
@@ -175,7 +167,7 @@ const Movies = () => {
                 <Filter size={20} className="text-netflix-light-gray" />
                 <span className="text-white font-medium">{t('common.filters')}</span>
               </div>
-              
+
               {/* Géneros */}
               <select
                 value={selectedGenre}
@@ -183,7 +175,7 @@ const Movies = () => {
                 className="bg-gray-800 text-white px-3 py-2 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-netflix-red"
               >
                 <option value="all">{t('common.allGenres')}</option>
-                {genres.map(genre => (
+                {genres.map((genre) => (
                   <option key={genre.id} value={genre.id}>
                     {genre.name}
                   </option>
@@ -235,7 +227,10 @@ const Movies = () => {
           <p className="text-netflix-light-gray">
             {t('common.showingCount', { count: filteredMovies.length })}
             {selectedGenre !== 'all' && ' '}
-            {selectedGenre !== 'all' && t('common.inGenre', { genre: genres.find(g => g.id === parseInt(selectedGenre))?.name })}
+            {selectedGenre !== 'all' &&
+              t('common.inGenre', {
+                genre: genres.find((g) => g.id === parseInt(selectedGenre))?.name,
+              })}
           </p>
         </div>
 
@@ -243,20 +238,13 @@ const Movies = () => {
         {viewMode === 'row' ? (
           // Vista en filas (carrusel)
           <div>
-            <MovieRow 
-              title={t('movies.filteredTitle')} 
-              movies={filteredMovies} 
-              type="movie"
-            />
+            <MovieRow title={t('movies.filteredTitle')} movies={filteredMovies} type="movie" />
           </div>
         ) : (
           // Vista en grid
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {filteredMovies.map((movie) => (
-              <div
-                key={movie.id}
-                className="group relative overflow-hidden rounded-md"
-              >
+              <div key={movie.id} className="group relative overflow-hidden rounded-md">
                 <img
                   src={getImageUrl(movie.poster_path, 'w500')}
                   alt={movie.title}
@@ -266,7 +254,7 @@ const Movies = () => {
                     e.target.nextSibling.style.display = 'block';
                   }}
                 />
-                
+
                 {/* Overlay con información */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute inset-0 flex flex-col justify-end p-3">
@@ -290,9 +278,7 @@ const Movies = () => {
         {/* Mensaje si no hay resultados */}
         {filteredMovies.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-netflix-light-gray text-lg">
-              {t('movies.noResults')}
-            </p>
+            <p className="text-netflix-light-gray text-lg">{t('movies.noResults')}</p>
             <button
               onClick={() => setSelectedGenre('all')}
               className="mt-4 bg-netflix-red text-white px-6 py-2 rounded-md hover:bg-red-700 transition-colors"

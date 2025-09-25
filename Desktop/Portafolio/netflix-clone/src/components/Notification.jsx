@@ -57,16 +57,12 @@ const Notification = ({ message, type = 'info', duration = 3000, onClose }) => {
                  ${isExiting ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100'}`}
     >
       <div className="flex items-start p-4">
-        <div className="flex-shrink-0 mr-3">
-          {getIcon()}
-        </div>
-        
+        <div className="flex-shrink-0 mr-3">{getIcon()}</div>
+
         <div className="flex-1 min-w-0">
-          <p className="text-white text-sm font-medium">
-            {message}
-          </p>
+          <p className="text-white text-sm font-medium">{message}</p>
         </div>
-        
+
         <button
           onClick={handleClose}
           className="flex-shrink-0 ml-3 text-gray-300 hover:text-white transition-colors"

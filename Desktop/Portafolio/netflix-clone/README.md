@@ -5,6 +5,7 @@ Un clon completo de Netflix construido con React, Vite y Tailwind CSS, con funci
 ## ✨ **Características Implementadas**
 
 ### 🎯 **Funcionalidades Principales**
+
 - ✅ **Reproducción de contenido** con VideoPlayer modal
 - ✅ **Sistema de favoritos** con persistencia en localStorage
 - ✅ **Búsqueda avanzada** con filtros múltiples
@@ -15,6 +16,7 @@ Un clon completo de Netflix construido con React, Vite y Tailwind CSS, con funci
 - ✅ **Responsividad móvil** optimizada
 
 ### 🔍 **Búsqueda Avanzada**
+
 - **Búsqueda múltiple** (películas, series, actores)
 - **Filtros por tipo** (películas, series, todo)
 - **Filtros por género** (todos los géneros disponibles)
@@ -24,6 +26,7 @@ Un clon completo de Netflix construido con React, Vite y Tailwind CSS, con funci
 - **Resultados en tiempo real** con interfaz intuitiva
 
 ### 📋 **Listas Personalizadas**
+
 - **Crear listas personalizadas** con nombres únicos
 - **Agregar contenido** desde cualquier card de película/serie
 - **Editar nombres** de listas existentes
@@ -32,6 +35,7 @@ Un clon completo de Netflix construido con React, Vite y Tailwind CSS, con funci
 - **Persistencia** en localStorage del navegador
 
 ### 🎭 **Sistema de Recomendaciones**
+
 - **Análisis de géneros favoritos** basado en favoritos del usuario
 - **Recomendaciones por género** más frecuente
 - **Contenido mejor valorado** de la plataforma
@@ -40,6 +44,7 @@ Un clon completo de Netflix construido con React, Vite y Tailwind CSS, con funci
 - **Regeneración manual** de recomendaciones
 
 ### 🎬 **Gestión de Contenido**
+
 - **Hero section** con película destacada
 - **Carruseles horizontales** para diferentes categorías
 - **Cards interactivas** con overlay siempre visible
@@ -48,6 +53,7 @@ Un clon completo de Netflix construido con React, Vite y Tailwind CSS, con funci
 - **Efectos visuales** y animaciones suaves
 
 ### 🎨 **Interfaz de Usuario**
+
 - **Diseño Netflix-inspired** con colores y tipografía auténticos
 - **Glassmorphism** y efectos de blur modernos
 - **Animaciones CSS** y transiciones suaves
@@ -56,6 +62,7 @@ Un clon completo de Netflix construido con React, Vite y Tailwind CSS, con funci
 - **Scrollbars personalizadas** con tema Netflix
 
 ### 📱 **Responsividad Móvil**
+
 - **Navegación adaptativa** para dispositivos móviles
 - **Grid responsivo** que se adapta a diferentes pantallas
 - **Menú hamburguesa** para dispositivos pequeños
@@ -66,6 +73,7 @@ Un clon completo de Netflix construido con React, Vite y Tailwind CSS, con funci
 ## 🛠️ **Stack Tecnológico**
 
 ### **Frontend**
+
 - **React 18** con hooks modernos
 - **Vite** para build y desarrollo rápido
 - **React Router v6** para navegación SPA
@@ -73,18 +81,21 @@ Un clon completo de Netflix construido con React, Vite y Tailwind CSS, con funci
 - **PostCSS** y **Autoprefixer** para compatibilidad
 
 ### **Estado y Datos**
+
 - **React Context API** para estado global
 - **useReducer** para lógica de estado compleja
 - **localStorage** para persistencia de datos
 - **Custom hooks** para lógica reutilizable
 
 ### **APIs y Servicios**
+
 - **TMDB API** para datos de películas y series
 - **Fetch API** para requests HTTP
 - **Async/await** para manejo de promesas
 - **Error handling** robusto con fallbacks
 
 ### **UI/UX**
+
 - **Lucide React** para iconografía consistente
 - **CSS Grid y Flexbox** para layouts modernos
 - **CSS Custom Properties** para variables dinámicas
@@ -93,10 +104,12 @@ Un clon completo de Netflix construido con React, Vite y Tailwind CSS, con funci
 ## 🚀 **Instalación y Uso**
 
 ### **Prerrequisitos**
-- Node.js 16+ 
+
+- Node.js 16+
 - npm o yarn
 
 ### **Instalación**
+
 ```bash
 # Clonar el repositorio
 git clone <url-del-repositorio>
@@ -114,6 +127,7 @@ npm run dev
 ```
 
 ### **Variables de Entorno**
+
 ```env
 VITE_TMDB_API_KEY=tu_api_key_aqui
 VITE_TMDB_BASE_URL=https://api.themoviedb.org/3
@@ -155,30 +169,35 @@ netflix-clone/
 ## 🎯 **Funcionalidades por Página**
 
 ### **🏠 Página Principal (/)**
+
 - Hero section con película destacada
 - Carruseles de contenido popular
 - Navegación rápida a categorías
 - Botones de acción principales
 
 ### **🎬 Películas (/movies)**
+
 - Catálogo completo de películas
 - Filtros por género y popularidad
 - Sistema de paginación
 - Búsqueda y ordenamiento
 
 ### **📺 Series (/series)**
+
 - Catálogo completo de series
 - Filtros por género y estado
 - Información de temporadas
 - Búsqueda avanzada
 
 ### **❤️ Mi Lista (/favorites)**
+
 - Gestión de favoritos
 - Filtros por tipo y ordenamiento
 - Estadísticas de contenido
 - Acciones rápidas
 
 ### **✨ Recomendaciones (/recommendations)**
+
 - Contenido personalizado
 - Análisis de preferencias
 - Múltiples categorías de recomendaciones
@@ -201,6 +220,7 @@ npm run tailwind:build  # Build de CSS
 ## 🌟 **Características Destacadas**
 
 ### **🎨 Diseño Visual**
+
 - **Paleta de colores Netflix** (#E50914, #141414, #333)
 - **Tipografía Inter** para máxima legibilidad
 - **Efectos de glassmorphism** modernos
@@ -208,6 +228,7 @@ npm run tailwind:build  # Build de CSS
 - **Iconografía consistente** con Lucide React
 
 ### **⚡ Performance**
+
 - **Lazy loading** de imágenes
 - **Optimización de re-renders** con React.memo
 - **Code splitting** automático con Vite
@@ -215,12 +236,14 @@ npm run tailwind:build  # Build de CSS
 - **Bundle optimization** para producción
 
 ### **🔒 Seguridad**
+
 - **API keys** en variables de entorno
 - **Validación de datos** en formularios
 - **Sanitización** de inputs del usuario
 - **Error boundaries** para manejo de errores
 
 ### **📱 Experiencia Móvil**
+
 - **Touch gestures** optimizados
 - **Responsive breakpoints** consistentes
 - **Mobile-first** approach
@@ -229,6 +252,7 @@ npm run tailwind:build  # Build de CSS
 ## 🚧 **Próximas Funcionalidades**
 
 ### **🔄 En Desarrollo**
+
 - [ ] **Autenticación de usuarios** con Firebase
 - [ ] **Sistema de ratings** personalizado
 - [ ] **Historial de visualización** detallado
@@ -236,6 +260,7 @@ npm run tailwind:build  # Build de CSS
 - [ ] **Modo offline** con Service Workers
 
 ### **🎯 Futuras Mejoras**
+
 - [ ] **Chat en vivo** para comentarios
 - [ ] **Sistema de amigos** y recomendaciones sociales
 - [ ] **Descargas** para contenido offline

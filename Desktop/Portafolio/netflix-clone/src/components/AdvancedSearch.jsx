@@ -11,7 +11,7 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
     genre: 'all',
     year: 'all',
     rating: 'all',
-    sortBy: 'relevance' // 'relevance', 'rating', 'year', 'popularity'
+    sortBy: 'relevance', // 'relevance', 'rating', 'year', 'popularity'
   });
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
       addNotification({
         message: t('adv.search.enterTerm'),
         type: 'warning',
-        duration: 3000
+        duration: 3000,
       });
       return;
     }
@@ -47,38 +47,36 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
     setLoading(true);
     try {
       const searchResults = await searchMulti(query, 1);
-      
+
       // Aplicar filtros
       let filteredResults = searchResults || [];
-      
+
       if (filters.type !== 'all') {
-        filteredResults = filteredResults.filter(item => {
+        filteredResults = filteredResults.filter((item) => {
           if (filters.type === 'movie') return item.title;
           if (filters.type === 'tv') return item.name;
           return true;
         });
       }
-      
+
       if (filters.genre !== 'all') {
-        filteredResults = filteredResults.filter(item => 
+        filteredResults = filteredResults.filter((item) =>
           item.genre_ids?.includes(parseInt(filters.genre))
         );
       }
-      
+
       if (filters.year !== 'all') {
-        filteredResults = filteredResults.filter(item => {
+        filteredResults = filteredResults.filter((item) => {
           const year = item.release_date?.split('-')[0] || item.first_air_date?.split('-')[0];
           return year === filters.year;
         });
       }
-      
+
       if (filters.rating !== 'all') {
         const minRating = parseFloat(filters.rating);
-        filteredResults = filteredResults.filter(item => 
-          (item.vote_average || 0) >= minRating
-        );
+        filteredResults = filteredResults.filter((item) => (item.vote_average || 0) >= minRating);
       }
-      
+
       // Aplicar ordenamiento
       switch (filters.sortBy) {
         case 'rating':
@@ -98,21 +96,20 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
           // Mantener orden de relevancia de la API
           break;
       }
-      
+
       setResults(filteredResults);
-      
+
       addNotification({
         message: t('adv.search.resultsFound', { count: filteredResults.length }),
         type: 'success',
-        duration: 3000
+        duration: 3000,
       });
-      
     } catch (error) {
       console.error('Error searching:', error);
       addNotification({
         message: t('adv.search.error'),
         type: 'error',
-        duration: 3000
+        duration: 3000,
       });
     } finally {
       setLoading(false);
@@ -125,7 +122,7 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
       genre: 'all',
       year: 'all',
       rating: 'all',
-      sortBy: 'relevance'
+      sortBy: 'relevance',
     });
     setResults([]);
   };
@@ -166,7 +163,10 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
           <div className="mb-6">
             <div className="flex space-x-4">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Search
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
                 <input
                   type="text"
                   value={query}
@@ -205,7 +205,9 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 p-4 bg-[#333]/50 rounded-lg">
                 {/* Tipo de contenido */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('adv.type')}</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    {t('adv.type')}
+                  </label>
                   <select
                     value={filters.type}
                     onChange={(e) => setFilters({ ...filters, type: e.target.value })}
@@ -219,37 +221,47 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
 
                 {/* Género */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('adv.genre')}</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    {t('adv.genre')}
+                  </label>
                   <select
                     value={filters.genre}
                     onChange={(e) => setFilters({ ...filters, genre: e.target.value })}
                     className="w-full px-3 py-2 bg-[#333] text-white rounded border border-gray-600 focus:border-[#E50914] focus:outline-none"
                   >
                     <option value="all">{t('common.allGenres')}</option>
-                    {genres.map(genre => (
-                      <option key={genre.id} value={genre.id}>{genre.name}</option>
+                    {genres.map((genre) => (
+                      <option key={genre.id} value={genre.id}>
+                        {genre.name}
+                      </option>
                     ))}
                   </select>
                 </div>
 
                 {/* Año */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('adv.year')}</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    {t('adv.year')}
+                  </label>
                   <select
                     value={filters.year}
                     onChange={(e) => setFilters({ ...filters, year: e.target.value })}
                     className="w-full px-3 py-2 bg-[#333] text-white rounded border border-gray-600 focus:border-[#E50914] focus:outline-none"
                   >
                     <option value="all">{t('adv.allYears')}</option>
-                    {getYearOptions().map(year => (
-                      <option key={year} value={year}>{year}</option>
+                    {getYearOptions().map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
                     ))}
                   </select>
                 </div>
 
                 {/* Calificación mínima */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('adv.minRating')}</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    {t('adv.minRating')}
+                  </label>
                   <select
                     value={filters.rating}
                     onChange={(e) => setFilters({ ...filters, rating: e.target.value })}
@@ -266,7 +278,9 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
 
                 {/* Ordenar por */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('adv.sortBy')}</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    {t('adv.sortBy')}
+                  </label>
                   <select
                     value={filters.sortBy}
                     onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
@@ -329,7 +343,9 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
                           <span>{item.vote_average?.toFixed(1) || 'N/A'}</span>
                         </div>
                         <span>
-                          {item.release_date?.split('-')[0] || item.first_air_date?.split('-')[0] || 'N/A'}
+                          {item.release_date?.split('-')[0] ||
+                            item.first_air_date?.split('-')[0] ||
+                            'N/A'}
                         </span>
                       </div>
                       <div className="mt-2">
@@ -348,12 +364,8 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
           {results.length === 0 && !loading && query && (
             <div className="text-center py-12">
               <Search size={64} className="text-gray-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">
-                {t('adv.noResults')}
-              </h3>
-              <p className="text-gray-400">
-                {t('adv.noResultsSubtitle')}
-              </p>
+              <h3 className="text-xl font-semibold text-white mb-2">{t('adv.noResults')}</h3>
+              <p className="text-gray-400">{t('adv.noResultsSubtitle')}</p>
             </div>
           )}
         </div>
