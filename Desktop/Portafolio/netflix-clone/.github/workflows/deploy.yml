@@ -28,18 +28,16 @@ jobs:
 
       - name: Install
         run: npm ci
-        working-directory: netflix-clone
 
       - name: Build
         run: npm run build
-        working-directory: netflix-clone
         env:
           VITE_TMDB_API_KEY: ${{ secrets.VITE_TMDB_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: netflix-clone/dist
+          path: dist
 
   deploy:
     needs: build
