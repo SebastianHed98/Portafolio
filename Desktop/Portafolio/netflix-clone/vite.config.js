@@ -8,9 +8,9 @@ export default defineConfig({
   // If your repo name is different, change '/netflix-clone/' accordingly.
   // If deploying to a user/organization site (username.github.io), set base: '/'
   base: '/Portafolio/',
-  // Output build to docs/ so Pages can deploy from main branch /docs
+  // Output build to repository root /docs so Pages can deploy from main branch /docs
   build: {
-    outDir: 'docs',
+    outDir: '../docs',
     assetsDir: 'assets',
     emptyOutDir: true,
   },
