@@ -7,7 +7,7 @@ export default defineConfig({
   // IMPORTANT: Set the base to your GitHub repository name for GitHub Pages.
   // If your repo name is different, change '/netflix-clone/' accordingly.
   // If deploying to a user/organization site (username.github.io), set base: '/'
-  base: '/netflix-clone/',
+  base: '/Portafolio/',
   server: {
     open: true,
   },
