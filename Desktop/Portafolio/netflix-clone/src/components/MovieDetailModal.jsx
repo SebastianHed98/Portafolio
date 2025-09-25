@@ -602,6 +602,8 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
             <button
               onClick={handleCloseWithAnimation}
               className="w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors modal-close-button modal-close-btn"
+              aria-label={t('detail.actions.close')}
+              title={t('detail.actions.close')}
             >
               <X size={24} />
             </button>
@@ -638,7 +640,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                     )}
                     <div className="flex items-center gap-1 bg-white/20 text-white px-2 py-1 rounded-full text-xs">
                       <Star size={12} className="text-yellow-400 fill-current" />
-                      {movie.vote_average?.toFixed(1) || 'N/A'}
+                      {movie.vote_average?.toFixed(1) || t('common.na')}
                     </div>
                   </div>
 
@@ -646,9 +648,11 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                     <button
                       onClick={handlePlay}
                       className="bg-white hover:bg-gray-200 text-black px-6 py-2 rounded-lg font-bold text-base flex items-center gap-2 transition-colors modal-action-btn"
+                      aria-label={t('common.play')}
+                      title={t('common.play')}
                     >
                       <Play size={20} className="fill-current" />
-                      Reproducir
+                      {t('common.play')}
                     </button>
 
                     <button
@@ -658,7 +662,12 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                           ? 'bg-[#E50914] text-white'
                           : 'bg-white/20 text-white hover:bg-white/30'
                       }`}
-                      title={isFavorite(movie.id) ? 'En favoritos' : 'Agregar a favoritos'}
+                      title={
+                        isFavorite(movie.id) ? t('common.inFavorites') : t('common.addToFavorites')
+                      }
+                      aria-label={
+                        isFavorite(movie.id) ? t('common.inFavorites') : t('common.addToFavorites')
+                      }
                     >
                       <Heart size={20} className={isFavorite(movie.id) ? 'fill-current' : ''} />
                     </button>
@@ -666,7 +675,8 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                     <button
                       onClick={handleAddToWatchHistory}
                       className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors modal-action-btn"
-                      title="Agregar al historial"
+                      title={t('detail.actions.addToHistory')}
+                      aria-label={t('detail.actions.addToHistory')}
                     >
                       <Plus size={20} />
                     </button>
@@ -674,7 +684,8 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                     <button
                       onClick={handleShare}
                       className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors modal-action-btn"
-                      title="Compartir"
+                      title={t('detail.actions.share')}
+                      aria-label={t('detail.actions.share')}
                     >
                       <Share2 size={20} />
                     </button>
@@ -687,10 +698,10 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
               <div className="max-w-4xl mx-auto px-4 md:px-6">
                 <div className="flex items-center space-x-1 bg-[#333]/50 rounded-xl p-1 mb-6 tab-navigation">
                   {[
-                    { id: 'overview', label: 'Vista General', icon: Info },
-                    { id: 'cast', label: 'Reparto', icon: Users },
-                    { id: 'videos', label: 'Videos', icon: Play },
-                    { id: 'similar', label: 'Similar', icon: Star },
+                    { id: 'overview', label: t('detail.tabs.overview'), icon: Info },
+                    { id: 'cast', label: t('detail.tabs.cast'), icon: Users },
+                    { id: 'videos', label: t('detail.tabs.videos'), icon: Play },
+                    { id: 'similar', label: t('detail.tabs.similar'), icon: Star },
                   ].map(({ id, label, icon: Icon }) => (
                     <button
                       key={id}
@@ -700,6 +711,8 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                           ? 'bg-[#E50914] text-white shadow-lg shadow-[#E50914]/30'
                           : 'text-[#E5E5E5] hover:text-white hover:bg-[#404040]'
                       }`}
+                      aria-pressed={activeTab === id}
+                      aria-label={label}
                     >
                       <Icon size={16} />
                       <span>{label}</span>
@@ -716,10 +729,23 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                       />
                       <input
                         type="text"
-                        placeholder={`Buscar en ${activeTab === 'cast' ? 'reparto' : activeTab === 'videos' ? 'videos' : 'contenido similar'}...`}
+                        placeholder={
+                          activeTab === 'cast'
+                            ? t('detail.actions.searchPlaceholderCast')
+                            : activeTab === 'videos'
+                              ? t('detail.actions.searchPlaceholderVideos')
+                              : t('detail.actions.searchPlaceholderSimilar')
+                        }
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full pl-10 pr-4 py-3 bg-[#333] text-white rounded-lg border border-[#555] focus:border-[#E50914] focus:outline-none transition-colors modal-search-input"
+                        aria-label={
+                          activeTab === 'cast'
+                            ? t('detail.actions.searchPlaceholderCast')
+                            : activeTab === 'videos'
+                              ? t('detail.actions.searchPlaceholderVideos')
+                              : t('detail.actions.searchPlaceholderSimilar')
+                        }
                       />
                       {searchQuery && (
                         <button
@@ -756,7 +782,9 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div className="lg:col-span-2 space-y-4">
                           <div>
-                            <h2 className="text-xl font-bold text-white mb-3">Sinopsis</h2>
+                            <h2 className="text-xl font-bold text-white mb-3">
+                              {t('detail.headings.synopsis')}
+                            </h2>
                             <div className="bg-[#333]/30 p-4 rounded-xl border border-[#555]/30">
                               <p className="text-[#E5E5E5] text-base leading-relaxed whitespace-pre-line">
                                 {getDetailedOverview()}
@@ -766,7 +794,9 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
 
                           {movieDetails?.genres && movieDetails.genres.length > 0 && (
                             <div>
-                              <h3 className="text-lg font-semibold text-white mb-3">Géneros</h3>
+                              <h3 className="text-lg font-semibold text-white mb-3">
+                                {t('detail.headings.genres')}
+                              </h3>
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {movieDetails.genres.map((genre) => (
                                   <div
@@ -790,7 +820,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
 
                           <div>
                             <h3 className="text-lg font-semibold text-white mb-3">
-                              Clasificación y Advertencias
+                              {t('detail.headings.ratingAndWarnings')}
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                               <div className="bg-[#333]/50 p-3 rounded-lg border border-[#555]/30">
@@ -804,7 +834,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                                   </div>
                                   <div>
                                     <h4 className="text-white font-semibold text-sm">
-                                      Clasificación
+                                      {t('detail.headings.status')}
                                     </h4>
                                     <p className="text-[#CCC] text-xs">
                                       {getContentRating().description}
@@ -816,7 +846,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                               <div className="bg-[#333]/50 p-3 rounded-lg border border-[#555]/30">
                                 <h4 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
                                   <AlertTriangle size={16} className="text-yellow-400" />
-                                  Advertencias
+                                  {t('detail.headings.warnings')}
                                 </h4>
                                 {getContentWarnings().length > 0 ? (
                                   <div className="space-y-1">
@@ -831,9 +861,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                                     ))}
                                   </div>
                                 ) : (
-                                  <p className="text-[#CCC] text-xs">
-                                    No hay advertencias específicas
-                                  </p>
+                                  <p className="text-[#CCC] text-xs">{t('common.na')}</p>
                                 )}
                               </div>
                             </div>
@@ -844,7 +872,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                               <div className="bg-[#333]/50 p-3 rounded-lg border border-[#555]/30">
                                 <h4 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
                                   <Clock size={14} />
-                                  Duración
+                                  {t('detail.headings.runtime')}
                                 </h4>
                                 <p className="text-[#E5E5E5] text-sm">
                                   {formatRuntime(movieDetails.runtime)}
@@ -856,7 +884,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                               <div className="bg-[#333]/50 p-3 rounded-lg border border-[#555]/30">
                                 <h4 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
                                   <span className="text-green-400">$</span>
-                                  Presupuesto
+                                  {t('detail.headings.budget')}
                                 </h4>
                                 <p className="text-[#E5E5E5] text-sm">
                                   {formatCurrency(movieDetails.budget)}
@@ -868,7 +896,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                               <div className="bg-[#333]/50 p-3 rounded-lg border border-[#555]/30">
                                 <h4 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
                                   <span className="text-green-400">💰</span>
-                                  Ingresos
+                                  {t('detail.headings.revenue')}
                                 </h4>
                                 <p className="text-[#E5E5E5] text-sm">
                                   {formatCurrency(movieDetails.budget)}
@@ -880,7 +908,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                               <div className="bg-[#333]/50 p-3 rounded-lg border border-[#555]/30">
                                 <h4 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
                                   <span className="text-blue-400">📊</span>
-                                  Estado
+                                  {t('detail.headings.status')}
                                 </h4>
                                 <p className="text-[#E5E5E5] text-sm capitalize">
                                   {movieDetails.status}
@@ -893,7 +921,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                             movieDetails.production_companies.length > 0 && (
                               <div>
                                 <h3 className="text-lg font-semibold text-white mb-3">
-                                  Producción
+                                  {t('detail.headings.production')}
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                   {movieDetails.production_companies.slice(0, 4).map((company) => (
@@ -939,35 +967,39 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                           </div>
 
                           <div className="bg-[#333]/50 p-3 rounded-lg space-y-3">
-                            <h3 className="text-base font-semibold text-white">Estadísticas</h3>
+                            <h3 className="text-base font-semibold text-white">
+                              {t('detail.headings.stats')}
+                            </h3>
 
                             <div className="flex items-center justify-between text-sm">
-                              <span className="text-[#E5E5E5]">Calificación</span>
+                              <span className="text-[#E5E5E5]">{t('detail.stats.rating')}</span>
                               <div className="flex items-center gap-1">
                                 <Star size={14} className="text-yellow-400 fill-current" />
                                 <span className="text-white font-semibold">
-                                  {movie.vote_average?.toFixed(1) || 'N/A'}
+                                  {movie.vote_average?.toFixed(1) || t('common.na')}
                                 </span>
                               </div>
                             </div>
 
                             <div className="flex items-center justify-between text-sm">
-                              <span className="text-[#E5E5E5]">Votos</span>
+                              <span className="text-[#E5E5E5]">{t('detail.stats.votes')}</span>
                               <span className="text-white font-semibold">
-                                {movie.vote_count?.toLocaleString() || 'N/A'}
+                                {movie.vote_count?.toLocaleString() || t('common.na')}
                               </span>
                             </div>
 
                             <div className="flex items-center justify-between text-sm">
-                              <span className="text-[#E5E5E5]">Popularidad</span>
+                              <span className="text-[#E5E5E5]">{t('detail.stats.popularity')}</span>
                               <span className="text-white font-semibold">
-                                {movie.popularity?.toFixed(0) || 'N/A'}
+                                {movie.popularity?.toFixed(0) || t('common.na')}
                               </span>
                             </div>
                           </div>
 
                           <div className="bg-[#333]/50 p-3 rounded-lg space-y-2">
-                            <h3 className="text-base font-semibold text-white">Acciones</h3>
+                            <h3 className="text-base font-semibold text-white">
+                              {t('detail.headings.actions')}
+                            </h3>
 
                             <button
                               onClick={handleAddToFavorites}
@@ -981,7 +1013,9 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                                 size={16}
                                 className={isFavorite(movie.id) ? 'fill-current' : ''}
                               />
-                              {isFavorite(movie.id) ? 'En Favoritos' : 'Agregar a Favoritos'}
+                              {isFavorite(movie.id)
+                                ? t('common.inFavorites')
+                                : t('common.addToFavorites')}
                             </button>
 
                             <button
@@ -989,12 +1023,12 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                               className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-white/20 text-white hover:bg-white/30 transition-colors text-sm"
                             >
                               <Plus size={16} />
-                              Agregar al Historial
+                              {t('detail.actions.addToHistory')}
                             </button>
 
                             <button className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-white/20 text-white hover:bg-white/30 transition-colors text-sm">
                               <Download size={16} />
-                              Descargar
+                              {t('detail.actions.download')}
                             </button>
                           </div>
                         </div>
@@ -1003,7 +1037,9 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
 
                     {activeTab === 'cast' && (
                       <div>
-                        <h2 className="text-2xl font-bold text-white mb-6">Reparto</h2>
+                        <h2 className="text-2xl font-bold text-white mb-6">
+                          {t('detail.tabs.cast')}
+                        </h2>
                         {filteredCast.length > 0 ? (
                           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                             {filteredCast.map((person) => (
@@ -1034,18 +1070,18 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                         ) : searchQuery ? (
                           <div className="text-center py-12 text-gray-400">
                             <Search size={48} className="mx-auto mb-3 opacity-50" />
-                            <p>No se encontraron resultados para "{searchQuery}"</p>
+                            <p>{t('detail.search.noResults', { query: searchQuery })}</p>
                             <button
                               onClick={clearSearch}
                               className="mt-3 text-[#E50914] hover:underline modal-clear-search-btn"
                             >
-                              Limpiar búsqueda
+                              {t('detail.actions.clearSearch')}
                             </button>
                           </div>
                         ) : (
                           <div className="text-center py-12 text-gray-400">
                             <Users size={48} className="mx-auto mb-3 opacity-50" />
-                            <p>No hay información del reparto disponible</p>
+                            <p>{t('detail.empty.cast')}</p>
                           </div>
                         )}
                       </div>
@@ -1053,7 +1089,9 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
 
                     {activeTab === 'videos' && (
                       <div>
-                        <h2 className="text-2xl font-bold text-white mb-6">Videos</h2>
+                        <h2 className="text-2xl font-bold text-white mb-6">
+                          {t('detail.tabs.videos')}
+                        </h2>
                         {filteredVideos.length > 0 ? (
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {filteredVideos.map((video) => (
@@ -1070,7 +1108,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                                   {video.official && (
                                     <div className="absolute top-2 right-2">
                                       <span className="bg-[#E50914] text-white px-2 py-1 rounded text-xs font-bold">
-                                        Oficial
+                                        {t('detail.badges.official')}
                                       </span>
                                     </div>
                                   )}
@@ -1083,7 +1121,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                                     <span>{video.type}</span>
                                     <div className="flex items-center gap-1">
                                       <Play size={14} />
-                                      <span>Reproducir</span>
+                                      <span>{t('common.play')}</span>
                                     </div>
                                   </div>
                                 </div>
@@ -1093,18 +1131,18 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                         ) : searchQuery ? (
                           <div className="text-center py-12 text-gray-400">
                             <Search size={48} className="mx-auto mb-3 opacity-50" />
-                            <p>No se encontraron videos para "{searchQuery}"</p>
+                            <p>{t('detail.search.noResults', { query: searchQuery })}</p>
                             <button
                               onClick={clearSearch}
                               className="mt-3 text-[#E50914] hover:underline modal-clear-search-btn"
                             >
-                              Limpiar búsqueda
+                              {t('detail.actions.clearSearch')}
                             </button>
                           </div>
                         ) : (
                           <div className="text-center py-12 text-gray-400">
                             <Play size={48} className="mx-auto mb-3 opacity-50" />
-                            <p>No hay videos disponibles</p>
+                            <p>{t('detail.empty.videos')}</p>
                           </div>
                         )}
                       </div>
@@ -1112,7 +1150,9 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
 
                     {activeTab === 'similar' && (
                       <div>
-                        <h2 className="text-2xl font-bold text-white mb-6">Contenido Similar</h2>
+                        <h2 className="text-2xl font-bold text-white mb-6">
+                          {t('detail.tabs.similar')}
+                        </h2>
                         {filteredSimilar.length > 0 ? (
                           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                             {filteredSimilar.map((item) => (
@@ -1146,18 +1186,18 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                         ) : searchQuery ? (
                           <div className="text-center py-12 text-gray-400">
                             <Search size={48} className="mx-auto mb-3 opacity-50" />
-                            <p>No se encontró contenido similar para "{searchQuery}"</p>
+                            <p>{t('detail.search.noResults', { query: searchQuery })}</p>
                             <button
                               onClick={clearSearch}
                               className="mt-3 text-bold underline modal-clear-search-btn"
                             >
-                              Limpiar búsqueda
+                              {t('detail.actions.clearSearch')}
                             </button>
                           </div>
                         ) : (
                           <div className="text-center py-12 text-gray-400">
                             <Star size={48} className="mx-auto mb-3 opacity-50" />
-                            <p>No hay contenido similar disponible</p>
+                            <p>{t('detail.empty.similar')}</p>
                           </div>
                         )}
                       </div>
