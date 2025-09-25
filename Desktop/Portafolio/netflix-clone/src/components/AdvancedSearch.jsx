@@ -232,7 +232,7 @@ const AdvancedSearch = ({ isOpen, onClose }) => {
                     <option value="all">{t('common.allGenres')}</option>
                     {genres.map((genre) => (
                       <option key={genre.id} value={genre.id}>
-                        {genre.name}
+                        {t(`genres.${genre.id}`)}
                       </option>
                     ))}
                   </select>

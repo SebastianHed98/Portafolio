@@ -458,7 +458,9 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
   };
 
   const getMovieType = () => {
-    return movie?.title ? t('common.movie') : t('common.series');
+    const key = movie?.title ? 'common.movie' : 'common.series';
+    const label = t(key);
+    return (label || '').toString().toLowerCase();
   };
 
   const getMovieYear = () => {
@@ -560,6 +562,32 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
     return 'Género cinematográfico con características únicas';
   };
 
+  // Helper por ID para evitar depender del idioma del API en nombres de género
+  const getGenreDescriptionById = (id) => {
+    const idToSlug = {
+      28: 'action',
+      12: 'adventure',
+      16: 'animation',
+      35: 'comedy',
+      80: 'crime',
+      99: 'documentary',
+      18: 'drama',
+      10751: 'family',
+      14: 'fantasy',
+      36: 'history',
+      27: 'horror',
+      10402: 'music',
+      9648: 'mystery',
+      10749: 'romance',
+      878: 'scienceFiction',
+      53: 'thriller',
+      10752: 'war',
+      37: 'western',
+    };
+    const slug = idToSlug[id];
+    return slug ? t(`detail.genreDescriptions.${slug}`) : '';
+  };
+
   const getDetailedOverview = () => {
     const baseOverview = movieDetails?.overview || 'Sinopsis no disponible.';
     const genres = movieDetails?.genres || [];
@@ -569,12 +597,18 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
     let detailedOverview = baseOverview;
 
     if (genres.length > 0) {
-      const genreNames = genres.map((g) => g.name).join(', ');
-      detailedOverview += `\n\nEsta ${getMovieType().toLowerCase()} de ${genreNames} promete entretenerte con una narrativa cautivadora y personajes memorables.`;
+      const genreNames = genres.map((g) => t(`genres.${g.id}`)).join(', ');
+      detailedOverview += `\n\n${t('detail.overview.withGenres', {
+        type: getMovieType(),
+        genres: genreNames,
+      })}`;
     }
 
     if (runtime && year !== 'N/A') {
-      detailedOverview += `\n\nCon una duración de ${formatRuntime(runtime)}, esta producción del ${year} te mantendrá en el borde de tu asiento desde el principio hasta el final.`;
+      detailedOverview += `\n\n${t('detail.overview.runtimeYear', {
+        runtime: formatRuntime(runtime),
+        year,
+      })}`;
     }
 
     return detailedOverview;
@@ -805,12 +839,12 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                                   >
                                     <div className="flex items-center justify-between mb-2">
                                       <span className="bg-[#E50914] text-white px-2 py-1 rounded-full text-xs font-bold">
-                                        {genre.name}
+                                        {t(`genres.${genre.id}`)}
                                       </span>
                                       <span className="text-[#999] text-xs">#{genre.id}</span>
                                     </div>
                                     <p className="text-[#CCC] text-xs">
-                                      {getGenreDescription(genre.name)}
+                                      {getGenreDescriptionById(genre.id)}
                                     </p>
                                   </div>
                                 ))}
@@ -946,7 +980,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                                             {company.name}
                                           </p>
                                           <p className="text-[#999] text-xs">
-                                            {company.origin_country || 'Internacional'}
+                                            {company.origin_country || t('common.international')}
                                           </p>
                                         </div>
                                       </div>

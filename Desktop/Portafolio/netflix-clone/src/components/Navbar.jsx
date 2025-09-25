@@ -62,7 +62,7 @@ const Navbar = () => {
             {/* Logo de Netflix */}
             <Link to="/" className="flex-shrink-0">
               <div className="text-[#E50914] text-2xl lg:text-3xl font-bold hover:scale-105 hover:brightness-110 hover:shadow-[0_0_20px_rgba(229,9,20,0.5)] transition-all duration-300">
-                NETFLIX
+                MovieDB
               </div>
             </Link>
 

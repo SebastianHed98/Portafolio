@@ -2,13 +2,22 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Hero from '../components/Hero';
 import MovieRow from '../components/MovieRow';
-import { getTrending, getPopularMovies, getPopularSeries } from '../services/tmdbApi';
+import {
+  getTrending,
+  getPopularMovies,
+  getPopularSeries,
+  getTopRatedMovies,
+  getUpcomingMovies,
+  getOnAirSeries,
+} from '../services/tmdbApi';
 
 const Home = () => {
   const [trending, setTrending] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
   const [popularSeries, setPopularSeries] = useState([]);
   const [topRated, setTopRated] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
+  const [onAir, setOnAir] = useState([]);
   const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState(true);
 
@@ -22,23 +31,30 @@ const Home = () => {
         console.log('📡 Iniciando fetch de datos de Home...');
 
         // Obtener datos en paralelo
-        const [trendingData, moviesData, seriesData, topRatedData] = await Promise.all([
-          getTrending('all', 'week'),
-          getPopularMovies(1),
-          getPopularSeries(1),
-          getPopularMovies(2), // Usar página 2 para variedad
-        ]);
+        const [trendingData, moviesData, seriesData, topRatedData, upcomingData, onAirData] =
+          await Promise.all([
+            getTrending('all', 'week'),
+            getPopularMovies(1),
+            getPopularSeries(1),
+            getTopRatedMovies(1),
+            getUpcomingMovies(1),
+            getOnAirSeries(1),
+          ]);
 
         setTrending(trendingData || []);
         setPopularMovies(moviesData || []);
         setPopularSeries(seriesData || []);
         setTopRated(topRatedData || []);
+        setUpcoming(upcomingData || []);
+        setOnAir(onAirData || []);
 
         console.log('✅ Datos de Home cargados:', {
           trending: trendingData?.length || 0,
           movies: moviesData?.length || 0,
           series: seriesData?.length || 0,
           topRated: topRatedData?.length || 0,
+          upcoming: upcomingData?.length || 0,
+          onAir: onAirData?.length || 0,
         });
       } catch (error) {
         console.error('❌ Error fetching home data:', error);
@@ -166,6 +182,20 @@ const Home = () => {
           title={t('home.topRated', { defaultValue: 'Mejor valoradas' })}
           movies={topRated.slice(0, 20)}
           type="movie"
+        />
+
+        {/* Próximos estrenos */}
+        <MovieRow
+          title={t('movies.upcoming', { defaultValue: 'Próximos estrenos' })}
+          movies={upcoming.slice(0, 20)}
+          type="movie"
+        />
+
+        {/* Series en emisión */}
+        <MovieRow
+          title={t('series.onAir', { defaultValue: 'Series en emisión' })}
+          movies={onAir.slice(0, 20)}
+          type="tv"
         />
 
         {/* Contenido original de Netflix */}

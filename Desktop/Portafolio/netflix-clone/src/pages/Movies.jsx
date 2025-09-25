@@ -1,8 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Filter, Grid, List } from 'lucide-react';
 import MovieRow from '../components/MovieRow';
-import { getPopularMovies, getGenres, getImageUrl } from '../services/tmdbApi';
+import {
+  getPopularMovies,
+  getGenres,
+  getImageUrl,
+  getMoviesByGenre,
+} from '../services/tmdbApi';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -12,6 +17,11 @@ const Movies = () => {
   const [selectedGenre, setSelectedGenre] = useState('all');
   const [sortBy, setSortBy] = useState('popularity');
   const [genres, setGenres] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const sentinelRef = useRef(null);
+  const observerRef = useRef(null);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -28,6 +38,8 @@ const Movies = () => {
         setMovies(moviesData || []);
         setFilteredMovies(moviesData || []);
         setGenres(genresData || []);
+        setPage(1);
+        setHasMore((moviesData || []).length > 0);
       } catch (error) {
         console.error('Error fetching movies data:', error);
         // Datos de respaldo para demostración
@@ -99,6 +111,65 @@ const Movies = () => {
 
     fetchData();
   }, [i18n.language]);
+
+  const loadNextPage = useCallback(async () => {
+    if (isLoadingMore || !hasMore) return;
+    setIsLoadingMore(true);
+    const nextPage = page + 1;
+    try {
+      let nextResults = [];
+      if (selectedGenre !== 'all') {
+        nextResults = await getMoviesByGenre(parseInt(selectedGenre), nextPage);
+      } else {
+        nextResults = await getPopularMovies(nextPage);
+      }
+      if (nextResults && nextResults.length > 0) {
+        setMovies((prev) => [...prev, ...nextResults]);
+        setPage(nextPage);
+      } else {
+        setHasMore(false);
+      }
+    } catch (e) {
+      console.error('Error loading next movies page:', e);
+      setHasMore(false);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  }, [page, selectedGenre, isLoadingMore, hasMore, getMoviesByGenre]);
+
+  // Re-observe when filters change
+  useEffect(() => {
+    // reset list when user changes genre
+    const resetAndLoad = async () => {
+      setPage(1);
+      setHasMore(true);
+      try {
+        const firstPage =
+          selectedGenre !== 'all'
+            ? await getMoviesByGenre(parseInt(selectedGenre), 1)
+            : await getPopularMovies(1);
+        setMovies(firstPage || []);
+      } catch (e) {
+        console.error('Error reloading movies by filter:', e);
+      }
+    };
+    // Only reset when user changed genre explicitly
+    // Ignore initial mount because it's already fetched in previous effect
+    // Trigger on selectedGenre change
+  }, [selectedGenre]);
+
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+    if (observerRef.current) observerRef.current.disconnect();
+    observerRef.current = new IntersectionObserver((entries) => {
+      const first = entries[0];
+      if (first.isIntersecting) {
+        loadNextPage();
+      }
+    });
+    observerRef.current.observe(sentinelRef.current);
+    return () => observerRef.current && observerRef.current.disconnect();
+  }, [loadNextPage]);
 
   useEffect(() => {
     let filtered = [...movies];
@@ -177,7 +248,7 @@ const Movies = () => {
                 <option value="all">{t('common.allGenres')}</option>
                 {genres.map((genre) => (
                   <option key={genre.id} value={genre.id}>
-                    {genre.name}
+                    {t(`genres.${genre.id}`)}
                   </option>
                 ))}
               </select>
@@ -229,7 +300,7 @@ const Movies = () => {
             {selectedGenre !== 'all' && ' '}
             {selectedGenre !== 'all' &&
               t('common.inGenre', {
-                genre: genres.find((g) => g.id === parseInt(selectedGenre))?.name,
+                genre: t(`genres.${selectedGenre}`),
               })}
           </p>
         </div>
@@ -275,21 +346,18 @@ const Movies = () => {
           </div>
         )}
 
-        {/* Mensaje si no hay resultados */}
-        {filteredMovies.length === 0 && (
-          <div className="text-center py-16">
-            <p className="text-netflix-light-gray text-lg">{t('movies.noResults')}</p>
-            <button
-              onClick={() => setSelectedGenre('all')}
-              className="mt-4 bg-netflix-red text-white px-6 py-2 rounded-md hover:bg-red-700 transition-colors"
-            >
-              {t('common.clearFilters')}
-            </button>
-          </div>
-        )}
+        {/* Sentinel for infinite scroll */}
+        <div ref={sentinelRef} className="h-10 flex items-center justify-center mt-6">
+          {isLoadingMore && (
+            <div className="text-netflix-light-gray text-sm">{t('common.loading')}</div>
+          )}
+          {!hasMore && (
+            <div className="text-netflix-light-gray text-sm">{t('common.noResults', { defaultValue: 'No more results' })}</div>
+          )}
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default Movies;

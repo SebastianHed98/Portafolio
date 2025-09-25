@@ -131,38 +131,12 @@ const Hero = () => {
     toggleFavorite(featuredMovie);
   };
 
-  // Función para mapear IDs de géneros a nombres reales
+  // Función para mapear IDs de géneros usando i18n
   const getGenreName = (genreId) => {
-    const genreMap = {
-      28: 'Acción',
-      12: 'Aventura',
-      16: 'Animación',
-      35: 'Comedia',
-      80: 'Crimen',
-      99: 'Documental',
-      18: 'Drama',
-      10751: 'Familiar',
-      14: 'Fantasía',
-      36: 'Historia',
-      27: 'Terror',
-      10402: 'Música',
-      9648: 'Misterio',
-      10749: 'Romance',
-      878: 'Ciencia Ficción',
-      10770: 'Película de TV',
-      53: 'Thriller',
-      10752: 'Guerra',
-      37: 'Western',
-      10759: 'Acción y Aventura',
-      10762: 'Kids',
-      10763: 'News',
-      10764: 'Reality',
-      10765: 'Ciencia Ficción y Fantasía',
-      10766: 'Soap',
-      10767: 'Talk',
-      10768: 'Guerra y Política',
-    };
-    return genreMap[genreId] || `Género ${genreId}`;
+    const key = `genres.${genreId}`;
+    const name = t(key, { defaultValue: null });
+    if (name && name !== key) return name;
+    return t('genres.unknown', { id: genreId });
   };
 
   const truncateOverview = (text, maxLength = 150) => {

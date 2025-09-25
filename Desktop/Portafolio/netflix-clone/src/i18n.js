@@ -15,6 +15,26 @@ const resources = {
         notificationsTitle: 'Notifications',
         profileTitle: 'My Profile',
       },
+      player: {
+        header: {
+          playing: 'Playing',
+        },
+        badges: {
+          trailer: 'Trailer',
+        },
+        loading: {
+          trailer: 'Loading trailer...',
+        },
+        empty: {
+          noTrailerTitle: 'No trailer available',
+          noOfficialFor: 'No official trailer found for "{{title}}".',
+          tipTryAnother: 'Tip: Try another movie or series with available trailers.',
+        },
+        youtube: {
+          titleFallback: 'YouTube Video',
+          autoPlayNote: 'The video plays automatically from YouTube.',
+        },
+      },
       hero: {
         loading: 'Loading featured content...',
         featuredContent: 'FEATURED CONTENT',
@@ -25,12 +45,43 @@ const resources = {
         ageRating: '+16',
         quality: '4K ULTRA HD',
       },
+      genres: {
+        '28': 'Action',
+        '12': 'Adventure',
+        '16': 'Animation',
+        '35': 'Comedy',
+        '80': 'Crime',
+        '99': 'Documentary',
+        '18': 'Drama',
+        '10751': 'Family',
+        '14': 'Fantasy',
+        '36': 'History',
+        '27': 'Horror',
+        '10402': 'Music',
+        '9648': 'Mystery',
+        '10749': 'Romance',
+        '878': 'Science Fiction',
+        '10770': 'TV Movie',
+        '53': 'Thriller',
+        '10752': 'War',
+        '37': 'Western',
+        '10759': 'Action & Adventure',
+        '10762': 'Kids',
+        '10763': 'News',
+        '10764': 'Reality',
+        '10765': 'Sci-Fi & Fantasy',
+        '10766': 'Soap',
+        '10767': 'Talk',
+        '10768': 'War & Politics',
+        unknown: 'Genre {{id}}',
+      },
+      
       home: {
         trendingNow: 'Trending now',
         popularMovies: 'Popular movies',
         popularSeries: 'Popular series',
         topRated: 'Top rated',
-        netflixOriginals: 'Netflix originals',
+        netflixOriginals: 'MovieDB originals',
         documentaries: 'Documentaries',
       },
       movies: {
@@ -39,6 +90,7 @@ const resources = {
         subtitle: 'Discover the best movies from all genres',
         filteredTitle: 'Filtered movies',
         noResults: 'No movies found for the selected filters.',
+        upcoming: 'Upcoming releases',
       },
       series: {
         loading: 'Loading series...',
@@ -47,6 +99,7 @@ const resources = {
         filteredTitle: 'Filtered series',
         noResults: 'No series found for the selected filters.',
         showingCount: 'Showing {{count}} series',
+        onAir: 'Currently airing',
       },
       recommendations: {
         loading: 'Generating personalized recommendations...',
@@ -84,6 +137,10 @@ const resources = {
       common: {
         filters: 'Filters:',
         allGenres: 'All genres',
+        type: {
+          movie: 'movie',
+          series: 'series',
+        },
         sort: {
           popularity: 'Most popular',
           rating: 'Top rated',
@@ -102,6 +159,7 @@ const resources = {
         series: 'Series',
         loading: 'Loading...',
         na: 'N/A',
+        international: 'International',
         hoursShort: 'h',
         minutesShort: 'm',
         cancel: 'Cancel',
@@ -189,7 +247,7 @@ const resources = {
         register: {
           title: 'Register',
           submit: 'Register',
-          success: 'Registration successful! Welcome to Netflix Clone',
+          success: 'Registration successful! Welcome to MovieDB',
         },
         logout: { success: 'Signed out successfully' },
         favorites: {
@@ -236,6 +294,12 @@ const resources = {
         unmute: 'Unmute',
       },
       detail: {
+        overview: {
+          withGenres:
+            'This {{type}} of {{genres}} promises to entertain you with a captivating narrative and memorable characters.',
+          runtimeYear:
+            'With a runtime of {{runtime}}, this {{year}} production will keep you on the edge of your seat from start to finish.',
+        },
         closedEsc: 'Modal closed with ESC',
         closedClickOutside: 'Modal closed by clicking outside',
         loaded: 'Details of "{{title}}" loaded successfully',
@@ -360,12 +424,63 @@ const resources = {
         ageRating: '+16',
         quality: '4K ULTRA HD',
       },
+      genres: {
+        '28': 'Acción',
+        '12': 'Aventura',
+        '16': 'Animación',
+        '35': 'Comedia',
+        '80': 'Crimen',
+        '99': 'Documental',
+        '18': 'Drama',
+        '10751': 'Familiar',
+        '14': 'Fantasía',
+        '36': 'Historia',
+        '27': 'Terror',
+        '10402': 'Música',
+        '9648': 'Misterio',
+        '10749': 'Romance',
+        '878': 'Ciencia Ficción',
+        '10770': 'Película de TV',
+        '53': 'Thriller',
+        '10752': 'Guerra',
+        '37': 'Western',
+        '10759': 'Acción y Aventura',
+        '10762': 'Kids',
+        '10763': 'News',
+        '10764': 'Reality',
+        '10765': 'Ciencia Ficción y Fantasía',
+        '10766': 'Soap',
+        '10767': 'Talk',
+        '10768': 'Guerra y Política',
+        unknown: 'Género {{id}}',
+      },
+      
+      player: {
+        header: {
+          playing: 'Reproduciendo',
+        },
+        badges: {
+          trailer: 'Trailer',
+        },
+        loading: {
+          trailer: 'Cargando trailer...',
+        },
+        empty: {
+          noTrailerTitle: 'No hay trailer disponible',
+          noOfficialFor: 'Para "{{title}}" no se encontró un trailer oficial.',
+          tipTryAnother: 'Consejo: Intenta con otra película o serie que tenga trailers disponibles.',
+        },
+        youtube: {
+          titleFallback: 'Video de YouTube',
+          autoPlayNote: 'El video se reproduce automáticamente desde YouTube.',
+        },
+      },
       home: {
         trendingNow: 'Tendencias ahora',
         popularMovies: 'Películas populares',
         popularSeries: 'Series populares',
         topRated: 'Mejor valoradas',
-        netflixOriginals: 'Contenido original de Netflix',
+        netflixOriginals: 'Contenido original de MovieDB',
         documentaries: 'Documentales',
       },
       movies: {
@@ -420,9 +535,13 @@ const resources = {
       common: {
         filters: 'Filtros:',
         allGenres: 'Todos los géneros',
+        type: {
+          movie: 'Película',
+          series: 'Serie',
+        },
         sort: {
           popularity: 'Más populares',
-          rating: 'Mejor valoradas',
+          rating: 'Mejor calificadas',
           date: 'Más recientes',
           title: 'Alfabético',
         },
@@ -438,6 +557,7 @@ const resources = {
         series: 'Serie',
         loading: 'Cargando...',
         na: 'N/D',
+        international: 'Internacional',
         hoursShort: 'h',
         minutesShort: 'm',
         cancel: 'Cancelar',
@@ -530,7 +650,7 @@ const resources = {
         register: {
           title: 'Registrarse',
           submit: 'Registrarse',
-          success: '¡Registro exitoso! Bienvenido a Netflix Clone',
+          success: '¡Registro exitoso! Bienvenido a MovieDB',
         },
         logout: { success: 'Sesión cerrada correctamente' },
         favorites: {
@@ -577,6 +697,12 @@ const resources = {
         unmute: 'Activar sonido',
       },
       detail: {
+        overview: {
+          withGenres:
+            'Esta {{type}} de {{genres}} promete entretenerte con una narrativa cautivadora y personajes memorables.',
+          runtimeYear:
+            'Con una duración de {{runtime}}, esta producción del {{year}} te mantendrá en el borde de tu asiento desde el principio hasta el final.',
+        },
         closedEsc: 'Modal cerrado con ESC',
         closedClickOutside: 'Modal cerrado haciendo clic fuera',
         loaded: 'Detalles de "{{title}}" cargados correctamente',

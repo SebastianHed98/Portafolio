@@ -11,8 +11,10 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import { useMovieContext } from '../context/MovieContext';
+import { useTranslation } from 'react-i18next';
 
 const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
+  const { t } = useTranslation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -176,17 +178,17 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
             <div className="flex items-center space-x-4">
               <h3 className="text-white font-bold text-lg">
                 {isYouTubeMode
-                  ? videoData?.name || 'Video'
-                  : movie?.title || movie?.name || 'Reproduciendo'}
+                  ? videoData?.name || t('player.youtube.titleFallback')
+                  : movie?.title || movie?.name || t('player.header.playing')}
               </h3>
               {isYouTubeMode && (
                 <div className="flex items-center space-x-2">
                   <span className="bg-[#E50914] text-white px-2 py-1 rounded text-xs font-bold">
-                    Trailer
+                    {t('player.badges.trailer')}
                   </span>
                   {videoData?.official && (
                     <span className="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">
-                      Oficial
+                      {t('detail.badges.official')}
                     </span>
                   )}
                 </div>
@@ -195,6 +197,7 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
             <button
               onClick={handleClose}
               className="w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
+              aria-label={t('detail.actions.close')}
             >
               <X size={24} />
             </button>
@@ -210,13 +213,13 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
                 <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-10">
                   <div className="text-center">
                     <div className="w-16 h-16 border-4 border-[#E50914] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-white text-lg">Cargando trailer...</p>
+                    <p className="text-white text-lg">{t('player.loading.trailer')}</p>
                   </div>
                 </div>
               )}
               <iframe
                 src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=1&rel=0&modestbranding=1&showinfo=0`}
-                title={videoData?.name || 'Video de YouTube'}
+                title={videoData?.name || t('player.youtube.titleFallback')}
                 className="w-full h-full"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -231,15 +234,12 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
                 <div className="w-24 h-24 bg-[#E50914]/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Play size={48} className="text-[#E50914]" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">No hay trailer disponible</h3>
+                <h3 className="text-xl font-bold mb-2">{t('player.empty.noTrailerTitle')}</h3>
                 <p className="text-gray-400 mb-4">
-                  Para "{movie?.title || movie?.name}" no se encontró un trailer oficial.
+                  {t('player.empty.noOfficialFor', { title: movie?.title || movie?.name })}
                 </p>
                 <div className="bg-[#333]/50 rounded-lg p-4 border border-[#555]/30">
-                  <p className="text-sm text-gray-300">
-                    💡 <strong>Consejo:</strong> Intenta con otra película o serie que tenga
-                    trailers disponibles.
-                  </p>
+                  <p className="text-sm text-gray-300">💡 {t('player.empty.tipTryAnother')}</p>
                 </div>
               </div>
             </div>
@@ -339,8 +339,7 @@ const VideoPlayer = ({ movie, isOpen, onClose, videoData = null }) => {
             </div>
             <div className="bg-[#E50914]/20 border border-[#E50914]/30 rounded-lg p-3">
               <p className="text-white text-sm">
-                🎬 <strong>Trailer oficial</strong> de "{movie?.title || movie?.name}". El video se
-                reproduce automáticamente desde YouTube.
+                🎬 <strong>{t('player.badges.trailer')}</strong> — "{movie?.title || movie?.name}". {t('player.youtube.autoPlayNote')}
               </p>
             </div>
           </div>
