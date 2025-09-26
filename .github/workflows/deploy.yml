@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      PROJECT_DIR: netflix-clone
+      PROJECT_DIR: Desktop/Portafolio/netflix-clone
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -42,15 +42,6 @@ jobs:
         env:
           VITE_TMDB_API_KEY: ${{ secrets.VITE_TMDB_API_KEY }}
 
-      - name: Set output dir
-        run: |
-          echo "OUTPUT_DIR=${{ env.PROJECT_DIR }}/dist" >> $GITHUB_ENV
-
-      - name: Debug - List repository files
-        run: |
-          pwd
-          ls -la
-
       - name: Debug - List project folder
         run: |
           ls -la
@@ -59,17 +50,17 @@ jobs:
       - name: Debug - List build output
         run: |
           ls -la
-        working-directory: ${{ env.OUTPUT_DIR }}
+        working-directory: ${{ env.PROJECT_DIR }}/dist
 
       - name: Verify build output
         run: |
           test -f index.html || (echo "Missing dist/index.html" && exit 1)
-        working-directory: ${{ env.OUTPUT_DIR }}
+        working-directory: ${{ env.PROJECT_DIR }}/dist
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ github.workspace }}/${{ env.OUTPUT_DIR }}
+          path: ${{ github.workspace }}/${{ env.PROJECT_DIR }}/dist
 
   deploy:
     needs: build

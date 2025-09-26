@@ -379,9 +379,12 @@ const resources = {
         },
         empty: {
           cast: 'No cast information available',
-          videos: 'No videos available',
-          similar: 'No similar content available',
         },
+      },
+      context: {
+        addedToList: '"{{title}}" added to your list',
+        removedFromList: '"{{title}}" removed from your list',
+        playing: 'Playing: "{{title}}"'
       },
       row: {
         playingTrailer: 'Playing trailer of "{{title}}"',
