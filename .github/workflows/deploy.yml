@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PROJECT_DIR: netflix-clone
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,19 +28,9 @@ jobs:
         with:
           node-version: 20
 
-      - name: Detect project directory
-        id: detect
-        run: |
-          if [ -f package.json ]; then
-            echo "PROJECT_DIR=." >> $GITHUB_ENV
-          elif [ -f netflix-clone/package.json ]; then
-            echo "PROJECT_DIR=netflix-clone" >> $GITHUB_ENV
-          else
-            echo "No package.json found at repo root or netflix-clone/" >&2
-            ls -la
-            exit 1
-          fi
-          echo "Using PROJECT_DIR=${PROJECT_DIR}"
+      - name: Show npm scripts
+        run: npm run
+        working-directory: ${{ env.PROJECT_DIR }}
 
       - name: Install dependencies
         run: npm ci
@@ -52,7 +44,7 @@ jobs:
 
       - name: Set output dir
         run: |
-          echo "OUTPUT_DIR=${PROJECT_DIR}/dist" >> $GITHUB_ENV
+          echo "OUTPUT_DIR=${{ env.PROJECT_DIR }}/dist" >> $GITHUB_ENV
 
       - name: Debug - List repository files
         run: |
