@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Film, Tv, Heart, Search, Bell, User, List, Sparkles } from 'lucide-react';
+import { Home, Film, Tv, Heart, Search, Bell, User, List, Sparkles, Languages } from 'lucide-react';
 import { useMovieContext } from '../context/MovieContext';
 import AdvancedSearch from './AdvancedSearch';
 import CustomLists from './CustomLists';
@@ -181,6 +181,43 @@ const Navbar = () => {
                 onChange={(e) => i18n.changeLanguage(e.target.value)}
                 className="bg-black/50 text-white border border-white/20 rounded px-2 py-1 text-sm"
                 aria-label={t('heroA11y.languageSelector')}
+              >
+                <option value="es">ES</option>
+                <option value="en">EN</option>
+              </select>
+            </div>
+
+            {/* Acciones rápidas móviles (notificaciones, perfil, idioma) */}
+            <div className="flex items-center gap-2 lg:hidden mr-2">
+              {/* Notificaciones */}
+              <button
+                onClick={handleNotifications}
+                className="btn-action btn-action-hover p-2 rounded-md"
+                aria-label={t('nav.notificationsTitle')}
+                title={t('nav.notificationsTitle')}
+              >
+                <Bell size={20} />
+              </button>
+
+              {/* Perfil */}
+              <button
+                onClick={handleUserProfile}
+                className="btn-action btn-action-hover p-2 rounded-md"
+                aria-label={t('nav.profileTitle')}
+                title={t('nav.profileTitle')}
+              >
+                <User size={20} />
+              </button>
+
+              {/* Idioma compacto */}
+              <label htmlFor="mobile-lang-top" className="sr-only">
+                {t('heroA11y.languageSelector')}
+              </label>
+              <select
+                id="mobile-lang-top"
+                value={i18n.language}
+                onChange={(e) => i18n.changeLanguage(e.target.value)}
+                className="bg-black/50 text-white border border-white/20 rounded px-2 py-1 text-xs"
               >
                 <option value="es">ES</option>
                 <option value="en">EN</option>
