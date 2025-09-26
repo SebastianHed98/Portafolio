@@ -1,0 +1,405 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+const resources = {
+  en: {
+    translation: {
+      nav: {
+        home: 'Home',
+        movies: 'Movies',
+        series: 'Series',
+        favorites: 'My List',
+        recommendations: 'Recommendations',
+        searchTitle: 'Advanced search',
+        listsTitle: 'Custom lists',
+        notificationsTitle: 'Notifications',
+        profileTitle: 'My Profile'
+      },
+      hero: {
+        loading: 'Loading featured content...',
+        featuredContent: 'FEATURED CONTENT',
+        ratingOutOfTen: '/ 10',
+        loadingTrailer: 'Loading...',
+        play: 'Play',
+        moreInfo: 'More info',
+        ageRating: '+16',
+        quality: '4K ULTRA HD'
+      },
+      home: {
+        trendingNow: 'Trending now',
+        popularMovies: 'Popular movies',
+        popularSeries: 'Popular series',
+        topRated: 'Top rated',
+        netflixOriginals: 'Netflix originals',
+        documentaries: 'Documentaries'
+      },
+      movies: {
+        loading: 'Loading movies...',
+        title: 'Movies',
+        subtitle: 'Discover the best movies from all genres',
+        filteredTitle: 'Filtered movies',
+        noResults: 'No movies found for the selected filters.'
+      },
+      series: {
+        loading: 'Loading series...',
+        title: 'TV Series',
+        subtitle: 'Discover the best series from all genres',
+        filteredTitle: 'Filtered series',
+        noResults: 'No series found for the selected filters.',
+        showingCount: 'Showing {{count}} series'
+      },
+      recommendations: {
+        loading: 'Generating personalized recommendations...',
+        title: 'Recommendations for you',
+        subtitle: 'Based on your favorites and preferences, we have selected content you may love',
+        byGenre: 'Based on your favorite genres',
+        topRated: 'Best of the best',
+        trending: 'Trending now',
+        similar: 'Similar to what you like',
+        empty: {
+          byGenre: 'Not enough favorites to generate genre-based recommendations',
+          topRated: 'Could not load top rated content',
+          trending: 'Could not load trending content',
+          similar: 'Not enough favorites to generate similar recommendations'
+        },
+        noneTitle: 'No recommendations yet',
+        noneSubtitle: 'Add some movies or series to your favorites to get personalized recommendations',
+        goToFavorites: 'Go to My Favorites',
+        regenerate: 'Regenerate recommendations'
+      },
+      favorites: {
+        tabFavorites: 'Favorites ({{count}})',
+        tabLists: 'Custom Lists',
+        emptyTitle: 'Your favorites list is empty',
+        emptySubtitle: 'Start adding content by clicking the "+ My list" button on any movie or series you like.',
+        emptyCta: 'Explore and find your next favorite!'
+        ,
+        removeFromList: 'Remove from my list',
+        added: 'Added',
+        noResults: 'No results',
+        noResultsSubtitle: 'No favorites found for the selected filters.',
+        viewAll: 'View all'
+      },
+      common: {
+        filters: 'Filters:',
+        allGenres: 'All genres',
+        sort: {
+          popularity: 'Most popular',
+          rating: 'Top rated',
+          date: 'Newest',
+          title: 'Alphabetical'
+        },
+        view: 'View:',
+        showingCount: 'Showing {{count}} items',
+        inGenre: 'in {{genre}}',
+        clearFilters: 'Clear filters',
+        play: 'Play',
+        moreInfo: 'More info',
+        inFavorites: 'In favorites',
+        addToFavorites: 'Add to favorites',
+        movie: 'Movie',
+        series: 'Series',
+        loading: 'Loading...',
+        cancel: 'Cancel'
+      },
+      adv: {
+        header: 'Advanced Search',
+        placeholder: 'Search movies, series, actors...',
+        applyFilters: 'Apply filters',
+        type: 'Type',
+        typeAll: 'All',
+        genre: 'Genre',
+        year: 'Year',
+        allYears: 'All years',
+        minRating: 'Minimum rating',
+        anyRating: 'Any rating',
+        sortBy: 'Sort by',
+        sort: { relevance: 'Relevance' },
+        filters: { show: 'Show filters', hide: 'Hide filters' },
+        results: 'Results ({{count}})',
+        noResults: 'No results found',
+        noResultsSubtitle: 'Try other search terms or adjust filters',
+        search: { enterTerm: 'Please enter a search term', error: 'Error performing search', resultsFound: '{{count}} results found', searching: 'Searching...', searchBtn: 'Search' }
+      },
+      notifications: {
+        title: 'Notifications',
+        count: '{{count}} notification{{count, plural, one {} other {s}}}',
+        filters: { all: 'All', success: 'Success', error: 'Error', warning: 'Warning', info: 'Info' },
+        showRead: 'Show read',
+        markAsRead: 'Mark as read',
+        deleteOne: 'Delete notification',
+        markedRead: 'Notification marked as read',
+        allMarkedRead: 'All notifications marked as read',
+        cleared: 'All notifications cleared',
+        markAllAsRead: 'Mark all as read',
+        clearAll: 'Clear all',
+        showing: 'Showing {{shown}} of {{total}} notifications'
+      },
+      profile: {
+        title: 'My Profile',
+        memberSince: 'Member since {{date}}',
+        stats: { favorites: 'Favorites', watched: 'Watched', average: 'Average' },
+        actions: { title: 'Actions', clearCache: 'Clear Cache', clearFavorites: 'Clear Favorites', clearHistory: 'Clear History', logout: 'Log out' },
+        cache: { title: 'Cache stats', items: 'Items', max: 'Max', expiration: 'Expiration' },
+        form: { name: 'Name', namePlaceholder: 'Your full name', emailPlaceholder: 'your@email.com', password: 'Password', confirmPassword: 'Confirm Password', fillAll: 'Please fill all fields', passwordMismatch: 'Passwords do not match' },
+        login: { title: 'Sign in', submit: 'Sign in', success: 'Signed in successfully!', noAccount: "Don't have an account?", haveAccount: 'Already have an account?', registerHere: 'Register here', signinHere: 'Sign in here' },
+        register: { title: 'Register', submit: 'Register', success: 'Registration successful! Welcome to Netflix Clone' },
+        logout: { success: 'Signed out successfully' },
+        favorites: { confirmClear: 'Are you sure you want to delete all your favorites? This action cannot be undone.', cleared: 'Favorites cleared successfully' },
+        history: { confirmClear: 'Are you sure you want to delete your entire history? This action cannot be undone.', cleared: 'History cleared successfully' }
+      },
+      lists: {
+        title: 'My Custom Lists',
+        createNew: 'Create New List',
+        namePlaceholder: 'List name',
+        create: 'Create',
+        edit: 'Edit',
+        delete: 'Delete',
+        itemsCount: '{{count}} items',
+        createdAt: 'Created: {{date}}',
+        removeItem: 'Remove from list',
+        empty: 'Empty list',
+        emptySubtitle: 'This list has no content yet',
+        selectList: 'Select a list',
+        selectListSubtitle: 'Choose a list on the left to view its content',
+        enterName: 'Please enter a list name',
+        created: 'List "{{name}}" created successfully',
+        updated: 'List updated successfully',
+        deleted: 'List "{{name}}" deleted',
+        itemAdded: '"{{title}}" added to the list',
+        itemRemoved: 'Item removed from the list'
+      },
+      context: {
+        addedToList: '"{{title}}" added to your list',
+        removedFromList: '"{{title}}" removed from your list',
+        playing: 'Playing: "{{title}}"'
+      }
+      row: {
+        playingTrailer: 'Playing trailer of "{{title}}"',
+        noTrailers: 'No trailers available for "{{title}}"',
+        errorLoadingTrailers: 'Error loading trailers',
+        trailerFinished: 'Trailer of "{{title}}" finished',
+        countTitles: '{{count}} titles',
+        addToCustomList: 'Add to custom list',
+        modal: {
+          title: 'Add to custom list',
+          subtitle: 'Select a list to add this content',
+          noListsTitle: 'You have no custom lists',
+          noListsSubtitle: 'Go to the navbar and create your first list',
+          items: '{{count}} items',
+          created: 'Created'
+        }
+      }
+    }
+  },
+  es: {
+    translation: {
+      nav: {
+        home: 'Inicio',
+        movies: 'Películas',
+        series: 'Series',
+        favorites: 'Mi Lista',
+        recommendations: 'Recomendaciones',
+        searchTitle: 'Búsqueda avanzada',
+        listsTitle: 'Listas personalizadas',
+        notificationsTitle: 'Notificaciones',
+        profileTitle: 'Mi Perfil'
+      },
+      hero: {
+        loading: 'Cargando contenido destacado...',
+        featuredContent: 'CONTENIDO DESTACADO',
+        ratingOutOfTen: '/ 10',
+        loadingTrailer: 'Cargando...',
+        play: 'Reproducir',
+        moreInfo: 'Más información',
+        ageRating: '+16',
+        quality: '4K ULTRA HD'
+      },
+      home: {
+        trendingNow: 'Tendencias ahora',
+        popularMovies: 'Películas populares',
+        popularSeries: 'Series populares',
+        topRated: 'Mejor valoradas',
+        netflixOriginals: 'Contenido original de Netflix',
+        documentaries: 'Documentales'
+      },
+      home: {
+        trendingNow: 'Tendencias ahora',
+        popularMovies: 'Películas populares',
+        popularSeries: 'Series populares',
+        topRated: 'Mejor valoradas',
+        netflixOriginals: 'Contenido original de Netflix',
+        documentaries: 'Documentales'
+      },
+      movies: {
+        loading: 'Cargando películas...',
+        title: 'Películas',
+        subtitle: 'Descubre las mejores películas de todos los géneros',
+        filteredTitle: 'Películas filtradas',
+        noResults: 'No se encontraron películas con los filtros seleccionados.'
+      },
+      series: {
+        loading: 'Cargando series...',
+        title: 'Series de TV',
+        subtitle: 'Descubre las mejores series de todos los géneros',
+        filteredTitle: 'Series filtradas',
+        noResults: 'No se encontraron series con los filtros seleccionados.',
+        showingCount: 'Mostrando {{count}} series'
+      },
+      recommendations: {
+        loading: 'Generando recomendaciones personalizadas...',
+        title: 'Recomendaciones para ti',
+        subtitle: 'Basado en tus favoritos y preferencias, hemos seleccionado contenido que creemos que te encantará',
+        byGenre: 'Basado en tus géneros favoritos',
+        topRated: 'Lo mejor de lo mejor',
+        trending: 'Tendencias del momento',
+        similar: 'Similar a lo que te gusta',
+        empty: {
+          byGenre: 'No hay suficientes favoritos para generar recomendaciones por género',
+          topRated: 'No se pudo cargar el contenido mejor valorado',
+          trending: 'No se pudo cargar las tendencias',
+          similar: 'No hay suficientes favoritos para generar recomendaciones similares'
+        },
+        noneTitle: 'No hay recomendaciones aún',
+        noneSubtitle: 'Agrega algunas películas o series a tus favoritos para recibir recomendaciones personalizadas',
+        goToFavorites: 'Ir a Mis Favoritos',
+        regenerate: 'Regenerar Recomendaciones'
+      },
+      favorites: {
+        tabFavorites: 'Favoritos ({{count}})',
+        tabLists: 'Listas Personalizadas',
+        emptyTitle: 'Tu lista de favoritos está vacía',
+        emptySubtitle: 'Comienza a agregar contenido a tu lista haciendo clic en el botón "+ Mi lista" en cualquier película o serie que te guste.',
+        emptyCta: '¡Explora y encuentra tu próximo favorito!',
+        removeFromList: 'Eliminar de mi lista',
+        added: 'Agregado',
+        noResults: 'No hay resultados',
+        noResultsSubtitle: 'No se encontraron favoritos con los filtros seleccionados.',
+        viewAll: 'Ver todos'
+      },
+      common: {
+        filters: 'Filtros:',
+        allGenres: 'Todos los géneros',
+        sort: {
+          popularity: 'Más populares',
+          rating: 'Mejor valoradas',
+          date: 'Más recientes',
+          title: 'Alfabético'
+        },
+        view: 'Vista:',
+        showingCount: 'Mostrando {{count}} elementos',
+        inGenre: 'en {{genre}}',
+        clearFilters: 'Limpiar filtros',
+        play: 'Reproducir',
+        moreInfo: 'Más información',
+        inFavorites: 'En favoritos',
+        addToFavorites: 'Agregar a favoritos',
+        movie: 'Película',
+        series: 'Serie',
+        loading: 'Cargando...',
+        cancel: 'Cancelar'
+      },
+      adv: {
+        header: 'Búsqueda Avanzada',
+        placeholder: 'Buscar películas, series, actores...',
+        applyFilters: 'Aplicar filtros',
+        type: 'Tipo',
+        typeAll: 'Todo',
+        genre: 'Género',
+        year: 'Año',
+        allYears: 'Todos los años',
+        minRating: 'Calificación mínima',
+        anyRating: 'Cualquier calificación',
+        sortBy: 'Ordenar por',
+        sort: { relevance: 'Relevancia' },
+        filters: { show: 'Mostrar filtros', hide: 'Ocultar filtros' },
+        results: 'Resultados ({{count}})',
+        noResults: 'No se encontraron resultados',
+        noResultsSubtitle: 'Intenta con otros términos o ajusta los filtros',
+        search: { enterTerm: 'Por favor ingresa un término de búsqueda', error: 'Error al realizar la búsqueda', resultsFound: 'Se encontraron {{count}} resultados', searching: 'Buscando...', searchBtn: 'Buscar' }
+      },
+      notifications: {
+        title: 'Notificaciones',
+        count: '{{count}} notificación{{count, plural, one {} other {es}}}',
+        filters: { all: 'Todas', success: 'Éxito', error: 'Error', warning: 'Advertencia', info: 'Información' },
+        showRead: 'Mostrar leídas',
+        markAsRead: 'Marcar como leída',
+        deleteOne: 'Eliminar notificación',
+        markedRead: 'Notificación marcada como leída',
+        allMarkedRead: 'Todas las notificaciones marcadas como leídas',
+        cleared: 'Todas las notificaciones eliminadas',
+        markAllAsRead: 'Marcar todas como leídas',
+        clearAll: 'Limpiar todas',
+        showing: 'Mostrando {{shown}} de {{total}} notificaciones'
+      },
+      profile: {
+        title: 'Mi Perfil',
+        memberSince: 'Miembro desde {{date}}',
+        stats: { favorites: 'Favoritos', watched: 'Vistos', average: 'Promedio' },
+        actions: { title: 'Acciones', clearCache: 'Limpiar Caché', clearFavorites: 'Limpiar Favoritos', clearHistory: 'Limpiar Historial', logout: 'Cerrar Sesión' },
+        cache: { title: 'Estadísticas del Caché', items: 'Items', max: 'Máximo', expiration: 'Expiración' },
+        form: { name: 'Nombre', namePlaceholder: 'Tu nombre completo', emailPlaceholder: 'tu@email.com', password: 'Contraseña', confirmPassword: 'Confirmar Contraseña', fillAll: 'Por favor completa todos los campos', passwordMismatch: 'Las contraseñas no coinciden' },
+        login: { title: 'Iniciar Sesión', submit: 'Iniciar Sesión', success: '¡Inicio de sesión exitoso!', noAccount: '¿No tienes cuenta?', haveAccount: '¿Ya tienes cuenta?', registerHere: 'Regístrate aquí', signinHere: 'Inicia sesión aquí' },
+        register: { title: 'Registrarse', submit: 'Registrarse', success: '¡Registro exitoso! Bienvenido a Netflix Clone' },
+        logout: { success: 'Sesión cerrada correctamente' },
+        favorites: { confirmClear: '¿Estás seguro de que quieres eliminar todos tus favoritos? Esta acción no se puede deshacer.', cleared: 'Favoritos eliminados correctamente' },
+        history: { confirmClear: '¿Estás seguro de que quieres eliminar todo tu historial? Esta acción no se puede deshacer.', cleared: 'Historial eliminado correctamente' }
+      },
+      lists: {
+        title: 'Mis Listas Personalizadas',
+        createNew: 'Crear Nueva Lista',
+        namePlaceholder: 'Nombre de la lista',
+        create: 'Crear',
+        edit: 'Editar',
+        delete: 'Eliminar',
+        itemsCount: '{{count}} items',
+        createdAt: 'Creada: {{date}}',
+        removeItem: 'Eliminar de la lista',
+        empty: 'Lista vacía',
+        emptySubtitle: 'Esta lista no tiene contenido aún',
+        selectList: 'Selecciona una lista',
+        selectListSubtitle: 'Elige una lista de la izquierda para ver su contenido',
+        enterName: 'Por favor ingresa un nombre para la lista',
+        created: 'Lista "{{name}}" creada exitosamente',
+        updated: 'Lista actualizada exitosamente',
+        deleted: 'Lista "{{name}}" eliminada',
+        itemAdded: '"{{title}}" agregado a la lista',
+        itemRemoved: 'Item removido de la lista'
+      }
+      context: {
+        addedToList: '"{{title}}" agregado a tu lista',
+        removedFromList: '"{{title}}" eliminado de tu lista',
+        playing: 'Reproduciendo: "{{title}}"'
+      }
+      row: {
+        playingTrailer: 'Reproduciendo trailer de "{{title}}"',
+        noTrailers: 'No hay trailers disponibles para "{{title}}"',
+        errorLoadingTrailers: 'Error al cargar los trailers',
+        trailerFinished: 'Trailer de "{{title}}" finalizado',
+        countTitles: '{{count}} títulos',
+        addToCustomList: 'Agregar a lista personalizada',
+        modal: {
+          title: 'Agregar a lista personalizada',
+          subtitle: 'Selecciona una lista para agregar este contenido',
+          noListsTitle: 'No tienes listas personalizadas',
+          noListsSubtitle: 'Ve al navbar y crea tu primera lista',
+          items: '{{count}} elementos',
+          created: 'Creada'
+        }
+      }
+    }
+  }
+};
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: 'es',
+    fallbackLng: 'es',
+    interpolation: { escapeValue: false }
+  });
+
+export default i18n;
+
+

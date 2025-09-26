@@ -1,0 +1,1217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Importar fuentes de Google */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Estilos base personalizados */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    background-color: #141414;
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Scrollbar personalizada */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #E50914;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b30710;
+  }
+}
+
+/* Componentes personalizados */
+@layer components {
+  /* Navbar */
+  .nav-link {
+    @apply flex items-center space-x-2 text-[#E5E5E5] hover:text-white transition-all duration-300 relative cursor-pointer;
+  }
+  
+  .nav-link.group {
+    /* Estilos adicionales para group si es necesario */
+  }
+
+  .nav-link.active {
+    @apply text-white;
+  }
+
+  .nav-link.active::after {
+    content: '';
+    @apply absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-[#E50914] rounded-full animate-pulse shadow-lg shadow-[#E50914]/50;
+  }
+
+  .nav-link::before {
+    content: '';
+    @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#E50914] to-red-500 transition-all duration-300 group-hover:w-full rounded-full;
+  }
+
+  .mobile-nav-link {
+    @apply flex items-center space-x-3 px-4 py-3 text-[#E5E5E5] hover:text-white hover:bg-[#333]/50 transition-all duration-200 rounded-lg;
+  }
+
+  .mobile-nav-link.active {
+    @apply text-white bg-[#E50914]/20;
+  }
+
+  /* Botones de acción */
+  .btn-action {
+    @apply p-2 rounded-full bg-[#333]/80 text-white hover:bg-[#E50914] transition-all duration-300 border border-transparent hover:border-[#E50914]/50;
+  }
+
+  .btn-action-hover {
+    @apply hover:scale-110 hover:shadow-[0_0_20px_rgba(229,9,20,0.3)];
+  }
+
+  /* Botones principales */
+  .btn-primary {
+    @apply bg-[#E50914] hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[0_0_20px_rgba(229,9,20,0.4)];
+  }
+
+  .btn-secondary {
+    @apply bg-[#808080]/80 hover:bg-[#808080] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105;
+  }
+
+  /* Efectos de glassmorphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: rgba(20, 20, 20, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Efectos de blur personalizados */
+  .backdrop-blur-custom {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Sombras personalizadas */
+  .shadow-netflix {
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+  }
+
+  .shadow-netflix-lg {
+    box-shadow: 0 0 30px rgba(229, 9, 20, 0.4);
+  }
+
+  /* Efectos de hover en imágenes */
+  .img-hover-zoom {
+    @apply overflow-hidden;
+  }
+
+  .img-hover-zoom img {
+    @apply transition-transform duration-500;
+  }
+
+  .img-hover-zoom:hover img {
+    @apply scale-110;
+  }
+
+  /* Efectos de shimmer */
+  .shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Efectos de neon */
+  .neon {
+    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+  }
+
+  .neon-red {
+    text-shadow: 0 0 5px #E50914, 0 0 10px #E50914, 0 0 15px #E50914;
+  }
+
+  /* Efectos de texto */
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Efectos de línea de texto */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Efectos de gradiente en cards */
+  .card-gradient {
+    background: linear-gradient(
+      to top,
+      rgba(20, 20, 20, 0.95) 0%,
+      rgba(20, 20, 20, 0.8) 30%,
+      rgba(20, 20, 20, 0.4) 60%,
+      transparent 100%
+    );
+  }
+
+  /* Efectos de hover en cards */
+  .movie-card {
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(229,9,20,0.3)];
+  }
+
+  /* Efectos de scrollbar personalizada */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Efectos de animación */
+  .animate-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .slide-in-from-top-2 {
+    animation: slideInFromTop 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideInFromTop {
+    from { 
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Efectos de pulso personalizados */
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* Responsividad móvil mejorada */
+  .mobile-optimized {
+    @apply sm:hidden;
+  }
+
+  .desktop-optimized {
+    @apply hidden sm:block;
+  }
+
+  /* Grid responsivo para contenido */
+  .content-grid {
+    @apply grid gap-4;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .content-grid-sm {
+    @apply grid gap-3;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .content-grid-lg {
+    @apply grid gap-6;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  /* Contenedores responsivos */
+  .container-responsive {
+    @apply px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+
+  .container-fluid {
+    @apply w-full max-w-7xl mx-auto;
+  }
+
+  /* Espaciado responsivo */
+  .section-spacing {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+
+  .section-spacing-sm {
+    @apply py-6 sm:py-8 lg:py-12;
+  }
+
+  .section-spacing-lg {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+
+  /* Tipografía responsiva */
+  .text-responsive-xl {
+    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl;
+  }
+
+  .text-responsive-lg {
+    @apply text-xl sm:text-2xl lg:text-3xl xl:text-4xl;
+  }
+
+  .text-responsive-md {
+    @apply text-lg sm:text-xl lg:text-2xl xl:text-3xl;
+  }
+
+  .text-responsive-sm {
+    @apply text-sm sm:text-base lg:text-lg xl:text-xl;
+  }
+
+  /* Botones responsivos */
+  .btn-responsive {
+    @apply px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base;
+  }
+
+  .btn-responsive-lg {
+    @apply px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg;
+  }
+
+  /* Cards responsivas */
+  .card-responsive {
+    @apply p-3 sm:p-4 lg:p-6;
+  }
+
+  .card-responsive-sm {
+    @apply p-2 sm:p-3 lg:p-4;
+  }
+
+  .card-responsive-lg {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+
+  /* Navegación responsiva */
+  .nav-responsive {
+    @apply space-x-4 sm:space-x-6 lg:space-x-8;
+  }
+
+  .nav-responsive-mobile {
+    @apply space-y-2 sm:space-y-3;
+  }
+
+  /* Iconos responsivos */
+  .icon-responsive {
+    @apply w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6;
+  }
+
+  .icon-responsive-sm {
+    @apply w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5;
+  }
+
+  .icon-responsive-lg {
+    @apply w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10;
+  }
+
+  /* Transiciones responsivas */
+  .transition-responsive {
+    @apply transition-all duration-200 sm:duration-300 lg:duration-500;
+  }
+
+  /* Hover responsivo */
+  .hover-responsive {
+    @apply hover:scale-105 sm:hover:scale-110 lg:hover:scale-125;
+  }
+
+  /* Sombras responsivas */
+  .shadow-responsive {
+    @apply shadow-lg sm:shadow-xl lg:shadow-2xl;
+  }
+
+  .shadow-responsive-hover {
+    @apply hover:shadow-xl sm:hover:shadow-2xl lg:hover:shadow-3xl;
+  }
+}
+
+/* Estilos para el reproductor de video */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-track {
+  background: #374151;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #E50914;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: #F43F5E;
+  transform: scale(1.1);
+}
+
+.slider::-moz-range-track {
+  background: #374151;
+  height: 8px;
+  border-radius: 4px;
+  border: none;
+}
+
+.slider::-moz-range-thumb {
+  background: #E50914;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.slider::-moz-range-thumb:hover {
+  background: #F43F5E;
+  transform: scale(1.1);
+}
+
+/* Animaciones para el reproductor */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.video-player-enter {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.video-controls-enter {
+  animation: slideUp 0.2s ease-out;
+}
+
+/* Efectos de hover para controles del video */
+.video-control {
+  transition: all 0.2s ease;
+}
+
+.video-control:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
+}
+
+/* Estilos para clasificación por edad y advertencias */
+.content-rating {
+  transition: all 0.3s ease;
+}
+
+.content-rating:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.content-warning {
+  transition: all 0.2s ease;
+}
+
+.content-warning:hover {
+  background-color: rgba(255, 193, 7, 0.1);
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+/* Estilos para géneros detallados */
+.genre-card {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(85, 85, 85, 0.3);
+}
+
+.genre-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(229, 9, 20, 0.5);
+  box-shadow: 0 8px 25px rgba(229, 9, 20, 0.2);
+}
+
+.genre-badge {
+  background: linear-gradient(135deg, #E50914 0%, #F43F5E 100%);
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+}
+
+/* Estilos para sinopsis expandida */
+.expanded-overview {
+  background: linear-gradient(135deg, rgba(51, 51, 51, 0.3) 0%, rgba(51, 51, 51, 0.1) 100%);
+  border: 1px solid rgba(85, 85, 85, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.expanded-overview:hover {
+  border-color: rgba(229, 9, 20, 0.3);
+  box-shadow: 0 8px 25px rgba(229, 9, 20, 0.1);
+}
+
+/* Estilos para información de producción */
+.production-company {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(85, 85, 85, 0.3);
+}
+
+.production-company:hover {
+  transform: translateX(5px);
+  border-color: rgba(229, 9, 20, 0.3);
+  background-color: rgba(229, 9, 20, 0.1);
+}
+
+/* Estilos para advertencias de contenido */
+.warning-icon {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Estilos para clasificación por edad */
+.rating-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.rating-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.rating-badge:hover::before {
+  left: 100%;
+}
+
+/* Responsive para el reproductor y nuevas secciones */
+@media (max-width: 768px) {
+  .video-player-container {
+    padding: 1rem;
+  }
+  
+  .video-controls {
+    padding: 1rem;
+  }
+  
+  .video-control {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .genre-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .rating-warnings-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .expanded-overview {
+    padding: 1rem;
+  }
+  
+  .genre-card {
+    padding: 1rem;
+  }
+}
+
+/* Estilos para el modal de detalles - Asegurar que esté por encima del navbar */
+.movie-detail-modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 9999 !important;
+}
+
+.movie-detail-modal .modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 9999 !important;
+}
+
+.movie-detail-modal .modal-content {
+  position: relative !important;
+  z-index: 10000 !important;
+}
+
+.movie-detail-modal .modal-close-button {
+  position: absolute !important;
+  z-index: 10001 !important;
+}
+
+/* Asegurar que el modal esté por encima de todos los elementos */
+.movie-detail-modal * {
+  z-index: inherit;
+}
+
+/* Forzar que el navbar esté por debajo del modal */
+nav {
+  z-index: 40 !important;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 0.2s ease-out,
+              backdrop-filter 0.3s ease-out,
+              -webkit-backdrop-filter 0.3s ease-out !important;
+  will-change: opacity, transform, filter, backdrop-filter !important;
+  backdrop-filter: blur(0px) !important;
+  -webkit-backdrop-filter: blur(0px) !important;
+}
+
+/* Ocultar el navbar cuando el modal esté abierto */
+body.modal-open nav {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-100%) scale(0.95) !important;
+  pointer-events: none !important;
+  filter: blur(1px) !important;
+}
+
+/* Mostrar el navbar cuando el modal esté cerrado */
+nav {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) scale(1) !important;
+  pointer-events: auto !important;
+  filter: blur(0) !important;
+}
+
+/* Estilos del navbar con fondo transparente y difuminado */
+nav {
+  background: rgba(20, 20, 20, 0.06) !important;
+  backdrop-filter: blur(35px) !important;
+  -webkit-backdrop-filter: blur(35px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Navbar cuando está scrolleado - más opaco pero mantiene transparencia */
+nav.scrolled {
+  background: rgba(20, 20, 20, 0.8) !important;
+  backdrop-filter: blur(45px) !important;
+  -webkit-backdrop-filter: blur(45px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Navbar en estado hover - efecto de profundidad */
+nav:hover {
+  background: rgba(20, 20, 20, 0.9) !important;
+  backdrop-filter: blur(55px) !important;
+  -webkit-backdrop-filter: blur(55px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Mejorar visibilidad de enlaces en navbar transparente */
+nav .nav-link {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9) !important;
+  transition: all 0.2s ease-out !important;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.7)) !important;
+}
+
+nav .nav-link:hover {
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 1) !important;
+  transform: translateY(-1px) !important;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.9)) !important;
+}
+
+/* Mejorar visibilidad del logo en navbar transparente */
+nav .text-\[#E50914\] {
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.95) !important;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6)) !important;
+}
+
+/* Efecto adicional de profundidad para el navbar */
+nav::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%) !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Indicador visual para tecla ESC en modal */
+.modal-overlay::after {
+  content: 'Presiona ESC para cerrar' !important;
+  position: absolute !important;
+  bottom: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  color: white !important;
+  padding: 8px 16px !important;
+  border-radius: 20px !important;
+  font-size: 12px !important;
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+  pointer-events: none !important;
+  z-index: 10001 !important;
+}
+
+.modal-overlay:hover::after {
+  opacity: 1 !important;
+}
+
+/* Indicador adicional para clic fuera */
+.modal-overlay::before {
+  content: 'Haz clic fuera para cerrar' !important;
+  position: absolute !important;
+  top: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  color: white !important;
+  padding: 8px 16px !important;
+  border-radius: 20px !important;
+  font-size: 12px !important;
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+  pointer-events: none !important;
+  z-index: 10001 !important;
+}
+
+.modal-overlay:hover::before {
+  opacity: 1 !important;
+}
+
+/* Mejorar el cursor del overlay para indicar que es clickeable */
+.modal-overlay {
+  cursor: pointer !important;
+  border: 2px solid transparent !important;
+  transition: border-color 0.3s ease !important;
+}
+
+.modal-overlay:hover {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.modal-overlay .modal-content {
+  cursor: default !important;
+}
+
+/* Animación de salida del modal */
+.modal-overlay.closing {
+  animation: modalFadeOut 0.3s ease-out forwards !important;
+}
+
+.modal-overlay.closing .modal-content {
+  animation: contentSlideOut 0.3s ease-out forwards !important;
+}
+
+@keyframes modalFadeOut {
+  from {
+    opacity: 1 !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+  to {
+    opacity: 0 !important;
+    backdrop-filter: blur(0px) !important;
+    -webkit-backdrop-filter: blur(0px) !important;
+  }
+}
+
+@keyframes contentSlideOut {
+  from {
+    transform: scale(1) translateY(0) !important;
+    opacity: 1 !important;
+  }
+  to {
+    transform: scale(0.95) translateY(20px) !important;
+    opacity: 0 !important;
+  }
+}
+
+/* Estilos para botones de reproducción con trailers */
+.btn-play-trailer {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.btn-play-trailer::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+  transition: left 0.5s ease !important;
+}
+
+.btn-play-trailer:hover::before {
+  left: 100% !important;
+}
+
+/* Spinner de carga para trailers */
+.trailer-spinner {
+  animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg) !important;
+  }
+  to {
+    transform: rotate(360deg) !important;
+  }
+}
+
+/* Estilos para botones dentro del modal */
+.modal-content button {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+}
+
+.modal-content input {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+}
+
+.modal-content .tab-button {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que los botones de acción del modal funcionen */
+.modal-content .action-buttons button {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que las pestañas del modal funcionen */
+.modal-content .tab-navigation button {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que el contenido del modal sea clickeable */
+.modal-content * {
+  pointer-events: auto !important;
+}
+
+/* Asegurar que el overlay no interfiera con el contenido del modal */
+.modal-overlay .modal-content {
+  pointer-events: auto !important;
+}
+
+.modal-overlay .modal-content * {
+  pointer-events: auto !important;
+}
+
+/* Estilos específicos para botones del modal */
+.modal-action-btn {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+.modal-search-input {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+}
+
+.modal-clear-btn {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+.modal-clear-search-btn {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Asegurar que las pestañas del modal funcionen */
+.tab-navigation .tab-button {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Asegurar que los botones de acción funcionen */
+.action-buttons .modal-action-btn {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Asegurar que el VideoPlayer esté por encima del modal */
+.video-player-modal {
+  z-index: 10002 !important;
+  position: fixed !important;
+}
+
+.video-player-overlay {
+  z-index: 10002 !important;
+  position: fixed !important;
+}
+
+/* Regla específica para VideoPlayer con z-index máximo */
+div[class*="z-[10002]"] {
+  z-index: 10002 !important;
+  position: fixed !important;
+}
+
+/* Asegurar que el VideoPlayer tenga prioridad absoluta */
+.video-player-modal,
+.video-player-overlay,
+div[class*="z-[10002]"] {
+  z-index: 10002 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que el contenido del VideoPlayer esté por encima */
+.video-player-modal *,
+.video-player-overlay *,
+div[class*="z-[10002]"] * {
+  position: relative !important;
+  z-index: 10002 !important;
+}
+
+/* Regla de prioridad máxima para VideoPlayer */
+.video-player-modal,
+.video-player-overlay {
+  z-index: 10002 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que el VideoPlayer esté por encima de TODO */
+.video-player-modal {
+  z-index: 999999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que el overlay del VideoPlayer esté por encima */
+.video-player-overlay {
+  z-index: 999999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+}
+
+/* Regla de prioridad absoluta para VideoPlayer */
+.video-player-modal,
+.video-player-overlay,
+div[class*="video-player"] {
+  z-index: 999999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que el VideoPlayer esté por encima del modal de detalles */
+.video-player-modal {
+  z-index: 999999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que el VideoPlayer esté por encima de TODO */
+.video-player-modal,
+.video-player-overlay {
+  z-index: 999999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+/* Regla final de prioridad máxima para VideoPlayer */
+.video-player-modal,
+.video-player-overlay,
+div[class*="video-player"],
+div[class*="z-[10002]"],
+div[class*="z-[999999]"] {
+  z-index: 999999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+}
+
+/* Regla única y efectiva para VideoPlayer - Prioridad máxima */
+.video-player-modal,
+.video-player-overlay {
+  z-index: 999999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+  isolation: isolate !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+/* Regla adicional para asegurar prioridad absoluta */
+.video-player-modal,
+.video-player-overlay,
+div[class*="video-player"] {
+  z-index: 999999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+}
+
+/* Regla final para VideoPlayer - Prioridad absoluta */
+.video-player-modal,
+.video-player-overlay {
+  z-index: 999999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+  isolation: isolate !important;
+}
+
+/* Botón de cerrar del modal */
+.modal-close-btn {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Regla general para todos los elementos interactivos del modal */
+.modal-content button,
+.modal-content input,
+.modal-content select,
+.modal-content textarea,
+.modal-content a,
+.modal-content [role="button"],
+.modal-content [tabindex] {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que los elementos clickeables del modal funcionen */
+.modal-content [onClick],
+.modal-content [onclick] {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Asegurar que el modal esté por encima de todo */
+.movie-detail-modal {
+  z-index: 9999 !important;
+  animation: modalFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.movie-detail-modal .modal-overlay {
+  z-index: 9999 !important;
+  animation: overlayFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.movie-detail-modal .modal-content {
+  z-index: 10000 !important;
+  animation: contentSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.movie-detail-modal .modal-close-button {
+  z-index: 10001 !important;
+  animation: buttonFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Asegurar que el contenido del modal tenga z-index correcto */
+.movie-detail-modal .modal-content > * {
+  position: relative !important;
+  z-index: 10001 !important;
+}
+
+/* Regla específica para botones del modal */
+.movie-detail-modal button,
+.movie-detail-modal input,
+.movie-detail-modal select,
+.movie-detail-modal textarea,
+.movie-detail-modal a {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+}
+
+/* Asegurar que los botones de acción del modal funcionen */
+.movie-detail-modal .action-buttons button,
+.movie-detail-modal .tab-navigation button,
+.movie-detail-modal .modal-action-btn,
+.movie-detail-modal .tab-button,
+.movie-detail-modal .modal-close-btn,
+.movie-detail-modal .modal-clear-btn,
+.movie-detail-modal .modal-clear-search-btn {
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Animaciones del modal */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes contentSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes buttonFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Bloquear scroll cuando el modal esté abierto */
+body.modal-open {
+  overflow: hidden !important;
+  transition: overflow 0.2s ease-out !important;
+}
+
+html.modal-open {
+  overflow: hidden !important;
+  transition: overflow 0.2s ease-out !important;
+}
+
+/* Transiciones suaves para el body */
+body {
+  transition: overflow 0.2s ease-out !important;
+}
+
+/* Prevenir scroll en el overlay del modal */
+.movie-detail-modal .modal-overlay {
+  overscroll-behavior: none !important;
+  -webkit-overflow-scrolling: auto !important;
+}
+
+/* Asegurar que el contenido del modal tenga scroll independiente */
+.movie-detail-modal .modal-content {
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  overflow-y: auto !important;
+  max-height: 90vh !important;
+  transition: all 0.2s ease-out !important;
+  scroll-behavior: smooth !important;
+}
+
+/* Permitir scroll dentro del modal */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #333;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #E50914;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #B2070F;
+}
