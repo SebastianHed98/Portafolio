@@ -14,6 +14,7 @@ const Navbar = () => {
   const [isCustomListsOpen, setIsCustomListsOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
   const { addNotification, notifications } = useMovieContext();
   const { t, i18n } = useTranslation();
@@ -32,6 +33,7 @@ const Navbar = () => {
     setIsCustomListsOpen(false);
     setIsNotificationsOpen(false);
     setIsUserProfileOpen(false);
+    setIsMobileOpen(false);
   }, [location]);
 
   const handleAdvancedSearch = () => {
@@ -50,12 +52,31 @@ const Navbar = () => {
     setIsUserProfileOpen(true);
   };
 
+  const toggleMobile = () => setIsMobileOpen((prev) => !prev);
+  const closeMobile = () => setIsMobileOpen(false);
+
+  // Lock body scroll when mobile menu is open and close with Escape key
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') closeMobile();
+    };
+    if (isMobileOpen) {
+      document.addEventListener('keydown', onKeyDown);
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.removeEventListener('keydown', onKeyDown);
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isMobileOpen]);
+
   return (
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled ? 'scrolled' : ''
-        }`}
+        } ${isMobileOpen ? 'shadow-2xl' : ''}`}
       >
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
@@ -168,63 +189,122 @@ const Navbar = () => {
 
             {/* Menú móvil */}
             <div className="md:hidden">
-              <button className="btn-action btn-action-hover">
+              <button
+                onClick={toggleMobile}
+                aria-label="Open navigation menu"
+                aria-expanded={isMobileOpen}
+                aria-controls="mobile-menu"
+                className="btn-action btn-action-hover p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E50914]/70 active:scale-95"
+              >
                 <span className="sr-only">Menú</span>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
+                {isMobileOpen ? (
+                  // Icono de cerrar
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  // Icono hamburguesa
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
         </div>
 
+        {/* Backdrop */}
+        {isMobileOpen && (
+          <button
+            onClick={closeMobile}
+            aria-hidden="true"
+            tabIndex={-1}
+            className="fixed inset-0 z-30 bg-black/50 backdrop-blur-[2px] md:hidden"
+          />
+        )}
+
         {/* Menú móvil expandido */}
-        <div className="md:hidden">
-          <div className="px-4 py-2 space-y-1 bg-[#141414]/95 backdrop-blur-sm">
+        <div
+          id="mobile-menu"
+          className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
+            isMobileOpen ? 'max-h-[30rem] opacity-100' : 'max-h-0 opacity-0'
+          }`}
+          aria-hidden={!isMobileOpen}
+        >
+          <div className="relative z-40 px-4 py-3 space-y-2 bg-[#141414]/95 backdrop-blur-sm shadow-2xl border-t border-white/10">
             <Link
               to="/"
-              className={`mobile-nav-link group ${location.pathname === '/' ? 'active' : ''}`}
+              onClick={closeMobile}
+              className={`mobile-nav-link group flex items-center gap-4 py-3.5 ${
+                location.pathname === '/' ? 'active' : ''
+              }`}
             >
-              <Home size={18} />
-              <span>{t('nav.home')}</span>
+              <Home size={22} />
+              <span className="text-lg">{t('nav.home')}</span>
             </Link>
 
             <Link
               to="/movies"
-              className={`mobile-nav-link group ${location.pathname === '/movies' ? 'active' : ''}`}
+              onClick={closeMobile}
+              className={`mobile-nav-link group flex items-center gap-4 py-3.5 ${
+                location.pathname === '/movies' ? 'active' : ''
+              }`}
             >
-              <Film size={18} />
-              <span>{t('nav.movies')}</span>
+              <Film size={22} />
+              <span className="text-lg">{t('nav.movies')}</span>
             </Link>
 
             <Link
               to="/series"
-              className={`mobile-nav-link group ${location.pathname === '/series' ? 'active' : ''}`}
+              onClick={closeMobile}
+              className={`mobile-nav-link group flex items-center gap-4 py-3.5 ${
+                location.pathname === '/series' ? 'active' : ''
+              }`}
             >
-              <Tv size={18} />
-              <span>{t('nav.series')}</span>
+              <Tv size={22} />
+              <span className="text-lg">{t('nav.series')}</span>
             </Link>
 
             <Link
               to="/favorites"
-              className={`mobile-nav-link group ${location.pathname === '/favorites' ? 'active' : ''}`}
+              onClick={closeMobile}
+              className={`mobile-nav-link group flex items-center gap-4 py-3.5 ${
+                location.pathname === '/favorites' ? 'active' : ''
+              }`}
             >
-              <Heart size={18} />
-              <span>{t('nav.favorites')}</span>
+              <Heart size={22} />
+              <span className="text-lg">{t('nav.favorites')}</span>
             </Link>
 
             <Link
               to="/recommendations"
-              className={`mobile-nav-link group ${location.pathname === '/recommendations' ? 'active' : ''}`}
+              onClick={closeMobile}
+              className={`mobile-nav-link group flex items-center gap-4 py-3.5 ${
+                location.pathname === '/recommendations' ? 'active' : ''
+              }`}
             >
-              <Sparkles size={18} />
-              <span>{t('nav.recommendations')}</span>
+              <Sparkles size={22} />
+              <span className="text-lg">{t('nav.recommendations')}</span>
             </Link>
+
+            {/* Idioma en móvil */}
+            <div className="pt-2">
+              <label htmlFor="mobile-lang" className="sr-only">
+                {t('heroA11y.languageSelector')}
+              </label>
+              <select
+                id="mobile-lang"
+                value={i18n.language}
+                onChange={(e) => {
+                  i18n.changeLanguage(e.target.value);
+                  closeMobile();
+                }}
+                className="w-full bg-black/60 text-white border border-white/20 rounded-full px-4 py-2.5 text-base shadow-inner"
+              >
+                <option value="es">ES</option>
+                <option value="en">EN</option>
+              </select>
+            </div>
           </div>
         </div>
       </nav>
