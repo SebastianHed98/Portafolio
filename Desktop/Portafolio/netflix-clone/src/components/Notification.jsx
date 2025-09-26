@@ -4,6 +4,7 @@ import { CheckCircle, XCircle, X, Info } from 'lucide-react';
 const Notification = ({ message, type = 'info', duration = 3000, onClose }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
 
   useEffect(() => {
     if (duration > 0) {
@@ -13,6 +14,12 @@ const Notification = ({ message, type = 'info', duration = 3000, onClose }) => {
       return () => clearTimeout(timer);
     }
   }, [duration]);
+
+  // Trigger enter animation after mount
+  useEffect(() => {
+    const t = setTimeout(() => setHasEntered(true), 10);
+    return () => clearTimeout(t);
+  }, []);
 
   const handleClose = () => {
     setIsExiting(true);
@@ -52,9 +59,9 @@ const Notification = ({ message, type = 'info', duration = 3000, onClose }) => {
 
   return (
     <div
-      className={`fixed top-4 right-4 z-50 max-w-sm w-full ${getBgColor()} 
-                 border rounded-lg shadow-lg backdrop-blur-sm transition-all duration-300
-                 ${isExiting ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100'}`}
+      className={`relative mx-auto w-full pointer-events-auto ${getBgColor()} 
+                 border rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300
+                 ${isExiting ? '-translate-y-2 opacity-0' : hasEntered ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}
     >
       <div className="flex items-start p-4">
         <div className="flex-shrink-0 mr-3">{getIcon()}</div>

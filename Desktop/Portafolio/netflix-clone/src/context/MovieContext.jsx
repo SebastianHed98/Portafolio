@@ -103,11 +103,16 @@ const movieReducer = (state, action) => {
         watchHistory: action.payload,
       };
 
-    case ACTIONS.ADD_NOTIFICATION:
+    case ACTIONS.ADD_NOTIFICATION: {
+      const incoming = { ...action.payload, id: Date.now() };
+      // FIFO: mantener como máximo 3; si supera, eliminar la más antigua
+      const next = [...state.notifications, incoming];
+      const limited = next.length > 3 ? next.slice(next.length - 3) : next;
       return {
         ...state,
-        notifications: [...state.notifications, { ...action.payload, id: Date.now() }],
+        notifications: limited,
       };
+    }
 
     case ACTIONS.REMOVE_NOTIFICATION:
       return {
@@ -304,7 +309,16 @@ export const MovieProvider = ({ children }) => {
 
   // Funciones para notificaciones
   const addNotification = (notification) => {
-    dispatch({ type: ACTIONS.ADD_NOTIFICATION, payload: notification });
+    // Duraciones por tipo si no se especifica
+    const defaultByType = {
+      success: 2000,
+      error: 4000,
+      warning: 3000,
+      info: 2500,
+    };
+    const duration =
+      notification.duration ?? defaultByType[notification.type ?? 'info'] ?? 2500;
+    dispatch({ type: ACTIONS.ADD_NOTIFICATION, payload: { ...notification, duration } });
   };
 
   const removeNotification = (notificationId) => {

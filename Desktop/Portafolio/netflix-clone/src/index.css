@@ -1251,6 +1251,11 @@ body {
   background: #b2070f;
 }
 
+/* Ocultar UI flotante del Hero (+16 y botón de sonido) si hay un modal abierto */
+body.modal-open .hero-floating-ui {
+  display: none !important;
+}
+
 /* Navbar móvil: más contraste cuando el menú está abierto */
 nav.nav--mobile-open {
   background: rgba(20, 20, 20, 0.95) !important;

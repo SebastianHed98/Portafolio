@@ -87,8 +87,8 @@ const Navbar = () => {
               </div>
             </Link>
 
-            {/* Navegación principal (oculta, usamos menú hamburguesa siempre) */}
-            <div className="hidden items-center space-x-8">
+            {/* Navegación principal (visible desde ~1024px en adelante) */}
+            <div className="hidden lg:flex items-center space-x-8">
               <Link
                 to="/"
                 className={`nav-link group ${location.pathname === '/' ? 'active' : ''}`}
@@ -130,8 +130,8 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {/* Acciones del usuario (ocultas, se ofrecen en el menú hamburguesa) */}
-            <div className="hidden items-center space-x-4">
+            {/* Acciones del usuario (visibles desde ~1024px en adelante) */}
+            <div className="hidden lg:flex items-center space-x-4">
               {/* Botón de búsqueda avanzada */}
               <button
                 onClick={handleAdvancedSearch}
@@ -187,8 +187,8 @@ const Navbar = () => {
               </select>
             </div>
 
-            {/* Menú móvil */}
-            <div className="md:hidden">
+            {/* Menú hamburguesa (visible hasta ~1024px) */}
+            <div className="lg:hidden">
               <button
                 onClick={toggleMobile}
                 aria-label="Open navigation menu"
@@ -219,19 +219,19 @@ const Navbar = () => {
             onClick={closeMobile}
             aria-hidden="true"
             tabIndex={-1}
-            className="fixed inset-0 z-30 bg-black/50 backdrop-blur-[2px] md:hidden"
+            className="fixed inset-0 z-30 bg-black/50 backdrop-blur-[2px] lg:hidden"
           />
         )}
 
         {/* Menú móvil expandido */}
         <div
           id="mobile-menu"
-          className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
+          className={`overflow-hidden transition-[max-height,opacity] duration-300 ease-out lg:hidden ${
             isMobileOpen ? 'max-h-[30rem] opacity-100' : 'max-h-0 opacity-0'
           }`}
           aria-hidden={!isMobileOpen}
         >
-          <div className="relative z-40 px-4 py-3 space-y-2 bg-[#141414]/95 backdrop-blur-sm shadow-2xl border-t border-white/10">
+          <div className="relative z-40 px-4 py-3 space-y-2 bg-[#141414]/95 backdrop-blur-sm shadow-2xl border-t border-white/10 max-h-[80vh] overflow-y-auto overscroll-contain">
             <Link
               to="/"
               onClick={closeMobile}

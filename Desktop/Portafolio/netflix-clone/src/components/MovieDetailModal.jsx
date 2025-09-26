@@ -730,7 +730,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
 
             <div className="bg-[#141414] relative z-10">
               <div className="max-w-4xl mx-auto px-4 md:px-6">
-                <div className="flex items-center space-x-1 bg-[#333]/50 rounded-xl p-1 mb-6 tab-navigation">
+                <div className="flex items-center space-x-1 bg-[#333]/50 rounded-xl p-1 mb-6 tab-navigation overflow-x-auto max-[514px]:-mx-4 max-[514px]:px-4 scrollbar-hide">
                   {[
                     { id: 'overview', label: t('detail.tabs.overview'), icon: Info },
                     { id: 'cast', label: t('detail.tabs.cast'), icon: Users },
@@ -740,7 +740,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                     <button
                       key={id}
                       onClick={() => setActiveTab(id)}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300 text-sm tab-button ${
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300 text-sm max-[514px]:px-3 max-[514px]:py-1.5 max-[514px]:text-xs tab-button ${
                         activeTab === id
                           ? 'bg-[#E50914] text-white shadow-lg shadow-[#E50914]/30'
                           : 'text-[#E5E5E5] hover:text-white hover:bg-[#404040]'
@@ -748,7 +748,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
                       aria-pressed={activeTab === id}
                       aria-label={label}
                     >
-                      <Icon size={16} />
+                      <Icon size={16} className="max-[514px]:w-4 max-[514px]:h-4" />
                       <span>{label}</span>
                     </button>
                   ))}
@@ -1255,7 +1255,7 @@ const MovieDetailModal = ({ movie, isOpen, onClose }) => {
       />
 
       {/* Estilos CSS personalizados para el scrollbar */}
-      <style jsx>{`
+      <style>{`
         .modal-scroll::-webkit-scrollbar {
           width: 8px;
         }

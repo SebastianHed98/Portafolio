@@ -146,7 +146,7 @@ const Hero = () => {
 
   return (
     <>
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-80px)] pt-16 lg:pt-20 overflow-hidden">
         {/* Imagen de fondo */}
         <div className="absolute inset-0">
           <img
@@ -169,7 +169,7 @@ const Hero = () => {
         </div>
 
         {/* Contenido del Hero */}
-        <div className="relative z-10 h-full flex items-center">
+        <div className="relative z-10 h-full flex items-center max-[390px]:pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div className="max-w-3xl">
               {/* Badge de contenido destacado */}
@@ -179,12 +179,12 @@ const Hero = () => {
               </div>
 
               {/* Título con tipografía profesional */}
-              <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight text-shadow">
+              <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-white mb-4 sm:mb-6 leading-tight text-shadow">
                 {featuredMovie.title}
               </h1>
 
               {/* Información adicional con diseño mejorado */}
-              <div className="flex flex-wrap items-center space-x-6 text-sm text-[#E5E5E5] mb-6">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-[#E5E5E5] mb-4 sm:mb-6">
                 <div className="flex items-center space-x-2 bg-[#E50914]/20 px-3 py-1 rounded-full">
                   <Star size={16} className="text-yellow-400 fill-current" />
                   <span className="text-green-400 font-bold text-lg">
@@ -211,12 +211,12 @@ const Hero = () => {
               </div>
 
               {/* Descripción con mejor tipografía */}
-              <p className="text-xl text-[#E5E5E5] mb-8 leading-relaxed max-w-2xl">
+              <p className="text-base sm:text-lg text-[#E5E5E5] mb-6 sm:mb-8 leading-relaxed max-w-2xl">
                 {truncateOverview(featuredMovie.overview)}
               </p>
 
               {/* Botones de acción mejorados */}
-              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
+              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 mb-6 sm:mb-8">
                 <button
                   onClick={handlePlay}
                   disabled={isLoadingTrailer}
@@ -261,7 +261,7 @@ const Hero = () => {
 
               {/* Géneros con diseño moderno */}
               {featuredMovie.genre_ids && featuredMovie.genre_ids.length > 0 && (
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 max-[390px]:mb-16">
                   {featuredMovie.genre_ids.slice(0, 3).map((genreId, index) => (
                     <span
                       key={index}
@@ -276,27 +276,31 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Controles de audio mejorados */}
-        <div className="absolute bottom-8 right-8 z-20">
-          <button
-            onClick={handleToggleMute}
-            className="btn-action btn-action-hover group"
-            title={isMuted ? t('heroA11y.unmute') : t('heroA11y.mute')}
-          >
-            {isMuted ? (
-              <VolumeX size={24} className="group-hover:scale-110 transition-transform" />
-            ) : (
-              <Volume2 size={24} className="group-hover:scale-110 transition-transform" />
-            )}
-          </button>
-        </div>
-
-        {/* Indicador de edad mejorado */}
-        <div className="absolute bottom-8 left-8 z-20">
-          <div className="glass px-4 py-2 rounded-lg text-white font-bold text-lg border border-white/20">
-            {t('hero.ageRating')}
+        {/* Controles de audio mejorados (ocultos si hay un modal abierto) */}
+        {!(isVideoPlayerOpen || isDetailModalOpen) && (
+          <div className="hero-floating-ui absolute bottom-4 right-4 md:bottom-8 md:right-8 z-20 max-[390px]:bottom-2 max-[390px]:right-2">
+            <button
+              onClick={handleToggleMute}
+              className="btn-action btn-action-hover group p-2 md:p-3 max-[390px]:p-1.5"
+              title={isMuted ? t('heroA11y.unmute') : t('heroA11y.mute')}
+            >
+              {isMuted ? (
+                <VolumeX size={22} className="group-hover:scale-110 transition-transform md:w-7 md:h-7 max-[390px]:w-5 max-[390px]:h-5" />
+              ) : (
+                <Volume2 size={22} className="group-hover:scale-110 transition-transform md:w-7 md:h-7 max-[390px]:w-5 max-[390px]:h-5" />
+              )}
+            </button>
           </div>
-        </div>
+        )}
+
+        {/* Indicador de edad mejorado (oculto si hay un modal abierto) */}
+        {!(isVideoPlayerOpen || isDetailModalOpen) && (
+          <div className="hero-floating-ui absolute bottom-4 left-4 md:bottom-8 md:left-8 z-20 max-[390px]:bottom-2 max-[390px]:left-2">
+            <div className="glass rounded-lg text-white font-bold border border-white/20 px-3 py-1.5 text-sm md:px-4 md:py-2 md:text-lg max-[390px]:px-2 max-[390px]:py-1 max-[390px]:text-xs">
+              {t('hero.ageRating')}
+            </div>
+          </div>
+        )}
 
         {/* Indicador de calidad */}
         <div className="absolute top-8 right-8 z-20">

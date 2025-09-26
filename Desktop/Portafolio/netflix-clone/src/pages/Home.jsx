@@ -156,7 +156,7 @@ const Home = () => {
       <Hero />
 
       {/* Contenido principal */}
-      <div className="relative z-10 -mt-32 pt-32">
+      <div className="relative z-10 mt-8 sm:mt-12 lg:mt-20 xl:mt-24 pt-6 sm:pt-8 lg:pt-10">
         {/* Tendencias */}
         <MovieRow
           title={t('home.trendingNow', { defaultValue: 'Tendencias ahora' })}
