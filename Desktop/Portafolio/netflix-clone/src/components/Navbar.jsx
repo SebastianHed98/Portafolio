@@ -76,7 +76,7 @@ const Navbar = () => {
       <nav
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled ? 'scrolled' : ''
-        } ${isMobileOpen ? 'shadow-2xl' : ''}`}
+        } ${isMobileOpen ? 'shadow-2xl nav--mobile-open' : ''}`}
       >
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
@@ -87,8 +87,8 @@ const Navbar = () => {
               </div>
             </Link>
 
-            {/* Navegación principal */}
-            <div className="hidden md:flex items-center space-x-8">
+            {/* Navegación principal (oculta, usamos menú hamburguesa siempre) */}
+            <div className="hidden items-center space-x-8">
               <Link
                 to="/"
                 className={`nav-link group ${location.pathname === '/' ? 'active' : ''}`}
@@ -130,8 +130,8 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {/* Acciones del usuario */}
-            <div className="flex items-center space-x-4">
+            {/* Acciones del usuario (ocultas, se ofrecen en el menú hamburguesa) */}
+            <div className="hidden items-center space-x-4">
               {/* Botón de búsqueda avanzada */}
               <button
                 onClick={handleAdvancedSearch}
@@ -286,6 +286,56 @@ const Navbar = () => {
               <Sparkles size={22} />
               <span className="text-lg">{t('nav.recommendations')}</span>
             </Link>
+
+            {/* Acciones trasladadas al menú: Búsqueda avanzada, Listas, Notificaciones, Perfil */}
+            <button
+              onClick={() => {
+                closeMobile();
+                handleAdvancedSearch();
+              }}
+              className="mobile-nav-link group flex items-center gap-4 py-3.5 w-full text-left"
+            >
+              <Search size={22} />
+              <span className="text-lg">{t('nav.searchTitle')}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                closeMobile();
+                handleCustomLists();
+              }}
+              className="mobile-nav-link group flex items-center gap-4 py-3.5 w-full text-left"
+            >
+              <List size={22} />
+              <span className="text-lg">{t('nav.listsTitle')}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                closeMobile();
+                handleNotifications();
+              }}
+              className="mobile-nav-link group flex items-center gap-4 py-3.5 w-full text-left relative"
+            >
+              <Bell size={22} />
+              <span className="text-lg">{t('nav.notificationsTitle')}</span>
+              {notifications.length > 0 && (
+                <span className="ml-auto bg-[#E50914] text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">
+                  {notifications.length > 9 ? '9+' : notifications.length}
+                </span>
+              )}
+            </button>
+
+            <button
+              onClick={() => {
+                closeMobile();
+                handleUserProfile();
+              }}
+              className="mobile-nav-link group flex items-center gap-4 py-3.5 w-full text-left"
+            >
+              <User size={22} />
+              <span className="text-lg">{t('nav.profileTitle')}</span>
+            </button>
 
             {/* Idioma en móvil */}
             <div className="pt-2">

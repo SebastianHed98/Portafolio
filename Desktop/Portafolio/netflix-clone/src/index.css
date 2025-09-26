@@ -1250,3 +1250,34 @@ body {
 .modal-content::-webkit-scrollbar-thumb:hover {
   background: #b2070f;
 }
+
+/* Navbar móvil: más contraste cuando el menú está abierto */
+nav.nav--mobile-open {
+  background: rgba(20, 20, 20, 0.95) !important;
+  -webkit-backdrop-filter: blur(45px) !important;
+  backdrop-filter: blur(45px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Enlaces del menú móvil con mayor contraste al estar abierto */
+nav.nav--mobile-open .mobile-nav-link {
+  color: #ffffff !important;
+}
+
+nav.nav--mobile-open .mobile-nav-link.active {
+  background: rgba(229, 9, 20, 0.22) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+}
+
+/* Separadores sutiles entre opciones del menú móvil */
+#mobile-menu .mobile-nav-link + .mobile-nav-link {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Asegurar nivel por encima del contenido cuando está abierto */
+#mobile-menu {
+  position: relative;
+  z-index: 45;
+}
